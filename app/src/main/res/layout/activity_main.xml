@@ -39,7 +39,7 @@
                     android:layout_width="200dp"
                     android:id="@+id/uerName"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:singleLine="true"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -57,7 +57,7 @@
                     android:id="@+id/password"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:singleLine="true"
                     android:textSize="14sp" />
             </LinearLayout>
 
