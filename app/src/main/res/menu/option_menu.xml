@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:title="@string/menu_item_config"
+        android:id="@+id/menu_item_config">
+        <menu>
+            <item
+                android:title="@string/menu_item_config_cmntway"
+                android:id="@+id/menu_item_config_cmntway"/>
+            <item
+                android:title="@string/menu_item_config_params"
+                android:id="@+id/menu_item_config_params"/>
+            <item
+                android:title="@string/menu_item_config_flash"
+                android:id="@+id/menu_item_config_flash"/>
+        </menu>
+    </item>
+    <item
+        android:title="@string/menu_item_support"
+        android:id="@+id/menu_item_support">
+        <menu>
+            <item
+                android:title="@string/menu_item_support_targeted"
+                android:id="@+id/menu_item_support_targeted"/>
+        </menu>
+    </item>
+    <item
+        android:title="@string/menu_item_help"
+        android:id="@+id/menu_item_help">
+
+    </item>
+</menu>
