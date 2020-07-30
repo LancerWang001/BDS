@@ -67,17 +67,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (checkedId){
             case R.id.rb_set:
                 fragment=fragments.get(0);
-                transaction.replace(R.id.fragment,fragment);
+                transaction.replace(R.id.fragment, new ConfigFragment());
                 Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rb_support:
                 fragment=fragments.get(1);
-                transaction.replace(R.id.fragment,fragment);
+                transaction.replace(R.id.fragment, new SupportFragment());
                 Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rb_help:
                 fragment=fragments.get(2);
-                transaction.replace(R.id.fragment,fragment);
+                transaction.replace(R.id.fragment, new HelpFragment());
                 Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
                 break;
         }
