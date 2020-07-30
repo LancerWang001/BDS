@@ -53,13 +53,16 @@
         <RadioGroup
             android:id="@+id/rg_main"
             android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="match_parent"
+            android:background="@color/cardview_dark_background"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rb_set"
                 style="@style/rb_style"
                 android:checked="true"
+                android:button="@null"
                 android:text="@string/menu_item_config"/>
 
             <RadioButton
