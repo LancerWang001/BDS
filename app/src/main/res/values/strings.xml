@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BDS</string>
+    <string name="app_name">假WQ定位追踪监测系统</string>
     <string name="menu_item_config">系统设置</string>
     <string name="menu_item_support">系统维护</string>
     <string name="menu_item_help">帮助选项</string>
@@ -9,6 +9,13 @@
     <string name="menu_item_support_targeted">系统自检</string>
     <string name="menu_item_start">开始</string>
     <string name="menu_item_quit">退出</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="param_content1">加速度值判断</string>
+    <string name="param_content2">出水时间</string>
+    <string name="param_content3">姿态判定时间间隔</string>
+    <string name="param_title">参数配置</string>
+    <string name="param_send_config">发送</string>
+    <string name="card_main_selfcheck">系统自检</string>
+    <string name="card_main_position">追踪监测</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
