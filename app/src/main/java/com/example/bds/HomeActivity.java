@@ -37,12 +37,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        uerName = (EditText)findViewById(R.id.uerName);
-        password = (EditText)findViewById(R.id.password);
-        btLogin = (Button)findViewById(R.id.button_login);
-        btLogin.setOnClickListener(this);
         mRadioGroup = (RadioGroup)findViewById(R.id.rg_main);
         initView(); //初始化组件
         mRadioGroup.setOnCheckedChangeListener(this); //点击事件
