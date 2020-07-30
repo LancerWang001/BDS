@@ -7,4 +7,9 @@
     <string name="menu_item_config_params">参数配置</string>
     <string name="menu_item_config_flash">频闪控制</string>
     <string name="menu_item_support_targeted">系统自检</string>
+    <string name="param_content1">加速度值判断</string>
+    <string name="param_content2">出水时间</string>
+    <string name="param_content3">姿态判定时间间隔</string>
+    <string name="param_title">参数配置</string>
+    <string name="param_send_config">发送</string>
 </resources>
