@@ -6,31 +6,31 @@
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
     android:background="@drawable/bk"
-    tools:context=".MainActivity">
+    tools:context=".HomeActivity">
 
-    <fragment
-        android:name="com.example.bds.ParamsFragment"
-        android:id="@+id/params_fragment"
+    <TableLayout
+        android:id="@+id/cmnt_way_syb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
-<!--    <android.support.v7.widget.CardView-->
-<!--        android:id="@+id/cardView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        android:clickable="true"-->
-<!--        android:foreground="?attr/selectableItemBackground"-->
-<!--        app:cardBackgroundColor="@color/colorAccent"-->
-<!--        app:cardCornerRadius="10dp"-->
-<!--        >-->
-<!--       <EditText-->
-<!--           android:layout_width="200dp"-->
-<!--           android:layout_height="wrap_content"-->
-<!--           android:text="第一个功能模块"-->
-<!--           >-->
-<!--       </EditText>-->
-<!--    </android.support.v7.widget.CardView>-->
+        android:layout_height="50dip">
+        <TableRow
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:text="通信方式："
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:text="电台通信"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </TableRow>
+    </TableLayout>
+    <RelativeLayout
+        android:id="@+id/home_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cmnt_way_syb">
+    </RelativeLayout>
 </RelativeLayout>
