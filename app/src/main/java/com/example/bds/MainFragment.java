@@ -73,10 +73,10 @@ public class MainFragment extends Fragment {
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment, new ParamsFragment())
-                        .commit();
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.fragment, new ParamsFragment())
+//                        .commit();
             }
         });
     }
