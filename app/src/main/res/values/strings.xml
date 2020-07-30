@@ -2,9 +2,13 @@
     <string name="app_name">BDS</string>
     <string name="menu_item_config">系统设置</string>
     <string name="menu_item_support">系统维护</string>
-    <string name="menu_item_help">系统帮助</string>
+    <string name="menu_item_help">帮助选项</string>
     <string name="menu_item_config_cmntway">通信方式设置</string>
     <string name="menu_item_config_params">参数配置</string>
     <string name="menu_item_config_flash">频闪控制</string>
     <string name="menu_item_support_targeted">系统自检</string>
+    <string name="menu_item_start">开始</string>
+    <string name="menu_item_quit">退出</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
