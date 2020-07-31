@@ -73,48 +73,40 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
                 Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
                 break;
         }
-//        setTabState();
+        setTabState();
         transaction.commit();
     }
 
     //设置选中和未选择的状态
-//    private void setTabState() {
-//        setState();
-//        setHelpState();
-//        setSupportState();
-//    }
-//
-//    private void setState() {
-//        if (rb_set.isChecked()){
-//            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
-//
-//    private void setHelpState() {
-//        if (rb_help.isChecked()){
-//            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
-//
-//    private void setSupportState() {
-//        if (rb_support.isChecked()){
-//            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
+    private void setTabState() {
+        setState();
+        setHelpState();
+        setSupportState();
+    }
 
-//    private void setHomeState() {
-//        if (rb_Home.isChecked()){
-//            rb_Home.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_Home.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
+    private void setState() {
+        if (rb_set.isChecked()){
+            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
+
+    private void setHelpState() {
+        if (rb_help.isChecked()){
+            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
+
+    private void setSupportState() {
+        if (rb_support.isChecked()){
+            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
