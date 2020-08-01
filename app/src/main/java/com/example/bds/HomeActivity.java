@@ -35,7 +35,7 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
     private FragmentManager fm;
     private FragmentTransaction transaction;
     //    private RadioButton rb_Home,rb_Message,rb_Find,rb_My;
-    private RadioButton rb_set,rb_help,rb_support;
+    private RadioButton rb_set,rb_help,rb_support,rb_main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
         rb_set.setOnClickListener(this);
         rb_support.setOnClickListener(this);
         rb_help.setOnClickListener(this);
+        rb_main.setOnClickListener(this);
 //        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
 
         //添加默认布局
@@ -57,6 +58,7 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
         rb_set= (RadioButton) findViewById(R.id.rb_set);
         rb_support= (RadioButton) findViewById(R.id.rb_support);
         rb_help= (RadioButton) findViewById(R.id.rb_help);
+        rb_main = (RadioButton)findViewById(R.id.card_mainpage);
     }
     @Override
 //    public void onClick(View v) {
@@ -94,15 +96,19 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
 //        switch (checkedId){
             case R.id.rb_set:
                 transaction.replace(R.id.fragment, new ConfigFragment());
-                Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "系统设置", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rb_support:
                 transaction.replace(R.id.fragment, new SupportFragment());
-                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "系统维护", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rb_help:
                 transaction.replace(R.id.fragment, new HelpFragment());
-                Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "帮助选项", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.card_mainpage:
+                transaction.replace(R.id.fragment, new MainFragment());
+                Toast.makeText(this, "主页", Toast.LENGTH_SHORT).show();
                 break;
         }
         setTabState();
@@ -113,6 +119,7 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
         setState();
         setHelpState();
         setSupportState();
+        setMain();
     }
 
     private void setState() {
@@ -136,6 +143,14 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
             rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
         }else{
             rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
+
+    private void setMain(){
+        if (rb_main.isChecked()){
+            rb_main.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_main.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
         }
     }
 
