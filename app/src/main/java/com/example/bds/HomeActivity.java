@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.annotation.IdRes;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener {
+public class HomeActivity extends FragmentActivity implements View.OnClickListener {
 
     private EditText uerName;
     private EditText password;
@@ -40,29 +41,48 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView(); //初始化组件
-        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
+//        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
+        rb_set.setOnClickListener(this);
+        rb_support.setOnClickListener(this);
+        rb_help.setOnClickListener(this);
+        //添加默认布局
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment, new MainFragment())
                 .commit();
     }
-
     private void initView() {
         mRadioGroup = (RadioGroup) findViewById(R.id.rg_main);
         rb_set= (RadioButton) findViewById(R.id.rb_set);
         rb_support= (RadioButton) findViewById(R.id.rb_support);
         rb_help= (RadioButton) findViewById(R.id.rb_help);
     }
-
+//    @Override
+//    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+//        fm=getSupportFragmentManager();
+//        transaction=fm.beginTransaction();
+//        switch (checkedId){
+//            case R.id.rb_set:
+//                transaction.replace(R.id.fragment, new ConfigFragment());
+//                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.rb_support:
+//                transaction.replace(R.id.fragment, new SupportFragment());
+//                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.rb_help:
+//                transaction.replace(R.id.fragment, new HelpFragment());
+//                Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
+//        setTabState();
+//        transaction.commit();
+//    }
     @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+    public void onClick(View v) {
         fm=getSupportFragmentManager();
         transaction=fm.beginTransaction();
-        switch (checkedId){
-            case R.id.card_mainpage:
-                transaction.replace(R.id.fragment, new MainFragment());
-                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-                break;
+        switch (v.getId()) {
             case R.id.rb_set:
                 transaction.replace(R.id.fragment, new ConfigFragment());
                 Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show();
@@ -75,49 +95,43 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
                 transaction.replace(R.id.fragment, new HelpFragment());
                 Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
                 break;
+
+            default:
+                break;
         }
-//        setTabState();
+        setTabState();
         transaction.commit();
     }
-
     //设置选中和未选择的状态
-//    private void setTabState() {
-//        setState();
-//        setHelpState();
-//        setSupportState();
-//    }
-//
-//    private void setState() {
-//        if (rb_set.isChecked()){
-//            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
-//
-//    private void setHelpState() {
-//        if (rb_help.isChecked()){
-//            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
-//
-//    private void setSupportState() {
-//        if (rb_support.isChecked()){
-//            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
+    private void setTabState() {
+        setState();
+        setHelpState();
+        setSupportState();
+    }
 
-//    private void setHomeState() {
-//        if (rb_Home.isChecked()){
-//            rb_Home.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonP));
-//        }else{
-//            rb_Home.setTextColor(ContextCompat.getColor(this,R.color.colorRadioButtonN));
-//        }
-//    }
+    private void setState() {
+        if (rb_set.isChecked()){
+            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_set.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
+
+    private void setHelpState() {
+        if (rb_help.isChecked()){
+            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_help.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
+
+    private void setSupportState() {
+        if (rb_support.isChecked()){
+            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorChecked));
+        }else{
+            rb_support.setTextColor(ContextCompat.getColor(this,R.color.colorunChecked));
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
