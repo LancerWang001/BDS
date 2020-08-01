@@ -78,5 +78,16 @@ public class MainFragment extends Fragment {
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "系统自检");
             }
         });
+
+        Button trackMoniBtn = (Button)getActivity().findViewById(R.id.card_main_position);
+        trackMoniBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, new TrackMonitorFragment())
+                        .commit();
+            }
+        });
     }
 }

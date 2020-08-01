@@ -24,7 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends FragmentActivity implements View.OnClickListener {
+public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     private EditText uerName;
     private EditText password;
@@ -41,10 +41,11 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView(); //初始化组件
-//        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
         rb_set.setOnClickListener(this);
         rb_support.setOnClickListener(this);
         rb_help.setOnClickListener(this);
+//        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
+
         //添加默认布局
         getSupportFragmentManager()
                 .beginTransaction()
@@ -57,32 +58,15 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
         rb_support= (RadioButton) findViewById(R.id.rb_support);
         rb_help= (RadioButton) findViewById(R.id.rb_help);
     }
-//    @Override
-//    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+    @Override
+//    public void onClick(View v) {
 //        fm=getSupportFragmentManager();
 //        transaction=fm.beginTransaction();
-//        switch (checkedId){
-//            case R.id.rb_set:
-//                transaction.replace(R.id.fragment, new ConfigFragment());
-//                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.rb_support:
-//                transaction.replace(R.id.fragment, new SupportFragment());
-//                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.rb_help:
-//                transaction.replace(R.id.fragment, new HelpFragment());
-//                Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-//        setTabState();
-//        transaction.commit();
-//    }
-    @Override
-    public void onClick(View v) {
+//        switch (v.getId()) {
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         fm=getSupportFragmentManager();
         transaction=fm.beginTransaction();
-        switch (v.getId()) {
+        switch (checkedId){
             case R.id.rb_set:
                 transaction.replace(R.id.fragment, new ConfigFragment());
                 Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show();
@@ -95,8 +79,30 @@ public class HomeActivity extends FragmentActivity implements View.OnClickListen
                 transaction.replace(R.id.fragment, new HelpFragment());
                 Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
                 break;
-
-            default:
+        }
+        setTabState();
+        transaction.commit();
+    }
+    @Override
+    public void onClick(View v) {
+        fm=getSupportFragmentManager();
+        transaction=fm.beginTransaction();
+        switch (v.getId()) {
+//    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+//        fm=getSupportFragmentManager();
+//        transaction=fm.beginTransaction();
+//        switch (checkedId){
+            case R.id.rb_set:
+                transaction.replace(R.id.fragment, new ConfigFragment());
+                Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rb_support:
+                transaction.replace(R.id.fragment, new SupportFragment());
+                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rb_help:
+                transaction.replace(R.id.fragment, new HelpFragment());
+                Toast.makeText(this, "Find", Toast.LENGTH_SHORT).show();
                 break;
         }
         setTabState();
