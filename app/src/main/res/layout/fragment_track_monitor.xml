@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrackMonitorFragment">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|center_vertical">
+        <TableRow
+            android:layout_height="50dip"
+            android:gravity="center_horizontal|center_vertical">
+            <TextView android:text="ID 地址码："/>
+            <TextView android:text="192.168.0.1/24"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="50dip"
+            android:gravity="center_horizontal|center_vertical">
+            <TextView android:text="报告时间："/>
+            <TextView android:text="2020/08/04 04:29:30"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="50dip"
+            android:gravity="center_horizontal|center_vertical">
+            <Button
+                android:text="退出"/>
+            <Button
+                android:text="系统休眠"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="50dip"
+            android:gravity="center_horizontal|center_vertical">
+            <Button
+                android:text="开始"/>
+            <Button
+                android:text="频闪开启"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="50dip"
+            android:gravity="center_horizontal|center_vertical">
+            <TextView android:text="位置信息："/>
+            <TextView android:text="360.1， 118.6"/>
+        </TableRow>
+    </TableLayout>
+</FrameLayout>

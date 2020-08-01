@@ -1,6 +1,7 @@
 package com.example.bds;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
@@ -40,12 +41,10 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
         setContentView(R.layout.activity_home);
         initView(); //初始化组件
         mRadioGroup.setOnCheckedChangeListener(this); //点击事件
-        //添加默认布局
         getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.fragment,new MainFragment())
-            .addToBackStack(null)
-            .commit();
+                .beginTransaction()
+                .replace(R.id.fragment, new MainFragment())
+                .commit();
     }
 
     private void initView() {
@@ -60,9 +59,13 @@ public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheck
         fm=getSupportFragmentManager();
         transaction=fm.beginTransaction();
         switch (checkedId){
+            case R.id.card_mainpage:
+                transaction.replace(R.id.fragment, new MainFragment());
+                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.rb_set:
                 transaction.replace(R.id.fragment, new ConfigFragment());
-                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Config", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rb_support:
                 transaction.replace(R.id.fragment, new SupportFragment());

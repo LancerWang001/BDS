@@ -1,23 +1,17 @@
 package com.example.bds;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
+ * Use the {@link StrobeControlFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class StrobeControlFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +22,7 @@ public class MainFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MainFragment() {
+    public StrobeControlFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +32,11 @@ public class MainFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainFragment.
+     * @return A new instance of fragment StrobeControlFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainFragment newInstance(String param1, String param2) {
-        MainFragment fragment = new MainFragment();
+    public static StrobeControlFragment newInstance(String param1, String param2) {
+        StrobeControlFragment fragment = new StrobeControlFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,20 +57,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Button selfBtn = (Button)getActivity().findViewById(R.id.card_main_selfcheck);
-        selfBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment dialogFragment = new SelfCheckFragment();
-                dialogFragment.show(getActivity().getSupportFragmentManager(), "系统自检");
-            }
-        });
+        return inflater.inflate(R.layout.fragment_strobe_control, container, false);
     }
 }

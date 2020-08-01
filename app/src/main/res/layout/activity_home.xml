@@ -21,6 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
             <TextView
+                android:id="@+id/cmnt_way"
                 android:text="电台通信"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_width="wrap_content"
@@ -59,10 +60,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/card_mainpage"
+                android:checked="true"
+                style="@style/rb_style"
+                android:text="@string/card_mainpage"/>
+
+            <RadioButton
                 android:id="@+id/rb_set"
                 style="@style/rb_style"
-                android:checked="true"
-                android:button="@null"
                 android:text="@string/menu_item_config"/>
 
             <RadioButton

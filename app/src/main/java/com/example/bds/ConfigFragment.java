@@ -65,15 +65,32 @@ public class ConfigFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button selfBtn = (Button)getActivity().findViewById(R.id.menu_item_config_params);
-        selfBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment, new ParamsFragment())
-                        .commit();
-            }
-        });
+        Button paramBtn = (Button)getActivity().findViewById(R.id.menu_item_config_params);
+        Button cmntBtn = (Button)getActivity().findViewById(R.id.menu_item_config_cmntway);
+        Button strobeBtn = (Button)getActivity().findViewById(R.id.menu_item_config_flash);
+
+        bindTransaction(paramBtn, new Listener(new ParamsFragment()));
+        bindTransaction(cmntBtn, new Listener(new CmntWayFragment()));
+        bindTransaction(strobeBtn, new Listener(new StrobeControlFragment()));
+
+    }
+
+    private class Listener implements View.OnClickListener {
+        Fragment targetFragment;
+        public Listener (Fragment targetFragment) {
+            this.targetFragment = targetFragment;
+        }
+        @Override
+        public void onClick(View view) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment, targetFragment)
+                    .commit();
+        }
+    }
+
+    private void bindTransaction(View bindView, Listener listener) {
+        if (null != bindView && null != listener)
+            bindView.setOnClickListener(listener);
     }
 }

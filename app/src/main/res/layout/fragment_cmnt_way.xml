@@ -5,9 +5,45 @@
     android:layout_height="match_parent"
     tools:context=".CmntWayFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ffcccccc"
+        android:padding="30dip"
+        >
+        <RadioGroup
+            android:id="@+id/cmnt_way_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dip"
+            >
+            <RadioButton
+                android:id="@+id/card_cmnt_dt"
+                android:layout_width="match_parent"
+                android:checked="true"
+                android:layout_height="50dip"
+                android:text="@string/card_cmnt_dt"/>
+            <RadioButton
+                android:id="@+id/card_cmnt_bd"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:text="@string/card_cmnt_bd"/>
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/send_cmntway"
+                android:layout_width="120dip"
+                android:layout_height="wrap_content"
+                android:text="@string/param_send_config"
+                android:textColor="#fff"
+                android:background="#f00"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>
