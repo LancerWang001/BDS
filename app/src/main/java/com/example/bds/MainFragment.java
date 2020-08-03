@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,7 +73,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button selfBtn = (Button)getActivity().findViewById(R.id.card_main_selfcheck);
+        LinearLayout selfBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_selfcheck);
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +82,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        Button trackMoniBtn = (Button)getActivity().findViewById(R.id.card_main_position);
+        LinearLayout trackMoniBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_position);
         trackMoniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
