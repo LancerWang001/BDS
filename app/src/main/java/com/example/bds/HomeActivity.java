@@ -24,7 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     private EditText uerName;
     private EditText password;
