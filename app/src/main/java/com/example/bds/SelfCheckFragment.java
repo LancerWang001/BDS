@@ -8,9 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.serialport.SerialPortUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +27,6 @@ public class SelfCheckFragment extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -63,7 +66,8 @@ public class SelfCheckFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_self_check, container, false);
+        View v = inflater.inflate(R.layout.fragment_self_check, container, false);
+        return v;
     }
 
     @NonNull
@@ -74,5 +78,10 @@ public class SelfCheckFragment extends DialogFragment {
         builder.setView(inflater.inflate(R.layout.fragment_self_check, null));
         builder.setTitle(R.string.card_main_selfcheck);
         return builder.create();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

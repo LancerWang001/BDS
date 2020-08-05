@@ -35,6 +35,7 @@
 
         </TableLayout>
         <Button
+            android:id="@+id/send_self_check"
             android:layout_width="100dip"
             android:layout_height="50dip"
             android:layout_marginBottom="15dip"

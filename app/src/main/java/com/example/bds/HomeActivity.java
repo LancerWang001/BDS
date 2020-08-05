@@ -1,4 +1,5 @@
 package com.example.bds;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,9 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.serialport.SerialPortUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +40,10 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     private FragmentTransaction transaction;
     //    private RadioButton rb_Home,rb_Message,rb_Find,rb_My;
     private RadioButton rb_set,rb_help,rb_support,rb_main;
+
+    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,8 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         rb_support.setOnClickListener(this);
         rb_help.setOnClickListener(this);
         rb_main.setOnClickListener(this);
+
+        serialPortUtil.openSerialPort();
 //        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
 
         //添加默认布局
@@ -158,5 +168,11 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        serialPortUtil.closeSerialPort();
     }
 }
