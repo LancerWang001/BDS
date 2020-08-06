@@ -37,7 +37,8 @@
                 <TextView
                     android:padding="15dip"
                     android:textColor="#000"
-                    android:gravity="right"
+                    android:gravity="left"
+                    android:textSize="20sp"
                     android:layout_height="match_parent"
                     android:text="@string/param_content1"
                     />
@@ -48,17 +49,28 @@
                 >
                 <EditText
                     android:layout_width="wrap_content"
-                    android:minWidth="60dip"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|left"
                     android:singleLine="true"
                     android:inputType="numberDecimal"
                     android:imeOptions="actionDone"
-                    android:textAlignment="center"
                     android:text="7"
                     />
                 <TextView android:text="(g)" android:textColor="#000"/>
             </TableRow>
+        </TableRow>
+        <TableRow
+            android:layout_weight=".7"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:padding="15dip"
+                android:textColor="#ff0033"
+                android:gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:text="（加速度范围100——200）"
+                android:textSize="20sp"
+                />
         </TableRow>
         <TableRow
             android:layout_width="fill_parent"
@@ -72,8 +84,9 @@
                 >
                 <TextView
                     android:padding="15dip"
+                    android:textSize="20sp"
                     android:textColor="#000"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:layout_height="match_parent"
                     android:text="@string/param_content2"
                     />
@@ -84,7 +97,6 @@
                 >
                 <EditText
                     android:layout_width="wrap_content"
-                    android:minWidth="60dip"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|left"
                     android:singleLine="true"
@@ -97,6 +109,19 @@
             </TableRow>
         </TableRow>
         <TableRow
+            android:layout_weight=".7"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:padding="15dip"
+                android:textColor="#ff0033"
+                android:gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:text="（加速度范围100——200）"
+                />
+        </TableRow>
+        <TableRow
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_margin="0.5dip"
@@ -109,7 +134,8 @@
                 <TextView
                     android:padding="15dip"
                     android:textColor="#000"
-                    android:gravity="right"
+                    android:gravity="left"
+                    android:textSize="20sp"
                     android:layout_height="match_parent"
                     android:text="@string/param_content3"
                     />
@@ -120,10 +146,10 @@
                 >
                 <EditText
                     android:layout_width="wrap_content"
-                    android:minWidth="60dip"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|left"
                     android:singleLine="true"
+                    android:textSize="20sp"
                     android:inputType="numberDecimal"
                     android:imeOptions="actionDone"
                     android:textAlignment="center"
@@ -133,10 +159,24 @@
             </TableRow>
         </TableRow>
         <TableRow
+            android:layout_weight=".7"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:padding="15dip"
+                android:textColor="#ff0033"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:text="（姿态判定时间间隔100——200）"
+                />
+        </TableRow>
+        <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="20dip"
-            android:layout_marginTop="15dip"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
             android:gravity="center"
+            android:textSize="70sp"
             android:orientation="horizontal">
             <Button
                 android:text="@string/param_send_config"

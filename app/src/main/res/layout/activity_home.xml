@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
+    android:label="@string/param_content3"
     android:background="@color/bkground"
     tools:context=".HomeActivity">
 
@@ -62,22 +63,31 @@
             <RadioButton
                 android:id="@+id/card_mainpage"
                 android:checked="true"
+                android:layout_width="wrap_content"
                 style="@style/rb_style"
+                android:textSize="25sp"
                 android:text="@string/card_mainpage"/>
 
             <RadioButton
                 android:id="@+id/rb_set"
                 style="@style/rb_style"
+                android:layout_width="wrap_content"
+                android:textSize="25sp"
                 android:text="@string/menu_item_config"/>
 
             <RadioButton
                 android:id="@+id/rb_support"
                 style="@style/rb_style"
+                android:textSize="25sp"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
                 android:text="@string/menu_item_support"/>
 
             <RadioButton
                 android:id="@+id/rb_help"
                 style="@style/rb_style"
+                android:layout_width="wrap_content"
+                android:textSize="25sp"
                 android:text="@string/menu_item_help"/>
 
         </RadioGroup>
