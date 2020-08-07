@@ -44,6 +44,7 @@
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
                 android:gravity="center"
+                android:background="#f00"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="开始"/>
@@ -54,6 +55,7 @@
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
                 android:gravity="center"
+                android:background="#f00"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="退出"/>
