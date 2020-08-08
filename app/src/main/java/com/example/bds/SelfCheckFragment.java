@@ -21,7 +21,7 @@ import com.serialport.SerialPortUtil;
  * Use the {@link SelfCheckFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SelfCheckFragment extends DialogFragment {
+public class SelfCheckFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,17 +69,6 @@ public class SelfCheckFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.fragment_self_check, container, false);
         return v;
     }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.fragment_self_check, null));
-        builder.setTitle(R.string.card_main_selfcheck);
-        return builder.create();
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

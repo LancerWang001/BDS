@@ -77,9 +77,11 @@ public class MainFragment extends Fragment {
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeActivity.serialPortUtil.sendSerialPort("$$BC:2211");
-                DialogFragment dialogFragment = new SelfCheckFragment();
-                dialogFragment.show(getActivity().getSupportFragmentManager(), "系统自检");
+                //HomeActivity.serialPortUtil.sendSerialPort("$$BC:2211");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, new SelfCheckFragment())
+                        .commit();
             }
         });
 

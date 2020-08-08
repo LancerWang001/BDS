@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     //    private RadioButton rb_Home,rb_Message,rb_Find,rb_My;
     private RadioButton rb_set,rb_help,rb_support,rb_main;
 
-    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
+   // public static SerialPortUtil serialPortUtil = new SerialPortUtil();
 
 
     @Override
@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         rb_help.setOnClickListener(this);
         rb_main.setOnClickListener(this);
 
-        serialPortUtil.openSerialPort();
+        //serialPortUtil.openSerialPort();
 //        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
 
         //添加默认布局
@@ -173,6 +173,6 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        serialPortUtil.closeSerialPort();
+        //serialPortUtil.closeSerialPort();
     }
 }

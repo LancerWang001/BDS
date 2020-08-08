@@ -67,12 +67,12 @@ public class SupportFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Button selfBtn = (Button)getActivity().findViewById(R.id.card_main_selfcheck);
-        selfBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment dialogFragment = new SelfCheckFragment();
-                dialogFragment.show(getActivity().getSupportFragmentManager(), "系统自检");
-            }
-        });
+//        selfBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                DialogFragment dialogFragment = new SelfCheckFragment();
+//                dialogFragment.show(getActivity().getSupportFragmentManager(), "系统自检");
+//            }
+//        });
     }
 }

@@ -69,7 +69,7 @@
                         android:gravity="right"
                         android:layout_marginTop="35dp"
                         android:textSize="20sp"
-                        android:text="电台 状态"
+                        android:text="电台状态"
                         />
                 </TableRow>
                 <TableRow>
