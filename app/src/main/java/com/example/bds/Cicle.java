@@ -8,11 +8,11 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class cicle extends View {
+public class Cicle extends View {
     //    定义画笔
     Paint paint;
 
-    public cicle(Context context, @Nullable AttributeSet attrs) {
+    public Cicle(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -24,7 +24,7 @@ public class cicle extends View {
 //        实例化画笔对象
         paint = new Paint();
 //        给画笔设置颜色
-        paint.setColor(Color.RED);
+        paint.setColor(Color.GREEN);
 //        设置画笔属性
         paint.setStyle(Paint.Style.FILL);//画笔属性是实心圆
 //        paint.setStyle(Paint.Style.STROKE);//画笔属性是空心圆

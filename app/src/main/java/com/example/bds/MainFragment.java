@@ -1,5 +1,6 @@
 package com.example.bds;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -53,6 +54,7 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,8 @@ public class MainFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        CardView cardView = (CardView)getActivity().findViewById(R.id.cardView);
+//        cardView.setCardBackgroundColor(R.color.colorAccent);
     }
 
     @Override
@@ -73,6 +77,9 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        CardView cardView = (CardView)getActivity().findViewById(R.id.fragmentcard);
+        cardView.setCardBackgroundColor(getResources().getColor(R.color.bkground));
         LinearLayout selfBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_selfcheck);
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override

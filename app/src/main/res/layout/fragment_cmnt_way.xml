@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/param_send_config"
                 android:textColor="#fff"
-                android:background="#f00"/>
+                android:background="#5DB851"/>
         </LinearLayout>
     </LinearLayout>
 
