@@ -2,6 +2,7 @@ package com.serialport;
 
 import android.util.Log;
 
+import com.Constants;
 import com.example.tools.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,7 +26,7 @@ public class SerialPortUtil {
     public void openSerialPort() throws RuntimeException {
         try {
             // Add params here
-            serialPort = new SerialPort(new File("/dev/ttysWK1"), 9600, 0);
+            serialPort = new SerialPort(new File(Constants.SERIAL_PORT_ADDR), 9600, 0);
             //调用对象SerialPort方法，获取串口中"读和写"的数据流
             inputStream = serialPort.getInputStream();
             outputStream = serialPort.getOutputStream();

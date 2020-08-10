@@ -1,17 +1,14 @@
 package com.example.bds;
-import android.app.Dialog;
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.annotation.IdRes;
@@ -21,19 +18,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tools.MessageEvent;
-import com.serialport.SerialPortFinder;
-import com.serialport.SerialPortUtil;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HomeActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+
+    private static String TAG = "HomeActivity";
 
     private EditText uerName;
     private EditText password;
@@ -43,10 +36,26 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     private Fragment fragment;
     private FragmentManager fm;
     private FragmentTransaction transaction;
-    //    private RadioButton rb_Home,rb_Message,rb_Find,rb_My;
     private RadioButton rb_set,rb_help,rb_support,rb_main;
 
-    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
+    /* communicate way : BD / WIFI */
+    public static int COMMUNICATE_WAY = R.string.card_cmnt_bd;
+
+    /* Data service */
+    BDSService bdsService;
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.d(TAG, "onServiceConnected: BDSService");
+            BDSService.BDSBinder binder = (BDSService.BDSBinder) iBinder;
+            bdsService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            bdsService = null;
+        }
+    };
 
 
     @Override
@@ -59,8 +68,9 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         rb_help.setOnClickListener(this);
         rb_main.setOnClickListener(this);
 
-        serialPortUtil.openSerialPort();
-//        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
+        // Start to invoke BDS service bind
+        final Intent intent = new Intent(this, BDSService.class);
+        bindService(intent, conn, Service.BIND_AUTO_CREATE);
 
         //添加默认布局
         getSupportFragmentManager()
@@ -178,6 +188,21 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        serialPortUtil.closeSerialPort();
+        unbindService(conn);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(int eventNum) {
+        switch (eventNum) {
+            case R.string.card_cmnt_bd:
+            case R.string.card_cmnt_dt:
+                changeCmntWay(eventNum);
+        }
+    }
+
+    private void changeCmntWay (int cmntWay) {
+        HomeActivity.COMMUNICATE_WAY = cmntWay;
+        TextView tv = (TextView) findViewById(R.id.cmnt_way);
+        tv.setText(HomeActivity.COMMUNICATE_WAY);
     }
 }

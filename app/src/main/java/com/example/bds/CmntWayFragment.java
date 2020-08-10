@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CmntWayFragment#newInstance} factory method to
@@ -96,8 +98,7 @@ public class CmntWayFragment extends Fragment {
                     case R.id.card_cmnt_dt:
                         cmntWay = R.string.card_cmnt_dt;
                 }
-                TextView tv = (TextView) getActivity().findViewById(R.id.cmnt_way);
-                tv.setText(cmntWay);
+                EventBus.getDefault().post(cmntWay);
             }
         });
         builder.setNegativeButton(R.string.card_dialog_alert_N, new DialogInterface.OnClickListener() {

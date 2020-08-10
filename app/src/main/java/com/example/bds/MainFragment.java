@@ -82,7 +82,6 @@ public class MainFragment extends Fragment {
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeActivity.serialPortUtil.sendSerialPort("$$BC:2211");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new SelfCheckFragment())
@@ -94,7 +93,6 @@ public class MainFragment extends Fragment {
         trackMoniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeActivity.serialPortUtil.sendSerialPort("$CCSIR,3,1*4A\\r\\n");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new TrackMonitorFragment())
