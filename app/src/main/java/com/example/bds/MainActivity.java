@@ -19,12 +19,13 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText uerName;
-    private EditText password;
+    private EditText textuerName;
+    private EditText textpassword;
     private Button btLogin;
 
     private RadioGroup mRadioGroup;
@@ -35,14 +36,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    private RadioButton rb_Home,rb_Message,rb_Find,rb_My;
     private RadioButton rb_set,rb_help,rb_support;
 
+
+    private HashMap accountList = new HashMap();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        uerName = (EditText)findViewById(R.id.uerName);
-        password = (EditText)findViewById(R.id.password);
+        textuerName = (EditText)findViewById(R.id.uerName);
+        textpassword = (EditText)findViewById(R.id.password);
         btLogin = (Button)findViewById(R.id.button_login);
-        btLogin.setOnClickListener(this);
+        //btLogin.setOnClickListener(this);
+        btLogin.setOnClickListener( v -> {
+             String userName = textuerName.getText().toString().trim();
+             String userPasswd = textpassword.getText().toString().trim();
+             String info = checkAccount(userName,userPasswd);
+            Toast.makeText(MainActivity.this, info, Toast.LENGTH_SHORT).show();
+        });
+
+        accountList.put("test1","test1");
+        accountList.put("test2","test2");
+        accountList.put("test3","test3");
+
+    }
+
+    //登陆验证
+    private String checkAccount(String userName,String userPasswd){
+        String loginInfo = "";
+        String tmpPass = (String) accountList.get(userName);
+        if (tmpPass != null && tmpPass.equals(userPasswd)) {
+            loginInfo = "登陆成功";
+            Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+            startActivity(intent);
+            MainActivity.this.finish();
+        }else if(tmpPass == null){
+            loginInfo = "用户名不存在";
+            textuerName.requestFocus();
+        }else if(!tmpPass.equals(userPasswd)){
+            loginInfo = "密码错误";
+            textpassword.requestFocus();
+        }
+        return loginInfo;
     }
     @Override
     public void onClick(View view) {
