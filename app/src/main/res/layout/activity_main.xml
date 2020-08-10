@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
-    android:background="@color/bkground"
+    android:background="@drawable/logo"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -36,6 +35,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:id="@+id/username"
+                    android:hint="请输入用户名"
                     android:text="用户名：" />
 
                 <EditText
@@ -57,6 +59,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:hint="请输入密码"
                     android:text="密码：" />
 
                 <EditText
