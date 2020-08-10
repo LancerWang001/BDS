@@ -69,7 +69,7 @@ public class SerialPortUtil {
      */
     public void sendSerialPort(String data) throws RuntimeException {
         try {
-            byte[] sendData = data.getBytes("US-ASCII");
+            byte[] sendData = data.getBytes("UTF-8");
             Log.d("sendData ", new String(sendData));
             outputStream.write(sendData);
             outputStream.flush();
