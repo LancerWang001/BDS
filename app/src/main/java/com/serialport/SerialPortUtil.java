@@ -22,7 +22,7 @@ public class SerialPortUtil {
      * 打开串口，接收数据
      * 通过串口，接收单片机发送来的数据
      */
-    public void openSerialPort() {
+    public void openSerialPort() throws RuntimeException {
         try {
             // Add params here
             serialPort = new SerialPort(new File("/dev/ttysWK1"), 9600, 0);
@@ -32,6 +32,10 @@ public class SerialPortUtil {
             isStart = true;
 
         } catch (IOException e) {
+            Log.d("SerialPortErr", e.toString());
+            Log.d("SerialPortErr", "Can not open serial port.");
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         getSerialPort();
@@ -41,7 +45,7 @@ public class SerialPortUtil {
      * 关闭串口
      * 关闭串口中的输入输出流
      */
-    public void closeSerialPort() {
+    public void closeSerialPort() throws RuntimeException {
         Log.i("test", "关闭串口");
         try {
             if (inputStream != null) {
@@ -51,6 +55,7 @@ public class SerialPortUtil {
                 outputStream.close();
             }
             isStart = false;
+            serialPort.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,13 +67,15 @@ public class SerialPortUtil {
      *
      * @param data 要发送的数据
      */
-    public void sendSerialPort(String data) {
+    public void sendSerialPort(String data) throws RuntimeException {
         try {
             byte[] sendData = data.getBytes("US-ASCII");
             Log.d("sendData ", new String(sendData));
             outputStream.write(sendData);
             outputStream.flush();
         } catch (IOException e) {
+            Log.d("SerialPortErr", e.toString());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -86,7 +93,7 @@ public class SerialPortUtil {
 
     private class ReceiveThread extends Thread {
         @Override
-        public void run() {
+        public void run() throws RuntimeException {
             super.run();
             while (isStart) {
                 if (inputStream == null) {
@@ -103,6 +110,8 @@ public class SerialPortUtil {
                     }
 
                 } catch (IOException e) {
+                    Log.d("SerialPortErr", e.toString());
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

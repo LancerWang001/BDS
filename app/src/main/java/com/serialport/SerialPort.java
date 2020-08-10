@@ -18,7 +18,7 @@ public class SerialPort {
     private FileOutputStream mFileOutputStream;
 
     public SerialPort(File device, int baudrate, int flags)
-            throws SecurityException, IOException {
+            throws SecurityException, IOException, RuntimeException {
 
         if (!device.canRead() || !device.canWrite()) {
             try {
@@ -30,18 +30,17 @@ public class SerialPort {
                 su.getOutputStream().write(cmd.getBytes());
                 if ((su.waitFor() != 0) || !device.canRead()
                         || !device.canWrite()) {
-                    throw new SecurityException();
+                    throw new RuntimeException("get root access failed.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new SecurityException();
             }
         }
         //开启串口，传入物理地址、波特率、flags值
         mFd = open(device.getAbsolutePath(), baudrate, flags);
         if (mFd == null) {
             Log.e(TAG, "native open returns null");
-            throw new IOException();
+            throw new IOException("can not generate serial port I/O.");
         }
         mFileInputStream = new FileInputStream(mFd);
         mFileOutputStream = new FileOutputStream(mFd);
