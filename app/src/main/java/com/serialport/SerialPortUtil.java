@@ -2,6 +2,10 @@ package com.serialport;
 
 import android.util.Log;
 
+import com.example.tools.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +25,7 @@ public class SerialPortUtil {
     public void openSerialPort() {
         try {
             // Add params here
-            serialPort = new SerialPort(new File("/dev/ttyS0"), 9600, 0);
+            serialPort = new SerialPort(new File("/dev/ttysWK1"), 9600, 0);
             //调用对象SerialPort方法，获取串口中"读和写"的数据流
             inputStream = serialPort.getInputStream();
             outputStream = serialPort.getOutputStream();
@@ -61,6 +65,7 @@ public class SerialPortUtil {
     public void sendSerialPort(String data) {
         try {
             byte[] sendData = data.getBytes("US-ASCII");
+            Log.d("sendData ", new String(sendData));
             outputStream.write(sendData);
             outputStream.flush();
         } catch (IOException e) {
@@ -92,9 +97,9 @@ public class SerialPortUtil {
                     int size = inputStream.read(readData);
                     if (size > 0) {
                         String readString = new String(readData, 0, size);
-                        Log.d("readString:", readString);
+                        Log.d("Receive ", readString);
                         // Handle here
-//                        EventBus.getDefault().post(readString);
+                        EventBus.getDefault().post(new MessageEvent(readString));
                     }
 
                 } catch (IOException e) {

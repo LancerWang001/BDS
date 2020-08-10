@@ -62,8 +62,6 @@ public class MainFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//        CardView cardView = (CardView)getActivity().findViewById(R.id.cardView);
-//        cardView.setCardBackgroundColor(R.color.colorAccent);
     }
 
     @Override
@@ -84,7 +82,7 @@ public class MainFragment extends Fragment {
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //HomeActivity.serialPortUtil.sendSerialPort("$$BC:2211");
+                HomeActivity.serialPortUtil.sendSerialPort("$$BC:2211");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new SelfCheckFragment())
@@ -96,6 +94,7 @@ public class MainFragment extends Fragment {
         trackMoniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                HomeActivity.serialPortUtil.sendSerialPort("$CCSIR,3,1*4A\\r\\n");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new TrackMonitorFragment())

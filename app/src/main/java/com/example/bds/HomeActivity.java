@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewParent;
@@ -18,12 +19,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.tools.MessageEvent;
+import com.serialport.SerialPortFinder;
 import com.serialport.SerialPortUtil;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     //    private RadioButton rb_Home,rb_Message,rb_Find,rb_My;
     private RadioButton rb_set,rb_help,rb_support,rb_main;
 
-   // public static SerialPortUtil serialPortUtil = new SerialPortUtil();
+    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
 
 
     @Override
@@ -54,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         rb_help.setOnClickListener(this);
         rb_main.setOnClickListener(this);
 
-        //serialPortUtil.openSerialPort();
+        serialPortUtil.openSerialPort();
 //        mRadioGroup.setOnCheckedChangeListener(this); //点击事件
 
         //添加默认布局
@@ -173,6 +178,6 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //serialPortUtil.closeSerialPort();
+        serialPortUtil.closeSerialPort();
     }
 }
