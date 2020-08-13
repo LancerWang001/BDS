@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView(); //初始化组件
+        ((TextView)findViewById(R.id.title_text)).setText("主页");
         rb_set.setOnClickListener(this);
         rb_support.setOnClickListener(this);
         rb_help.setOnClickListener(this);

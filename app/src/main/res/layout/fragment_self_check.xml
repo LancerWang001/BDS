@@ -56,7 +56,7 @@
                         />
                 </TableRow>
                 <TableRow>
-                    <com.example.bds.Cicle
+                    .example.bds.Cicle
                         android:layout_width="100sp"
                         android:layout_height="100sp" />
                 </TableRow>
