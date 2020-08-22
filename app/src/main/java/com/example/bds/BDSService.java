@@ -1,15 +1,14 @@
 package com.example.bds;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.location.LocationService;
 import com.serialport.SerialPortUtil;
+import com.socket.DTSocket;
 
 public class BDSService extends Service {
 
@@ -40,6 +39,9 @@ public class BDSService extends Service {
         if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
             serialPortUtil = new SerialPortUtil();
             serialPortUtil.openSerialPort();
+        } else {
+          dtSocket = new DTSocket();
+          dtSocket.connect();
         }
     }
 
@@ -66,6 +68,7 @@ public class BDSService extends Service {
     @Override
     public void onDestroy() {
         serialPortUtil.closeSerialPort();
+        dtSocket.close();
         Log.i(TAG, "Service is invoke Destroyed");
     }
 
@@ -73,7 +76,7 @@ public class BDSService extends Service {
     public void sendService (final String data) {
         serialPortUtil.sendSerialPort(data);
         Log.d(TAG, data);
-        // send data here
+        // handle data here
     }
 
     public String receiveService () {
@@ -84,6 +87,10 @@ public class BDSService extends Service {
     public void startLocationService (Context context) {
         Log.d(TAG, "startLocationService");
         new LocationService(context);
+    }
+
+    public void sendByDT (String data) {
+        dtSocket.writeData(data);
     }
 
 }

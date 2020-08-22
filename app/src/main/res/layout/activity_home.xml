@@ -8,7 +8,6 @@
     android:label="@string/param_content3"
     android:background="@color/bkground"
     tools:context=".HomeActivity">
-
     <TableLayout
         android:id="@+id/cmnt_way_syb"
         android:layout_width="match_parent"
@@ -44,14 +43,40 @@
         android:layout_height="1dp"
         android:layout_above="@+id/ll_main_radio"/>
 <!--        android:background="@color/main_rb_bg"/>-->
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        >
+        <com.example.bds.titleBar
+            android:id="@+id/titlebar"
+            android:background="#DCDCDC"
+            app:right_icon="@drawable/bk"
+            app:right_text="更多"
+            app:titlebar_type="11"
+            app:left_icon="@drawable/bk"
+            app:title="标题标题"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </com.example.bds.titleBar>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_main_radio"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:paddingTop="5dp">
-
+        <TextView
+            android:padding="15dip"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:id="@+id/recvET"
+            android:gravity="left"
+            android:textSize="20sp"
+            android:layout_height="match_parent"
+            android:text="@string/param_content1"
+            />
         <RadioGroup
             android:id="@+id/rg_main"
             android:layout_width="match_parent"
@@ -94,4 +119,8 @@
 
 
     </LinearLayout>
+    <com.example.bds.titleBar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        />
 </RelativeLayout>

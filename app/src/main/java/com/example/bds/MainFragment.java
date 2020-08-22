@@ -1,6 +1,7 @@
 package com.example.bds;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +29,10 @@ public class MainFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public static final String status = "a";
+
+    TextView t1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -75,7 +81,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         CardView cardView = (CardView)getActivity().findViewById(R.id.fragmentcard);
         cardView.setCardBackgroundColor(getResources().getColor(R.color.bkground));
         LinearLayout selfBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_selfcheck);
@@ -92,6 +97,15 @@ public class MainFragment extends Fragment {
         });
 
         LinearLayout trackMoniBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_position);
+        if(status == "a"){
+//            .setText("Hello");
+//            (TextView)findViewById(R.id.editText4);
+            //findViewById(R.id.title_text).setText("Hello");
+            t1 = (TextView)getActivity().findViewById(R.id.title_text);
+            t1.setText("装机前准备111");
+            t1.setTextColor(Color.parseColor("#FFFFFF"));
+            trackMoniBtn.setVisibility(View.GONE);
+        }
         trackMoniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
