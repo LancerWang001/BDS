@@ -1,12 +1,14 @@
 package com.example.bds;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.location.LocationService;
 import com.serialport.SerialPortUtil;
 import com.socket.DTSocket;
 
@@ -21,6 +23,8 @@ public class BDSService extends Service {
     boolean mAllowRebind;
 
     public static SerialPortUtil serialPortUtil;
+
+    DTSocket dtSocket;
 
     public BDSService() {
     }
