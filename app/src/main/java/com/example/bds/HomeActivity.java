@@ -38,8 +38,11 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
     private FragmentTransaction transaction;
     private RadioButton rb_set,rb_help,rb_support,rb_main;
 
+    EditText speed;
+//    DTServiceThread ct;
+
     /* communicate way : BD / WIFI */
-    public static int COMMUNICATE_WAY = R.string.card_cmnt_bd;
+    public static int COMMUNICATE_WAY = R.string.card_cmnt_dt;
 
     /* Data service */
     BDSService bdsService;
@@ -72,6 +75,70 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         // Start to invoke BDS service bind
         final Intent intent = new Intent(this, BDSService.class);
         bindService(intent, conn, Service.BIND_AUTO_CREATE);
+
+        TextView recvET = (TextView)findViewById(R.id.recvET);
+//        ct = new DTServiceThread();
+//        ct.start();
+        mRadioGroup = (RadioGroup)findViewById(R.id.rg_main);
+//        rb_set.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                //发送数据
+//                try {
+//                    ct.outputStream.write("Test".getBytes());
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        class ConnectThread extends Thread{
+//            Socket socket = null;		//定义socket
+//            OutputStream outputStream = null;	//定义输出流（发送）
+//            InputStream inputStream=null;	//定义输入流（接收）
+//            MainActivity ma;
+//            public void run(){
+//                System.out.println(Thread.currentThread().getName()+": 你好1111");
+//                try {
+//                    socket = new Socket("192.168.0.104", 8080);
+//                } catch (UnknownHostException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//
+//                //获取输出流
+//                try {
+//                    outputStream = socket.getOutputStream();
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//
+//                try{
+//                    while (true)
+//                    {
+//                        final byte[] buffer = new byte[1024];//创建接收缓冲区
+//                        inputStream = socket.getInputStream();
+//                        final int len = inputStream.read(buffer);//数据读出来，并且返回数据的长度
+//                        runOnUiThread(new Runnable()//不允许其他线程直接操作组件，用提供的此方法可以
+//                        {
+//                            public void run()
+//                            {
+//                                // TODO Auto-generated method stub
+//                                recvET.append(new String(buffer,0,len)+"\r\n");
+//                            }
+//                        });
+//                    }
+//                }
+//                catch (IOException e) {
+//
+//                }
+//
+//            }
+//        }
+
 
         //添加默认布局
         getSupportFragmentManager()
@@ -137,9 +204,10 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
                 Toast.makeText(this, "主页", Toast.LENGTH_SHORT).show();
                 break;
         }
+        bdsService.sendByDT("Test");
         setTabState();
-        transaction.commit();
-    }
+            transaction.commit();
+        }
     //设置选中和未选择的状态
     private void setTabState() {
         setState();

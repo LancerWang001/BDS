@@ -8,8 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.serialport.SerialPortUtil;
-
-import java.io.FileDescriptor;
+import com.socket.DTSocket;
 
 public class BDSService extends Service {
 
@@ -22,6 +21,8 @@ public class BDSService extends Service {
     boolean mAllowRebind;
 
     public static SerialPortUtil serialPortUtil;
+
+    DTSocket dtSocket;
 
     public BDSService() {
     }
@@ -40,6 +41,9 @@ public class BDSService extends Service {
         if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
             serialPortUtil = new SerialPortUtil();
             serialPortUtil.openSerialPort();
+        } else {
+          dtSocket = new DTSocket();
+          dtSocket.connect();
         }
     }
 
@@ -66,6 +70,7 @@ public class BDSService extends Service {
     @Override
     public void onDestroy() {
         serialPortUtil.closeSerialPort();
+        dtSocket.close();
         Log.i(TAG, "Service is invoke Destroyed");
     }
 
@@ -78,6 +83,10 @@ public class BDSService extends Service {
     public String receiveService () {
 //        Log.d(TAG, "")
         return null;
+    }
+
+    public void sendByDT (String data) {
+        dtSocket.writeData(data);
     }
 
 }
