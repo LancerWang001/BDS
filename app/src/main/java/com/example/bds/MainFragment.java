@@ -82,6 +82,8 @@ public class MainFragment extends Fragment {
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                HomeActivity home = (HomeActivity) getActivity();
+                home.bdsService.sendService("$CCICA,0,00*7B");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new SelfCheckFragment())

@@ -8,6 +8,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.example.tools.LocationEvent;
+import com.example.tools.MessageEvent;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -82,7 +88,11 @@ public class Location extends View {
         canvas.drawPoint(x1, y1, paint);
         canvas.drawPoint(x2, y2, paint);
         canvas.restore();
-        Log.d("Draw x1: ", x1 + "");
         super.draw(canvas);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LocationEvent event) {
+        // dispatch data
     }
 }

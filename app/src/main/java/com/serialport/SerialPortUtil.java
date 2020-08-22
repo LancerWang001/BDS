@@ -26,7 +26,7 @@ public class SerialPortUtil {
     public void openSerialPort() throws RuntimeException {
         try {
             // Add params here
-            serialPort = new SerialPort(new File(Constants.SERIAL_PORT_ADDR), 9600, 0);
+            serialPort = new SerialPort(new File(Constants.SERIAL_PORT_ADDR), Constants.SERIAL_PORT_RATE, 0);
             //调用对象SerialPort方法，获取串口中"读和写"的数据流
             inputStream = serialPort.getInputStream();
             outputStream = serialPort.getOutputStream();
@@ -70,7 +70,8 @@ public class SerialPortUtil {
      */
     public void sendSerialPort(String data) throws RuntimeException {
         try {
-            byte[] sendData = data.getBytes("UTF-8");
+            String fullData = data + "\r\n";
+            byte[] sendData = fullData.getBytes();
             Log.d("sendData ", new String(sendData));
             outputStream.write(sendData);
             outputStream.flush();
@@ -85,6 +86,7 @@ public class SerialPortUtil {
         if (mReceiveThread == null) {
             mReceiveThread = new ReceiveThread();
         }
+        Log.d("Thread", "Thread start");
         mReceiveThread.start();
     }
 
@@ -96,13 +98,17 @@ public class SerialPortUtil {
         @Override
         public void run() throws RuntimeException {
             super.run();
+            Log.d("Receive ", "Tread start !!");
             while (isStart) {
                 if (inputStream == null) {
                     return;
                 }
                 byte[] readData = new byte[1024];
                 try {
+                    Log.d("GET Serialport ", "Start to Read");
+                    Thread.sleep(500);
                     int size = inputStream.read(readData);
+                    Log.d("GET Serialport ", new String(readData));
                     if (size > 0) {
                         String readString = new String(readData, 0, size);
                         Log.d("Receive ", readString);

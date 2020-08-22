@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -86,10 +87,6 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         rb_main = (RadioButton)findViewById(R.id.card_mainpage);
     }
     @Override
-//    public void onClick(View v) {
-//        fm=getSupportFragmentManager();
-//        transaction=fm.beginTransaction();
-//        switch (v.getId()) {
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         fm=getSupportFragmentManager();
         transaction=fm.beginTransaction();
@@ -115,10 +112,6 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         fm=getSupportFragmentManager();
         transaction=fm.beginTransaction();
         switch (v.getId()) {
-//    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-//        fm=getSupportFragmentManager();
-//        transaction=fm.beginTransaction();
-//        switch (checkedId){
             case R.id.rb_set:
                 transaction.replace(R.id.fragment, new ConfigFragment());
                 Toast.makeText(this, "系统设置", Toast.LENGTH_SHORT).show();
@@ -204,5 +197,13 @@ public class HomeActivity extends AppCompatActivity implements RadioGroup.OnChec
         HomeActivity.COMMUNICATE_WAY = cmntWay;
         TextView tv = (TextView) findViewById(R.id.cmnt_way);
         tv.setText(HomeActivity.COMMUNICATE_WAY);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            bdsService.startLocationService(this);
+        }
     }
 }

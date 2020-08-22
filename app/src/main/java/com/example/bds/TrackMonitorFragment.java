@@ -1,6 +1,7 @@
 package com.example.bds;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,5 +59,12 @@ public class TrackMonitorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_track_monitor, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        HomeActivity home = (HomeActivity) getActivity();
+        home.bdsService.startLocationService(home);
     }
 }
