@@ -34,7 +34,10 @@ public class DTSocket {
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                DTSocket.this.readData();
+                while (true){
+                    DTSocket.this.readData();
+                }
+
             }
         }).start();
     }
