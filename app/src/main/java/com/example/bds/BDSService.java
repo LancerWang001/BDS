@@ -78,9 +78,12 @@ public class BDSService extends Service {
 
     @NonNull
     public void sendService (final String data) {
-        serialPortUtil.sendSerialPort(data);
+        if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
+            serialPortUtil.sendSerialPort(data);
+        } else {
+            dtSocket.writeData(data);
+        }
         Log.d(TAG, data);
-        // handle data here
     }
 
     public String receiveService () {
@@ -92,9 +95,4 @@ public class BDSService extends Service {
         Log.d(TAG, "startLocationService");
         new LocationService(context);
     }
-
-    public void sendByDT (String data) {
-        dtSocket.writeData(data);
-    }
-
 }

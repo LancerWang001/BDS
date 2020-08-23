@@ -46,13 +46,13 @@ public class DTSocket {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                try{
-                    outputStream.write(data.getBytes());
+                try {
+                    String fullData = data + "\r\n";
+                    outputStream.write(fullData.getBytes());
                     outputStream.flush();
-                }catch (IOException e){
+                } catch (IOException e){
                     e.printStackTrace();
-                }
-                catch (Exception e){
+                } catch (Exception e){
                     e.printStackTrace();
                 }
             }

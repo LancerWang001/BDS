@@ -88,7 +88,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 HomeActivity home = (HomeActivity) getActivity();
-                home.bdsService.sendService("$CCICA,0,00*7B");
+//                home.bdsService.sendService("$CCTXA,0332953,1,1,sha2232*");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new SelfCheckFragment())
@@ -98,9 +98,6 @@ public class MainFragment extends Fragment {
 
         LinearLayout trackMoniBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_position);
         if(status == "a"){
-//            .setText("Hello");
-//            (TextView)findViewById(R.id.editText4);
-            //findViewById(R.id.title_text).setText("Hello");
             t1 = (TextView)getActivity().findViewById(R.id.title_text);
             t1.setText("装机前准备111");
             t1.setTextColor(Color.parseColor("#FFFFFF"));
