@@ -48,7 +48,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         final Intent intent = new Intent(this, BDSService.class);
         bindService(intent, conn, Service.BIND_AUTO_CREATE);
 
-        TextView recvET = (TextView) findViewById(R.id.recvET);
         //添加默认布局
         getSupportFragmentManager()
                 .beginTransaction()
