@@ -67,16 +67,6 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:paddingTop="5dp">
-        <TextView
-            android:padding="15dip"
-            android:textColor="#000"
-            android:layout_width="wrap_content"
-            android:id="@+id/recvET"
-            android:gravity="left"
-            android:textSize="20sp"
-            android:layout_height="match_parent"
-            android:text="@string/param_content1"
-            />
         <RadioGroup
             android:id="@+id/rg_main"
             android:layout_width="match_parent"
