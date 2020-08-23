@@ -26,7 +26,8 @@ public class DTSocket {
             @Override
             public void run() {
                 try {
-                    socket = new Socket("192.168.0.104",8080);
+//                    socket = new Socket("192.168.0.104",8080);
+                    socket = new Socket("192.168.1.123",10161);
                     inputStream = socket.getInputStream();
                     outputStream = socket.getOutputStream();
                 }catch (IOException e){
