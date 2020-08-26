@@ -19,7 +19,7 @@
         >
 
         <service
-            android:name=".BDSService"
+            android:name="com.example.service.BDSService"
             android:enabled="true"
             android:exported="true"></service>
 

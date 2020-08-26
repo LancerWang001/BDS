@@ -15,11 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -97,6 +98,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         transaction.replace(R.id.fragment, f);
         transaction.commit();
+        Log.d(TAG, new String(new char[]{(char) 255}));
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
         setTabState((RadioButton) v);
     }

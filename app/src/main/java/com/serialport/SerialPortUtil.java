@@ -3,7 +3,7 @@ package com.serialport;
 import android.util.Log;
 
 import com.Constants;
-import com.example.tools.MessageEvent;
+import com.example.events.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -5,7 +5,7 @@ import android.location.LocationListener;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.tools.LocationEvent;
+import com.example.events.LocationEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
