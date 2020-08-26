@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.service;
 
 import android.app.Service;
 import android.content.Context;
@@ -8,9 +8,14 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 import com.location.LocationService;
 import com.serialport.SerialPortUtil;
 import com.socket.DTSocket;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BDSService extends Service {
 
@@ -23,6 +28,8 @@ public class BDSService extends Service {
     boolean mAllowRebind;
 
     public static SerialPortUtil serialPortUtil;
+
+    ExecutorService executorService;
 
     DTSocket dtSocket;
 
@@ -39,13 +46,14 @@ public class BDSService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "Service is invoke Created!");
+        executorService = Executors.newCachedThreadPool();
+        serialPortUtil = new SerialPortUtil();
+        serialPortUtil.openSerialPort();
+
         /* Handle BD / WIFI service here */
-        if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
-            serialPortUtil = new SerialPortUtil();
-            serialPortUtil.openSerialPort();
-        } else {
-          dtSocket = new DTSocket();
-          dtSocket.connect();
+        if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_dt) {
+            dtSocket = new DTSocket();
+            dtSocket.connect();
         }
     }
 
@@ -78,12 +86,17 @@ public class BDSService extends Service {
 
     @NonNull
     public void sendService (final String data) {
-        if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
-            serialPortUtil.sendSerialPort(data);
-        } else {
-            dtSocket.writeData(data);
-        }
-        Log.d(TAG, data);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, data);
+                if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
+                    serialPortUtil.sendSerialPort(data);
+                } else {
+                    dtSocket.writeData(data);
+                }
+            }
+        });
     }
 
     public String receiveService () {

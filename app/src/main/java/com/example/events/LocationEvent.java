@@ -1,4 +1,4 @@
-package com.example.tools;
+package com.example.events;
 
 public class LocationEvent {
     public final double[] message;

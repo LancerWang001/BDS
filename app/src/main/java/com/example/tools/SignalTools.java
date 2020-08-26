@@ -11,6 +11,8 @@ public class SignalTools {
 
     private static char[] HAX_ARR = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
+    private static Pattern PATTERN = Pattern.compile("\\$(.*?)\\*");
+
     public static String intToHax (String numStr) {
         int num = Integer.parseInt(numStr, 10);
         StringBuffer stf = new StringBuffer();
@@ -28,8 +30,7 @@ public class SignalTools {
 
     // 北斗信令 asc
     public static String calcBDVerifyRes (String signal) {
-        Pattern pattern = Pattern.compile("\\$(.*?)\\*");
-        Matcher matcher = pattern.matcher(signal);
+        Matcher matcher = PATTERN.matcher(signal);
 
         String calcStr = "";
         String verifiStr = "";

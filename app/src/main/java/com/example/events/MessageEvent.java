@@ -1,4 +1,4 @@
-package com.example.tools;
+package com.example.events;
 
 public class MessageEvent {
     public final String message;

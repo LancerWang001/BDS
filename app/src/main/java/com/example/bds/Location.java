@@ -8,8 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.example.tools.LocationEvent;
-import com.example.tools.MessageEvent;
+import com.example.events.LocationEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
