@@ -2,6 +2,8 @@ package com.socket;
 
 import android.util.Log;
 
+import com.example.events.MessageEvent;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
@@ -58,7 +60,7 @@ public class DTSocket {
             int size = inputStream.read(bt);
             String data = new String(bt, 0, size);
             Log.d("Socket Receive ", data);
-            EventBus.getDefault().post(data);
+            EventBus.getDefault().post(new MessageEvent(data));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

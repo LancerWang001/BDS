@@ -10,12 +10,23 @@ import android.util.Log;
 
 import com.example.bds.HomeActivity;
 import com.example.bds.R;
+import com.example.events.MessageEvent;
+import com.example.events.SendSignalEvent;
+import com.example.events.configparams.SendConfigParamsEvent;
 import com.location.LocationService;
 import com.serialport.SerialPortUtil;
 import com.socket.DTSocket;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static com.example.service.BDTXSignalSvc.getBDTXA;
+import static com.example.service.BDTXSignalSvc.getBDTXR;
+import static com.example.service.BDTXSignalSvc.handOutSignalEvent;
 
 public class BDSService extends Service {
 
@@ -47,13 +58,14 @@ public class BDSService extends Service {
         super.onCreate();
         Log.d(TAG, "Service is invoke Created!");
         executorService = Executors.newCachedThreadPool();
-        serialPortUtil = new SerialPortUtil();
-        serialPortUtil.openSerialPort();
-
+        EventBus.getDefault().register(this);
         /* Handle BD / WIFI service here */
         if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             dtSocket = new DTSocket();
             dtSocket.connect();
+        } else if (HomeActivity.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
+            serialPortUtil = new SerialPortUtil();
+            serialPortUtil.openSerialPort();
         }
     }
 
@@ -79,13 +91,28 @@ public class BDSService extends Service {
 
     @Override
     public void onDestroy() {
+        EventBus.getDefault().unregister(this);
         serialPortUtil.closeSerialPort();
         dtSocket.close();
         Log.i(TAG, "Service is invoke Destroyed");
     }
 
+    // 订阅发送信令事件，进行发送
+    @Subscribe()
+    public void onSendSignalEvent (SendConfigParamsEvent signalEvent) {
+        String bdtxaSignal = getBDTXA(signalEvent.signal);
+        sendService(bdtxaSignal);
+    }
+
+    // 订阅接收信令事件，进行分发
+    @Subscribe()
+    public void onMessageEvent (MessageEvent messageEvent) {
+        String signal = getBDTXR(messageEvent.message);
+        handOutSignalEvent(signal);
+    }
+
     @NonNull
-    public void sendService (final String data) {
+    private void sendService (final String data) {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -97,11 +124,6 @@ public class BDSService extends Service {
                 }
             }
         });
-    }
-
-    public String receiveService () {
-//        Log.d(TAG, "")
-        return null;
     }
 
     public void startLocationService (Context context) {
