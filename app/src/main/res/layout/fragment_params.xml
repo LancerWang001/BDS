@@ -39,19 +39,18 @@
                     android:textColor="#000"
                     android:id="@+id/speed"
                     android:gravity="left"
-                    android:textSize="20sp"
+                    android:textSize="35sp"
                     android:layout_height="match_parent"
                     android:text="@string/param_content1"
                     />
             </TableRow>
             <TableRow
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal|left"
+                    android:gravity="center_horizontal"
                     android:singleLine="true"
                     android:inputType="numberDecimal"
                     android:imeOptions="actionDone"
@@ -85,7 +84,7 @@
                 >
                 <TextView
                     android:padding="15dip"
-                    android:textSize="20sp"
+                    android:textSize="35sp"
                     android:textColor="#000"
                     android:gravity="left"
                     android:layout_height="match_parent"
@@ -136,7 +135,7 @@
                     android:padding="15dip"
                     android:textColor="#000"
                     android:gravity="left"
-                    android:textSize="20sp"
+                    android:textSize="35sp"
                     android:layout_height="match_parent"
                     android:text="@string/param_content3"
                     />
@@ -182,6 +181,9 @@
             <Button
                 android:text="@string/param_send_config"
                 android:textColor="#fff"
+                android:textSize="35sp"
+                android:layout_marginTop="15dip"
+                android:layout_marginBottom="15dip"
                 android:background="#5DB851"
                 />
         </TableRow>

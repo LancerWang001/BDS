@@ -22,12 +22,14 @@
                 android:id="@+id/card_cmnt_dt"
                 android:layout_width="match_parent"
                 android:checked="true"
+                android:textSize="35sp"
                 android:layout_height="50dip"
                 android:text="@string/card_cmnt_dt"/>
             <RadioButton
                 android:id="@+id/card_cmnt_bd"
                 android:layout_width="match_parent"
                 android:layout_height="50dip"
+                android:textSize="35sp"
                 android:text="@string/card_cmnt_bd"/>
         </RadioGroup>
 

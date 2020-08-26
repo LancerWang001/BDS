@@ -8,14 +8,14 @@
     android:background="@color/colorAccent"
     >
 
-<!--    <Button-->
-<!--        android:id="@+id/title_back"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_margin="5dip"-->
-<!--        android:text="返回"-->
-<!--        android:textColor="#fff" />-->
+    <Button
+        android:id="@+id/title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dip"
+        android:text="返回"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/title_text"

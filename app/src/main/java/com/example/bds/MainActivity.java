@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
              String info = checkAccount(userName,userPasswd);
             Toast.makeText(MainActivity.this, info, Toast.LENGTH_SHORT).show();
         });
-
         accountList.put("test1","test1");
         accountList.put("test2","test2");
         accountList.put("test3","test3");
