@@ -28,6 +28,11 @@ public class SignalTools {
         return res;
     }
 
+    public static String haxToInt (String haxNum) {
+        int haxInt = Integer.parseInt(haxNum, 16);
+        return Integer.toString(haxInt);
+    }
+
     // 北斗信令 asc
     public static String calcBDVerifyRes (String signal) {
         Matcher matcher = PATTERN.matcher(signal);
@@ -60,19 +65,19 @@ public class SignalTools {
     }
 
     //自定义指令 hax
-    public static String calcCustomerVerifyRes (String haxSignal) {
-        String[] haxArr = haxSignal.split("H+");
-        int verifiNum = Integer.parseInt(haxArr[0], 16);
-        for (int i = 1; i < haxArr.length; i ++) {
-            if (haxArr[i] != "") {
-                verifiNum ^= Integer.parseInt(haxArr[i], 16);
-            }
+    public static String calcCustomerVerifyRes (String custSignal) {
+        char[] chars = custSignal.toCharArray();
+        int verifyNum = chars[0];
+        for (int i = 1; i < chars.length; i ++) {
+            verifyNum ^= chars[i];
         }
-        String verifiStr = Integer.toHexString(verifiNum);
-        verifiStr = verifiStr.toUpperCase() + "H";
-        if (verifiStr.length() < 3) {
+        String verifiStr = Integer.toHexString(verifyNum);
+        if (verifiStr.length() < 2) {
             verifiStr = "0" + verifiStr;
         }
-        return haxSignal + verifiStr;
+
+        verifiStr = verifiStr.toUpperCase();
+
+        return custSignal + verifiStr;
     }
 }

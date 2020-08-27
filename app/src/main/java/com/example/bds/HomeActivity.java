@@ -20,8 +20,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.events.configparams.SendConfigParamsEvent;
 import com.example.service.BDSService;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -98,9 +100,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         transaction.replace(R.id.fragment, f);
         transaction.commit();
-        Log.d(TAG, new String(new char[]{(char) 255}));
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
         setTabState((RadioButton) v);
+
+        // for test service
+        EventBus.getDefault().post(new SendConfigParamsEvent("100", "120", "255"));
     }
 
     //设置选中和未选择的状态
@@ -124,15 +128,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unbindService(conn);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(int eventNum) {
-        switch (eventNum) {
-            case R.string.card_cmnt_bd:
-            case R.string.card_cmnt_dt:
-                changeCmntWay(eventNum);
-        }
     }
 
     private void changeCmntWay(int cmntWay) {
