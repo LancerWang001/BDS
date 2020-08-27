@@ -2,8 +2,10 @@ package com.example.bds;
 
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -41,10 +43,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rb_set, rb_help, rb_support, rb_main;
     private RadioButton[] btns;
 
+
+    SharedPreferences context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //取变量
+        context = this.getSharedPreferences("testContextSp", MODE_PRIVATE);
+        String status = context.getString("status",null);
+        Log.d("test111","status" + status );
         initView(); //初始化组件
 
         // Start to invoke BDS service bind

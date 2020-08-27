@@ -1,13 +1,17 @@
 package com.example.bds;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -32,6 +36,9 @@ public class CmntWayFragment extends Fragment {
 
     private AlertDialog dialog;
     private int checkedId;
+
+    SharedPreferences mContextSp;
+    SharedPreferences mActivitySp;
 
     public CmntWayFragment() {
         // Required empty public constructor
@@ -75,6 +82,23 @@ public class CmntWayFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.dialog = createDialog();
+        RadioGroup radioGroup =getActivity().findViewById(R.id.cmnt_way_rg);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton radioGroupButton = getActivity().findViewById(radioGroup.getCheckedRadioButtonId());
+                String cmtWay = radioGroupButton.getText().toString();
+                Log.d("way" , cmtWay);
+                if(cmtWay.equals("电台通信")){
+                    cmtWay = "DT";
+                    saveStatus(cmtWay);
+                }else if(cmtWay.equals("北斗通信")){
+                    cmtWay = "BD";
+                    saveStatus(cmtWay);
+                }
+
+            }
+        });
         getActivity().findViewById(R.id.send_cmntway).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +124,7 @@ public class CmntWayFragment extends Fragment {
                         cmntWay = R.string.card_cmnt_dt;
                 }
                 EventBus.getDefault().post(cmntWay);
+                //saveStatus(String.valueOf(cmntWay));
             }
         });
         builder.setNegativeButton(R.string.card_dialog_alert_N, new DialogInterface.OnClickListener() {
@@ -109,5 +134,17 @@ public class CmntWayFragment extends Fragment {
             }
         });
         return builder.create();
+    }
+
+    private void saveStatus(String cmntWay){
+        //数据状态存储
+        mContextSp = getActivity().getSharedPreferences("testContextSp", Context.MODE_PRIVATE);
+        mActivitySp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        mActivitySp.edit().commit();
+
+        //接收信令存储
+        SharedPreferences.Editor editor = mContextSp.edit();
+        editor.putString("status",cmntWay);
+        editor.commit();
     }
 }
