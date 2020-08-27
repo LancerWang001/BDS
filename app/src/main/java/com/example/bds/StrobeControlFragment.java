@@ -1,11 +1,19 @@
 package com.example.bds;
 
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +26,7 @@ public class StrobeControlFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static String strobelAlarm = "";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,5 +68,34 @@ public class StrobeControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_strobe_control, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //获得单选框的数据
+        RadioGroup radioGroup = getActivity().findViewById(R.id.strobeAlarm);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton radioButton = getActivity().findViewById(radioGroup.getCheckedRadioButtonId());
+                String alarmText = radioButton.getText().toString();
+                Log.d("alarm" , alarmText);
+                if(alarmText.equals("开启")){
+                    strobelAlarm = "Y";
+                }else {
+                    strobelAlarm = "N";
+                }
+            }
+        });
+
+        Button button = getActivity().findViewById(R.id.stromAlarm);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("频闪警报",strobelAlarm);
+                EventBus.getDefault().post(strobelAlarm);
+            }
+        });
     }
 }

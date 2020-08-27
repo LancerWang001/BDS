@@ -49,6 +49,7 @@
                 <RadioGroup
                     android:layout_height="match_parent"
                     android:gravity="center|left"
+                    android:id="@+id/strobeAlarm"
                     android:orientation="horizontal">
                     <RadioButton
                         android:id="@+id/strobe_start"
@@ -75,6 +76,7 @@
             android:orientation="horizontal">
             <Button
                 android:text="@string/param_send_config"
+                android:id="@+id/stromAlarm"
                 android:layout_marginTop="15dip"
                 android:layout_marginBottom="15dip"
                 android:textSize="35sp"

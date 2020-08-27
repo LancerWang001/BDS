@@ -17,14 +17,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class titleBar extends LinearLayout {
     private Context context;
-
+    private TextView textView;
     public titleBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         View view =LayoutInflater.from(context).inflate(R.layout.activity_title_bar,this);
         Button titleBack = (Button) findViewById(R.id.title_back);
         Button titleLogout = (Button) view.findViewById(R.id.title_logout);
+        textView = (TextView) view.findViewById(R.id.title_text);
         titleBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,5 +51,11 @@ public class titleBar extends LinearLayout {
                 Toast.makeText(getContext(), "You clicked Edit button", Toast.LENGTH_SHORT).show();
             }
         });
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessage(Integer way){
+        textView.setText(way);
     }
 }
