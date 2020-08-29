@@ -17,7 +17,9 @@ public class Constants {
 
     // System signals
 
-    public static final String TARGET_CARD_NUM = "0333132";
+//    public static final String TARGET_CARD_NUM = "0333132";
+
+    public static final String TARGET_CARD_NUM = "0332953";
 
     /* 上下位机协议 */
 
@@ -58,4 +60,7 @@ public class Constants {
 
     // 接收短报文
     public static final String SIGNAL_SHORT_MSG_R = "\\$BDTXR,(.*?),(.*?),(.*?),(.*?),(.*?)\\*.*";
+
+    // 北斗发送结果
+    public static final String SIGNAL_BD_SEND_RES = "\\BDFKI,(.*?),(.*?),(.*?),(.*?),(.*?)\\*";
 }

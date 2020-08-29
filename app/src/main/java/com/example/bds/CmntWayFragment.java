@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.events.ChangeCmntWayEvent;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -82,23 +84,6 @@ public class CmntWayFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.dialog = createDialog();
-        RadioGroup radioGroup =getActivity().findViewById(R.id.cmnt_way_rg);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton radioGroupButton = getActivity().findViewById(radioGroup.getCheckedRadioButtonId());
-                String cmtWay = radioGroupButton.getText().toString();
-                Log.d("way" , cmtWay);
-                if(cmtWay.equals("电台通信")){
-                    cmtWay = "DT";
-                    saveStatus(cmtWay);
-                }else if(cmtWay.equals("北斗通信")){
-                    cmtWay = "BD";
-                    saveStatus(cmtWay);
-                }
-
-            }
-        });
         getActivity().findViewById(R.id.send_cmntway).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,8 +108,7 @@ public class CmntWayFragment extends Fragment {
                     case R.id.card_cmnt_dt:
                         cmntWay = R.string.card_cmnt_dt;
                 }
-                EventBus.getDefault().post(cmntWay);
-                //saveStatus(String.valueOf(cmntWay));
+                EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
             }
         });
         builder.setNegativeButton(R.string.card_dialog_alert_N, new DialogInterface.OnClickListener() {

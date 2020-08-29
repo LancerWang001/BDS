@@ -1,5 +1,6 @@
 package com.example.bds;
 
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.events.BDError;
 import com.example.events.configparams.SendConfigParamsEvent;
 import com.example.service.BDSService;
 
@@ -37,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /* Data service */
     BDSService bdsService;
     ServiceConnection conn = new AppServiceConnection();
+
     private RadioGroup mRadioGroup;
     private FragmentManager fm;
     private FragmentTransaction transaction;
@@ -50,15 +53,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //取变量
-        context = this.getSharedPreferences("testContextSp", MODE_PRIVATE);
-        String status = context.getString("status",null);
-        Log.d("test111","status" + status );
         initView(); //初始化组件
 
         // Start to invoke BDS service bind
         final Intent intent = new Intent(this, BDSService.class);
         bindService(intent, conn, Service.BIND_AUTO_CREATE);
+
+        // register EventBus
+        EventBus.getDefault().register(this);
 
         //添加默认布局
         getSupportFragmentManager()
@@ -137,12 +139,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unbindService(conn);
-    }
-
-    private void changeCmntWay(int cmntWay) {
-        HomeActivity.COMMUNICATE_WAY = cmntWay;
-        TextView tv = (TextView) findViewById(R.id.cmnt_way);
-        tv.setText(HomeActivity.COMMUNICATE_WAY);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -153,12 +150,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onError(BDError error) {
+        // handle BD error
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(error.errorCode);
+        builder.create().show();
+    }
+
     private class AppServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.d(TAG, "onServiceConnected: BDSService");
             BDSService.BDSBinder binder = (BDSService.BDSBinder) iBinder;
             bdsService = binder.getService();
+            bdsService.bindContext = HomeActivity.this;
         }
 
         @Override
