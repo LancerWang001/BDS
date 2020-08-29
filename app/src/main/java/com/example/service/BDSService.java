@@ -13,6 +13,7 @@ import com.example.bds.R;
 import com.example.events.ChangeCmntWayEvent;
 import com.example.events.MessageEvent;
 import com.example.events.configparams.SendConfigParamsEvent;
+import com.example.events.readcard.SendReadCardEvent;
 import com.example.events.selfcheck.SendSelfControlEvent;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
 import com.example.events.uppercontrol.SendUpperControlEvent;
@@ -29,19 +30,20 @@ import java.util.concurrent.Executors;
 import static com.example.service.BDTXSignalSvc.getBDTXA;
 import static com.example.service.BDTXSignalSvc.getBDTXR;
 import static com.example.service.BDTXSignalSvc.handOutSignalEvent;
+import static com.example.tools.SignalTools.calcBDVerifyRes;
 
 public class BDSService extends Service {
 
     public static SerialPortUtil serialPortUtil;
     private static String TAG = "BDSService";
+    public Context bindContext;
     int mStartMode;
     IBinder mBinder = new BDSBinder();
     boolean mAllowRebind;
     ExecutorService executorService;
-    public Context bindContext;
     DTSocket dtSocket;
 
-    private SharedPreferences preferences;
+    public SharedPreferences preferences;
 
     private int COMMUNICATE_WAY = R.string.card_cmnt_bd;
 
@@ -61,7 +63,6 @@ public class BDSService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.i(TAG, "Service is invoke onBind");
-        preferences = bindContext.getSharedPreferences("BDPreferences", MODE_PRIVATE);
         /* Handle BD / WIFI service here */
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             dtSocket = new DTSocket();
@@ -121,6 +122,11 @@ public class BDSService extends Service {
         sendService(bdtxaSignal);
     }
 
+    @Subscribe()
+    public void onSendReadCardEvent(SendReadCardEvent event) {
+        sendService(calcBDVerifyRes(event.signal));
+    }
+
     // 订阅接收信令事件，进行分发
     @Subscribe()
     public void onMessageEvent(MessageEvent messageEvent) {
@@ -129,7 +135,7 @@ public class BDSService extends Service {
     }
 
     @Subscribe()
-    public void onChangeCmntWay (ChangeCmntWayEvent event) {
+    public void onChangeCmntWay(ChangeCmntWayEvent event) {
         this.COMMUNICATE_WAY = event.cmntWay;
         if (event.cmntWay == R.string.card_cmnt_dt) {
             // 关闭串口，连接电台

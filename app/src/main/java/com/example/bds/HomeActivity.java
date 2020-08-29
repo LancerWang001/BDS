@@ -3,10 +3,8 @@ package com.example.bds;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -24,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.events.BDError;
-import com.example.events.configparams.SendConfigParamsEvent;
+import com.example.events.readcard.SendReadCardEvent;
 import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,15 +37,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /* Data service */
     BDSService bdsService;
     ServiceConnection conn = new AppServiceConnection();
-
     private RadioGroup mRadioGroup;
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private RadioButton rb_set, rb_help, rb_support, rb_main;
     private RadioButton[] btns;
 
-
-    SharedPreferences context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setTabState((RadioButton) v);
 
         // for test service
-        EventBus.getDefault().post(new SendConfigParamsEvent("100", "120", "255"));
+        EventBus.getDefault().post(new SendReadCardEvent());
     }
 
     //设置选中和未选择的状态
@@ -164,7 +159,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "onServiceConnected: BDSService");
             BDSService.BDSBinder binder = (BDSService.BDSBinder) iBinder;
             bdsService = binder.getService();
-            bdsService.bindContext = HomeActivity.this;
+            bdsService.preferences = HomeActivity.this.getSharedPreferences("BDPreferences", MODE_PRIVATE);
         }
 
         @Override
