@@ -56,9 +56,10 @@
                         />
                 </TableRow>
                 <TableRow>
-                    .example.bds.Cicle
-                        android:layout_width="100sp"
-                        android:layout_height="100sp" />
+                    <com.example.bds.RestClcle
+                        android:layout_marginTop="25dp"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp" />
                 </TableRow>
                 <TableRow
                     android:layout_weight=".7"
@@ -73,9 +74,10 @@
                         />
                 </TableRow>
                 <TableRow>
-                    <com.example.bds.Cicle
-                        android:layout_width="100sp"
-                        android:layout_height="100sp" />
+                    <com.example.bds.WorkingCicle
+                        android:layout_marginTop="25dp"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp" />
                 </TableRow>
             </TableRow>
         </TableLayout>
@@ -151,6 +153,7 @@
                 <TableRow>
                     <Button
                         android:id="@+id/syscheck"
+                        android:layout_marginTop="5dp"
                         android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
                         android:layout_weight="1"
@@ -181,11 +184,12 @@
                 >
                 <TextView
                     android:padding="15dip"
+                    android:id="@+id/vol_result"
                     android:textColor="#ff0033"
                     android:textSize="20sp"
                     android:gravity="center_horizontal"
                     android:layout_height="match_parent"
-                    android:text="电源正常"
+                    android:text=""
                     />
             </TableRow>
             <TableRow

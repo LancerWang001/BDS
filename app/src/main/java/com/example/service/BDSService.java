@@ -45,7 +45,11 @@ public class BDSService extends Service {
 
     public SharedPreferences preferences;
 
-    private int COMMUNICATE_WAY = R.string.card_cmnt_bd;
+    //电台
+    public int COMMUNICATE_WAY = R.string.card_cmnt_dt;
+
+    //北斗
+    //public int COMMUNICATE_WAY = R.string.card_cmnt_bd;
 
     private String emissionStatus = "0";
 
@@ -136,7 +140,6 @@ public class BDSService extends Service {
 
     @Subscribe()
     public void onChangeCmntWay(ChangeCmntWayEvent event) {
-        this.COMMUNICATE_WAY = event.cmntWay;
         if (event.cmntWay == R.string.card_cmnt_dt) {
             // 关闭串口，连接电台
             serialPortUtil.closeSerialPort();
@@ -146,7 +149,7 @@ public class BDSService extends Service {
             dtSocket.close();
             serialPortUtil.openSerialPort();
         }
-
+        this.COMMUNICATE_WAY = event.cmntWay;
     }
 
     @NonNull

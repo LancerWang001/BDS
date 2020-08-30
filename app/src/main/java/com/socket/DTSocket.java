@@ -20,6 +20,8 @@ public class DTSocket {
     InputStream inputStream;
     OutputStream outputStream;
 
+    private boolean isOpen;
+
     public void connect() {
 
         new Thread(new Runnable() {
@@ -29,12 +31,13 @@ public class DTSocket {
                     socket = new Socket(DT_HOST, DT_PORT);
                     inputStream = socket.getInputStream();
                     outputStream = socket.getOutputStream();
+                    isOpen = true;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                while (true) {
+                while (isOpen && true) {
                     DTSocket.this.readData();
                 }
 
@@ -73,6 +76,7 @@ public class DTSocket {
             socket.close();
             inputStream.close();
             outputStream.close();
+            isOpen = false;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

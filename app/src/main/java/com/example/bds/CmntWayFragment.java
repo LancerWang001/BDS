@@ -108,6 +108,15 @@ public class CmntWayFragment extends Fragment {
                     case R.id.card_cmnt_dt:
                         cmntWay = R.string.card_cmnt_dt;
                 }
+                RadioGroup radioGroup =getActivity().findViewById(R.id.cmnt_way_rg);
+                RadioButton radioGroupButton = getActivity().findViewById(radioGroup.getCheckedRadioButtonId());
+                String cmtWay = radioGroupButton.getText().toString();
+                Log.d("way" , cmtWay);
+                if(cmtWay.equals("电台通信")){
+                    cmtWay = "DT";
+                }else if(cmtWay.equals("北斗通信")){
+                    cmtWay = "BD";
+                }
                 EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
             }
         });
@@ -120,15 +129,15 @@ public class CmntWayFragment extends Fragment {
         return builder.create();
     }
 
-    private void saveStatus(String cmntWay){
-        //数据状态存储
-        mContextSp = getActivity().getSharedPreferences("testContextSp", Context.MODE_PRIVATE);
-        mActivitySp = getActivity().getPreferences(Context.MODE_PRIVATE);
-        mActivitySp.edit().commit();
-
-        //接收信令存储
-        SharedPreferences.Editor editor = mContextSp.edit();
-        editor.putString("status",cmntWay);
-        editor.commit();
-    }
+//    private void saveStatus(String cmntWay){
+//        //数据状态存储
+//        mContextSp = getActivity().getSharedPreferences("testContextSp", Context.MODE_PRIVATE);
+//        mActivitySp = getActivity().getPreferences(Context.MODE_PRIVATE);
+//        mActivitySp.edit().commit();
+//
+//        //接收信令存储
+//        SharedPreferences.Editor editor = mContextSp.edit();
+//        editor.putString("status",cmntWay);
+//        editor.commit();
+//    }
 }

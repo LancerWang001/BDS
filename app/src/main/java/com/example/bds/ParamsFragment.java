@@ -1,13 +1,17 @@
 package com.example.bds;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.events.MessageEvent;
+import com.example.events.configparams.SendConfigParamsEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,6 +32,10 @@ public class ParamsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private EditText accelerationText;
+    private EditText waterTimeText;
+    private EditText attitudDeterminationTimeText;
 
     public ParamsFragment() {
         // Required empty public constructor
@@ -65,6 +73,29 @@ public class ParamsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_params, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Button paramSetBtn = (Button) getActivity().findViewById(R.id.param_set);
+        if(null != paramSetBtn) Log.d("paramSetBtn:", "initial success!");
+        else Log.d("paramSetBtn:", "initial fail!");
+
+        paramSetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accelerationText = (EditText) getActivity().findViewById(R.id.accespeedRange);
+                String a = String.valueOf(accelerationText.getText());
+                Log.d("a",a);
+                waterTimeText = (EditText) getActivity().findViewById(R.id.outWaterTime);
+                String b = String.valueOf(accelerationText);
+                attitudDeterminationTimeText = (EditText) getActivity().findViewById(R.id.timeInterVal);
+                String c = String.valueOf(attitudDeterminationTimeText);
+                Log.d("========参数设置发送", "accelerationText====" + a + "waterTimeText====" + b + "attitudDeterminationTimeText====" + c);
+                EventBus.getDefault().post(new SendConfigParamsEvent(a, b, c));
+            }
+        });
     }
 
     @Override

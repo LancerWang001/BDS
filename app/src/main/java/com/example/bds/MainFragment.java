@@ -33,6 +33,7 @@ public class MainFragment extends Fragment {
     public static final String status = "a";
 
     TextView t1;
+    TextView locationText;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,12 +98,6 @@ public class MainFragment extends Fragment {
         });
 
         LinearLayout trackMoniBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_position);
-        if(status == "a"){
-            t1 = (TextView)getActivity().findViewById(R.id.title_text);
-            t1.setText("装机前准备111");
-            t1.setTextColor(Color.parseColor("#FFFFFF"));
-            trackMoniBtn.setVisibility(View.GONE);
-        }
         trackMoniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,4 +108,6 @@ public class MainFragment extends Fragment {
             }
         });
     }
+
+
 }

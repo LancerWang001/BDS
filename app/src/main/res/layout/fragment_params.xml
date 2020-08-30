@@ -17,6 +17,7 @@
 
         <TextView
             android:padding="15dip"
+            android:id="@+id/pg"
             android:layout_height="match_parent"
             android:text="@string/param_title"
             android:textFontWeight="1000"
@@ -48,6 +49,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent">
                 <EditText
+                    android:id="@+id/accespeedRange"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
@@ -96,6 +98,7 @@
                 android:layout_height="match_parent"
                 >
                 <EditText
+                    android:id="@+id/outWaterTime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|left"
@@ -145,6 +148,7 @@
                 android:layout_height="match_parent"
                 >
                 <EditText
+                    android:id="@+id/timeInterVal"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|left"
@@ -179,9 +183,10 @@
             android:textSize="70sp"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/param_set"
                 android:text="@string/param_send_config"
                 android:textColor="#fff"
-                android:textSize="35sp"
+                android:textSize="45sp"
                 android:layout_marginTop="15dip"
                 android:layout_marginBottom="15dip"
                 android:background="#5DB851"

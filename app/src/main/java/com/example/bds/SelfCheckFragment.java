@@ -13,8 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.events.selfcheck.RecieveSelfControlEvent;
+import com.example.events.selfcheck.SendSelfControlEvent;
+import com.example.service.BDSService;
 import com.serialport.SerialPortUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +38,8 @@ public class SelfCheckFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private BDSService bdsService;
+    private TextView batteryVoltageText;
 
     public SelfCheckFragment() {
         // Required empty public constructor
@@ -56,10 +66,34 @@ public class SelfCheckFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        // 1 获得通讯方式，控制指示灯的显示
+        bdsService = ((HomeActivity)getActivity()).bdsService;
+        int way  = bdsService.COMMUNICATE_WAY;
+        if(way == R.string.card_cmnt_dt){
+            Log.d("==========","初始化电台指示灯");
+        }else{
+            Log.d("==========","初始化北斗指示灯");
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Button selfCheckButton = getActivity().findViewById(R.id.syscheck);
+        selfCheckButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 系统自检按钮的发送
+                Log.d("=======","Voltage snd");
+                EventBus.getDefault().post(new SendSelfControlEvent());
+            }
+        });
     }
 
     @Override
@@ -72,5 +106,19 @@ public class SelfCheckFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onRecieveSelfControlEvent(RecieveSelfControlEvent event){
+        String batV =  event.batteryVoltage;
+        Log.d("Voltage receive=======", batV);
+       TextView textView = getActivity().findViewById(R.id.vol_result);
+       textView.setText(batV);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

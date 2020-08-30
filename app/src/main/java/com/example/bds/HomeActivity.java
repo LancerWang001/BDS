@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setTabState((RadioButton) v);
 
         // for test service
-        EventBus.getDefault().post(new SendReadCardEvent());
+       // EventBus.getDefault().post(new SendReadCardEvent());
     }
 
     //设置选中和未选择的状态

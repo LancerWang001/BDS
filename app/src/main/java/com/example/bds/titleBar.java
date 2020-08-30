@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.events.ChangeCmntWayEvent;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -55,7 +57,7 @@ public class titleBar extends LinearLayout {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessage(Integer way){
-        textView.setText(way);
+    public void onMessage(ChangeCmntWayEvent way){
+        textView.setText(way.cmntWay);
     }
 }

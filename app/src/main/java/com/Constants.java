@@ -11,9 +11,12 @@ public class Constants {
     public static final int SERIAL_PORT_RATE = 115200;
 
     // Radio wifi
-    public static final String DT_HOST = "192.168.1.123";
+//    public static final String DT_HOST = "192.168.1.123";
+//
+//    public static final int DT_PORT = 10161;
+    public static final String DT_HOST = "192.168.0.108";
 
-    public static final int DT_PORT = 10161;
+    public static final int DT_PORT = 8080;
 
     // System signals
 
