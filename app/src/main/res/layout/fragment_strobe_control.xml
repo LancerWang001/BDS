@@ -71,23 +71,6 @@
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_marginTop="15dip"
-            android:layout_marginBottom="15dip"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:text="@string/param_send_config"
-                android:id="@+id/stromAlarm"
-                android:layout_marginTop="15dip"
-                android:layout_marginBottom="15dip"
-                android:textSize="35sp"
-                android:textColor="#fff"
-                android:background="#5DB851"
-                />
-        </TableRow>
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="20dip"
-            android:layout_marginTop="15dip"
             android:background="#ffcccccc"
             android:orientation="horizontal">
             <TableRow
@@ -108,6 +91,7 @@
                 android:layout_height="match_parent"
                 >
                 <EditText
+                    android:id="@+id/twinkletimes"
                     android:layout_width="wrap_content"
                     android:minWidth="60dip"
                     android:layout_height="match_parent"
@@ -145,6 +129,7 @@
                 android:layout_height="match_parent"
                 >
                 <EditText
+                    android:id="@+id/twinkletimelength"
                     android:layout_width="wrap_content"
                     android:minWidth="60dip"
                     android:layout_height="match_parent"
@@ -183,6 +168,7 @@
                 android:layout_height="match_parent"
                 >
                 <EditText
+                    android:id="@+id/twinkleinterval"
                     android:layout_width="wrap_content"
                     android:minWidth="60dip"
                     android:layout_height="match_parent"
@@ -204,6 +190,7 @@
             android:orientation="horizontal">
             <Button
                 android:text="@string/param_send_config"
+                android:id="@+id/twinklecontrol"
                 android:textColor="#fff"
                 android:textSize="35sp"
                 android:layout_marginTop="15dip"

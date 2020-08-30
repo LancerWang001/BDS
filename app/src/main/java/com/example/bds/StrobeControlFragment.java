@@ -10,10 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.events.MessageEvent;
+import com.example.events.configparams.SendConfigParamsEvent;
+import com.example.events.strobecontrol.SendStrobeControlEvent;
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +64,7 @@ public class StrobeControlFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -80,22 +88,46 @@ public class StrobeControlFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 RadioButton radioButton = getActivity().findViewById(radioGroup.getCheckedRadioButtonId());
                 String alarmText = radioButton.getText().toString();
-                Log.d("alarm" , alarmText);
-                if(alarmText.equals("开启")){
+                Log.d("alarm", alarmText);
+                if (alarmText.equals("开启")) {
                     strobelAlarm = "Y";
-                }else {
+                } else {
                     strobelAlarm = "N";
                 }
             }
         });
 
-        Button button = getActivity().findViewById(R.id.stromAlarm);
-        button.setOnClickListener(new View.OnClickListener() {
+        //Button button = getActivity().findViewById(R.id.stromAlarm);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("频闪警报", strobelAlarm);
+//                EventBus.getDefault().post(strobelAlarm);
+//            }
+//        });
+        Log.d("频闪警报", strobelAlarm);
+        EditText twinkletimes = (EditText) getActivity().findViewById(R.id.twinkletimes);
+        String twinkletimesValue = String.valueOf(twinkletimes);
+        EditText twinkleTimeLength = (EditText) getActivity().findViewById(R.id.twinkletimelength);
+        String twinkleTimeLengthValue = String.valueOf(twinkletimes);
+        EditText twinkleInterVal = (EditText) getActivity().findViewById(R.id.twinkleinterval);
+        String twinkleInterValValue = String.valueOf(twinkletimes);
+
+        Button twinkleBtn = (Button) getActivity().findViewById(R.id.twinklecontrol);
+        if (null != twinkleBtn) Log.d("twinkleBtn:", "initial success!");
+        else Log.d("twinkleBtn:", "initial fail!");
+        twinkleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Log.d("频闪警报",strobelAlarm);
-                EventBus.getDefault().post(strobelAlarm);
+            public void onClick(View view) {
+                Log.d("频闪控制参数发送", "strobelAlarm============" + strobelAlarm+"twinkletimesValue=====" + twinkletimesValue + "twinkleTimeLengthValue=====" + twinkleTimeLengthValue + "twinkleInterValValue=====" + twinkleInterValValue);
+                EventBus.getDefault().post(new SendStrobeControlEvent(strobelAlarm,twinkletimesValue, twinkleTimeLengthValue, twinkleInterValValue));
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        // dispatch data
+        Log.d("Event Bus: ", event.message);
     }
 }

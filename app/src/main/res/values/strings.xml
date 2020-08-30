@@ -17,7 +17,7 @@
     <string name="strobe_control_title">频闪控制</string>
     <string name="strobe_control_warn">频闪警报</string>
     <string name="strobe_flash_times">闪烁次数</string>
-    <string name="strobe_flash_time_length">闪烁时常</string>
+    <string name="strobe_flash_time_length">闪烁时长</string>
     <string name="strobe_flash_break">闪烁间隔</string>
     <string name="strobe_control_on">开启</string>
     <string name="strobe_control_off">关闭</string>

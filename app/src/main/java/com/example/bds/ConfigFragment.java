@@ -107,34 +107,6 @@ public class ConfigFragment extends Fragment {
                     .commit();
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        Button paramSetBtn = (Button) getActivity().findViewById(R.id.param_set);
-//        if(null != paramSetBtn) Log.d("paramSetBtn:", "initial success!");
-//        else Log.d("paramSetBtn:", "initial fail!");
-////        String accelerationText = ((EditText) getActivity().findViewById(R.id.accespeedRange)).getText().toString();
-////        String waterTimeText = ((EditText)getActivity().findViewById(R.id.outWaterTime)).getText().toString();
-////        String attitudDeterminationTimeText = ((EditText)getActivity().findViewById(R.id.timeInterVal)).getText().toString();
-//
-//
-//        paramSetBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                accelerationText = (EditText) getActivity().findViewById(R.id.accespeedRange);
-//                String a = String.valueOf(accelerationText.getText());
-//                Log.d("a",a);
-//                waterTimeText = (EditText) getActivity().findViewById(R.id.outWaterTime);
-//                String b = String.valueOf(accelerationText);
-//                attitudDeterminationTimeText = (EditText) getActivity().findViewById(R.id.timeInterVal);
-//                String c = String.valueOf(attitudDeterminationTimeText);
-//                Log.d("========参数设置发送", "accelerationText====" + a + "waterTimeText====" + b + "attitudDeterminationTimeText====" + c);
-//                EventBus.getDefault().post(new SendConfigParamsEvent(a, b, c));
-//            }
-//        });
-    }
-
     private void bindTransaction(View bindView, Listener listener) {
         if (null != bindView && null != listener)
             bindView.setOnClickListener(listener);
