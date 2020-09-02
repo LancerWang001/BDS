@@ -33,15 +33,14 @@ import static com.example.service.BDTXSignalSvc.handOutSignalEvent;
 import static com.example.tools.SignalTools.calcBDVerifyRes;
 
 public class BDSService extends Service {
-
-    public static SerialPortUtil serialPortUtil;
     private static String TAG = "BDSService";
-    public Context bindContext;
     int mStartMode;
     IBinder mBinder = new BDSBinder();
     boolean mAllowRebind;
     ExecutorService executorService;
-    DTSocket dtSocket;
+    DTSocket dtSocket = new DTSocket();
+
+    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
 
     public SharedPreferences preferences;
 
@@ -69,10 +68,8 @@ public class BDSService extends Service {
         Log.i(TAG, "Service is invoke onBind");
         /* Handle BD / WIFI service here */
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
-            dtSocket = new DTSocket();
             dtSocket.connect();
         } else if (COMMUNICATE_WAY == R.string.card_cmnt_bd) {
-            serialPortUtil = new SerialPortUtil();
             serialPortUtil.openSerialPort();
         }
         return mBinder;

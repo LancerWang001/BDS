@@ -14,7 +14,7 @@ public class Constants {
 //    public static final String DT_HOST = "192.168.1.123";
 //
 //    public static final int DT_PORT = 10161;
-    public static final String DT_HOST = "192.168.0.108";
+    public static final String DT_HOST = "192.168.0.105";
 
     public static final int DT_PORT = 8080;
 

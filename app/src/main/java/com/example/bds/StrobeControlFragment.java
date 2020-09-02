@@ -107,11 +107,11 @@ public class StrobeControlFragment extends Fragment {
 //        });
         Log.d("频闪警报", strobelAlarm);
         EditText twinkletimes = (EditText) getActivity().findViewById(R.id.twinkletimes);
-        String twinkletimesValue = String.valueOf(twinkletimes);
+        String twinkletimesValue = String.valueOf(twinkletimes.getText());
         EditText twinkleTimeLength = (EditText) getActivity().findViewById(R.id.twinkletimelength);
-        String twinkleTimeLengthValue = String.valueOf(twinkletimes);
+        String twinkleTimeLengthValue = String.valueOf(twinkletimes.getText());
         EditText twinkleInterVal = (EditText) getActivity().findViewById(R.id.twinkleinterval);
-        String twinkleInterValValue = String.valueOf(twinkletimes);
+        String twinkleInterValValue = String.valueOf(twinkletimes.getText());
 
         Button twinkleBtn = (Button) getActivity().findViewById(R.id.twinklecontrol);
         if (null != twinkleBtn) Log.d("twinkleBtn:", "initial success!");

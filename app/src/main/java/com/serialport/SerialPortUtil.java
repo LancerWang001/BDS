@@ -23,7 +23,7 @@ public class SerialPortUtil {
      * 打开串口，接收数据
      * 通过串口，接收单片机发送来的数据
      */
-    public void openSerialPort() throws RuntimeException {
+    public void openSerialPort() {
         try {
             // Add params here
             serialPort = new SerialPort(new File(Constants.SERIAL_PORT_ADDR), Constants.SERIAL_PORT_RATE, 0);
@@ -46,7 +46,7 @@ public class SerialPortUtil {
      * 关闭串口
      * 关闭串口中的输入输出流
      */
-    public void closeSerialPort() throws RuntimeException {
+    public void closeSerialPort() {
         Log.i("test", "关闭串口");
         try {
             if (inputStream != null) {
@@ -56,7 +56,9 @@ public class SerialPortUtil {
                 outputStream.close();
             }
             isStart = false;
-            serialPort.close();
+            if (null != serialPort) {
+                serialPort.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +70,7 @@ public class SerialPortUtil {
      *
      * @param data 要发送的数据
      */
-    public void sendSerialPort(String data) throws RuntimeException {
+    public void sendSerialPort(String data) {
         try {
             String fullData = data + "\r\n";
             byte[] sendData = fullData.getBytes();
@@ -96,7 +98,7 @@ public class SerialPortUtil {
 
     private class ReceiveThread extends Thread {
         @Override
-        public void run() throws RuntimeException {
+        public void run() {
             super.run();
             Log.d("Receive ", "Tread start !!");
             while (isStart) {

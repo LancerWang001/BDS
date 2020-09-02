@@ -89,9 +89,9 @@ public class ParamsFragment extends Fragment {
                 String a = String.valueOf(accelerationText.getText());
                 Log.d("a",a);
                 waterTimeText = (EditText) getActivity().findViewById(R.id.outWaterTime);
-                String b = String.valueOf(accelerationText);
+                String b = String.valueOf(accelerationText.getText());
                 attitudDeterminationTimeText = (EditText) getActivity().findViewById(R.id.timeInterVal);
-                String c = String.valueOf(attitudDeterminationTimeText);
+                String c = String.valueOf(attitudDeterminationTimeText.getText());
                 Log.d("========参数设置发送", "accelerationText====" + a + "waterTimeText====" + b + "attitudDeterminationTimeText====" + c);
                 EventBus.getDefault().post(new SendConfigParamsEvent(a, b, c));
             }

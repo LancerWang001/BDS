@@ -1,6 +1,7 @@
 package com.example.bds;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.events.uppercontrol.SendUpperControlEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MainFragment#newInstance} factory method to
@@ -34,6 +41,7 @@ public class MainFragment extends Fragment {
 
     TextView t1;
     TextView locationText;
+    SharedPreferences context;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,10 +69,10 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -85,6 +93,7 @@ public class MainFragment extends Fragment {
         CardView cardView = (CardView)getActivity().findViewById(R.id.fragmentcard);
         cardView.setCardBackgroundColor(getResources().getColor(R.color.bkground));
         LinearLayout selfBtn = (LinearLayout)getActivity().findViewById(R.id.card_main_selfcheck);
+
         selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,9 +114,31 @@ public class MainFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.fragment, new TrackMonitorFragment())
                         .commit();
+                //取变量
+              HomeActivity activity = (HomeActivity)getActivity();
+              int way = activity.bdsService.COMMUNICATE_WAY;
+              String dt;
+              String bd;
+              if (R.string.card_cmnt_dt == way){
+                  dt = "Y";
+              }else{
+                  dt = "N";
+              }
+              if(R.id.card_cmnt_bd == way){
+                  bd = "Y";
+              }else{
+                  bd = "N";
+              }
+              Log.d("dt=====" ,dt +" bd=======" + bd);
+              Log.d("way=====" , String.valueOf(way));
+              EventBus.getDefault().post(new SendUpperControlEvent(bd,"60",dt,"2"));
             }
         });
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessage(String mess) {
+
+    }
 }

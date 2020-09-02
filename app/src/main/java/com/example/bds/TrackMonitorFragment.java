@@ -3,9 +3,16 @@ package com.example.bds;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.events.uppercontrol.RecieveUpperControlEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +55,7 @@ public class TrackMonitorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -66,5 +74,13 @@ public class TrackMonitorFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         HomeActivity home = (HomeActivity) getActivity();
         home.bdsService.startLocationService(home);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessage(RecieveUpperControlEvent mess) {
+        Log.d("onMessage1: ",mess.latitude);
+        Log.d("onMessage2: ",mess.latitudeHem);
+        Log.d("onMessage3: ",mess.longitude);
+        Log.d("onMessage4: ",mess.longitudeHem);
     }
 }
