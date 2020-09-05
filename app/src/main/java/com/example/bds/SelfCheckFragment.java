@@ -110,6 +110,7 @@ public class SelfCheckFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onRecieveSelfControlEvent(RecieveSelfControlEvent event){
+        Log.d("SelfControl=======",event.toString());
         String batV =  event.batteryVoltage;
         Log.d("Voltage receive=======", batV);
        TextView textView = getActivity().findViewById(R.id.vol_result);

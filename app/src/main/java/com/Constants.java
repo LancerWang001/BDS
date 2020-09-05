@@ -11,12 +11,12 @@ public class Constants {
     public static final int SERIAL_PORT_RATE = 115200;
 
     // Radio wifi
-//    public static final String DT_HOST = "192.168.1.123";
-//
-//    public static final int DT_PORT = 10161;
-    public static final String DT_HOST = "192.168.0.105";
+    public static final String DT_HOST = "192.168.1.123";
 
-    public static final int DT_PORT = 8080;
+    public static final int DT_PORT = 10161;
+//    public static final String DT_HOST = "192.168.0.105";
+//
+//    public static final int DT_PORT = 8080;
 
     // System signals
 
@@ -45,7 +45,8 @@ public class Constants {
     public static final String SIGNAL_STROBE_CONTROL = "7E3108%s%s%s%s";
 
     // 系统自检结果
-    public static final String SIGNAL_SELF_CHECK_RGEX = "7E4108000000(.{2}).*";
+//    public static final String SIGNAL_SELF_CHECK_RGEX = "7E41080000(.{2}).*";
+      public static final String SIGNAL_SELF_CHECK_RGEX = "7E41080000(.{2}).*";
 
     // 上报数据（下位机发送到上位机）
     public static final String SIGNAL_UPPER_DATA = "7E4019.{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
