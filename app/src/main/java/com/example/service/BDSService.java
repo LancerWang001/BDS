@@ -101,26 +101,22 @@ public class BDSService extends Service {
     // 订阅发送信令事件，进行发送
     @Subscribe()
     public void onSendConfigParamsEvent(SendConfigParamsEvent signalEvent) {
-        String bdtxaSignal = getBDTXA(signalEvent.signal);
-        sendService(bdtxaSignal);
+        sendShortMessage(signalEvent.signal);
     }
 
     @Subscribe()
     public void onSendSelfControlEvent(SendSelfControlEvent signalEvent) {
-        String bdtxaSignal = getBDTXA(signalEvent.signal);
-        sendService(bdtxaSignal);
+        sendShortMessage(signalEvent.signal);
     }
 
     @Subscribe()
     public void onSendStrobeControlEvent(SendStrobeControlEvent signalEvent) {
-        String bdtxaSignal = getBDTXA(signalEvent.signal);
-        sendService(bdtxaSignal);
+        sendShortMessage(signalEvent.signal);
     }
 
     @Subscribe()
     public void onSendUpperControlEvent(SendUpperControlEvent signalEvent) {
-        String bdtxaSignal = getBDTXA(signalEvent.signal);
-        sendService(bdtxaSignal);
+        sendShortMessage(signalEvent.signal);
     }
 
     @Subscribe()
@@ -131,8 +127,21 @@ public class BDSService extends Service {
     // 订阅接收信令事件，进行分发
     @Subscribe()
     public void onMessageEvent(MessageEvent messageEvent) {
-        String signal = getBDTXR(messageEvent.message);
-        handOutSignalEvent(signal);
+        if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
+            handOutSignalEvent(messageEvent.message);
+        } else {
+            String signal = getBDTXR(messageEvent.message);
+            handOutSignalEvent(signal);
+        }
+    }
+
+    private void sendShortMessage (String signal) {
+        if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
+            sendService(signal);
+        } else {
+            String bdtxaSignal = getBDTXA(signal);
+            sendService(bdtxaSignal);
+        }
     }
 
     @Subscribe()

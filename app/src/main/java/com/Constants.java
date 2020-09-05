@@ -33,23 +33,22 @@ public class Constants {
     public static final String SIGNAL_REJECT = "00";
 
     // 上报控制
-    public static final String SIGNAL_UPPER_CONTROL = "7E3208%s%s%s%s";
+    public static final String SIGNAL_UPPER_CONTROL = "6E3208%s%s%s%s";
 
     // 参数配置
-    public static final String SIGNAL_CONFIG_PARAMS = "7E3007%s%s%s";
+    public static final String SIGNAL_CONFIG_PARAMS = "6E3007%s%s%s";
 
     // 系统自检
-    public static final String SIGNAL_SELF_CHECK = "7E330800000000";
+    public static final String SIGNAL_SELF_CHECK = "6E330800000000";
 
     // 频闪控制
-    public static final String SIGNAL_STROBE_CONTROL = "7E3108%s%s%s%s";
+    public static final String SIGNAL_STROBE_CONTROL = "6E3108%s%s%s%s";
 
     // 系统自检结果
-//    public static final String SIGNAL_SELF_CHECK_RGEX = "7E41080000(.{2}).*";
-      public static final String SIGNAL_SELF_CHECK_RGEX = "7E41080000(.{2}).*";
+    public static final String SIGNAL_SELF_CHECK_RGEX = "6E4108(.{2})0000(.{2}).*";
 
     // 上报数据（下位机发送到上位机）
-    public static final String SIGNAL_UPPER_DATA = "7E4019.{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
+    public static final String SIGNAL_UPPER_DATA = "6E4019(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
 
     /* 北斗协议 */
 

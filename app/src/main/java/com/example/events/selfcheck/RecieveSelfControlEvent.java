@@ -12,14 +12,18 @@ public class RecieveSelfControlEvent {
 
     public String batteryVoltage;
 
+    public String targetCardId;
+
     public RecieveSelfControlEvent(String data) {
         Pattern pattern = Pattern.compile(SIGNAL_SELF_CHECK_RGEX);
         Matcher matcher = pattern.matcher(data);
         boolean isFind = matcher.find();
-        String voltage = matcher.group(1);
-        if (isFind && !"".equals(voltage)) {
+        String cardId = matcher.group(1);
+        String voltage = matcher.group(2);
+        if (isFind && !"".equals(cardId) && !"".equals(voltage)) {
             Log.d("voltage", voltage);
             batteryVoltage = haxToInt(voltage);
+            targetCardId = haxToInt(cardId);
         }
     }
 }
