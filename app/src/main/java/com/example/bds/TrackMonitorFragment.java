@@ -78,9 +78,9 @@ public class TrackMonitorFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessage(RecieveUpperControlEvent mess) {
-        Log.d("onMessage1: ",mess.latitude);
-        Log.d("onMessage2: ",mess.latitudeHem);
-        Log.d("onMessage3: ",mess.longitude);
-        Log.d("onMessage4: ",mess.longitudeHem);
+        Log.d("onMessage1: ", Double.toString(mess.latitude));
+        Log.d("onMessage2: ", mess.latitudeHem);
+        Log.d("onMessage3: ", Double.toString(mess.longitude));
+        Log.d("onMessage4: ", mess.longitudeHem);
     }
 }

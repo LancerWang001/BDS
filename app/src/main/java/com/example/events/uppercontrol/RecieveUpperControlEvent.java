@@ -8,9 +8,9 @@ import static com.example.tools.SignalTools.haxToInt;
 
 public class RecieveUpperControlEvent {
 
-    public String latitude;
+    public double latitude;
 
-    public String longitude;
+    public double longitude;
 
     public String latitudeHem;
 
@@ -40,6 +40,9 @@ public class RecieveUpperControlEvent {
             latitudeHem = lahem;
             longitudeHem = lohem;
             StringBuilder laBf = new StringBuilder();
+            if (latitudeHem.equals("S")) {
+                laBf.append("-");
+            }
             laBf.append(haxToInt(ladd));
             laBf.append(haxToInt(lamm1));
             laBf.append(".");
@@ -47,9 +50,10 @@ public class RecieveUpperControlEvent {
             laBf.append(haxToInt(lamm3));
             laBf.append(haxToInt(lamm4));
             laBf.append(haxToInt(lamm5));
-            latitude = laBf.toString();
+            latitude = Double.parseDouble(laBf.toString());
 
             StringBuilder loBf = new StringBuilder();
+            if (longitudeHem.equals("W"))
             loBf.append(haxToInt(loddd));
             loBf.append(haxToInt(lomm1));
             loBf.append(".");
@@ -57,7 +61,7 @@ public class RecieveUpperControlEvent {
             loBf.append(haxToInt(lomm3));
             loBf.append(haxToInt(lomm4));
             loBf.append(haxToInt(lomm5));
-            longitude = loBf.toString();
+            longitude = Double.parseDouble(loBf.toString());
         }
     }
 }
