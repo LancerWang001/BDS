@@ -16,10 +16,12 @@ public class RecieveUpperControlEvent {
 
     public String longitudeHem;
 
+    public String targetCardId;
+
     public RecieveUpperControlEvent(String data) {
         Pattern pattern = Pattern.compile(SIGNAL_UPPER_DATA);
         Matcher matcher = pattern.matcher(data);
-        String targetCardId  = matcher.group(1);
+        targetCardId  = matcher.group(1);
 
         String ladd = matcher.group(2);
         String lamm1 = matcher.group(3);

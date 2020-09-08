@@ -10,10 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import static com.Constants.*;
+import static com.Constants.DT_HOST;
+import static com.Constants.DT_PORT;
 
 public class DTSocket {
     Socket socket;
@@ -73,9 +72,15 @@ public class DTSocket {
 
     public void close() {
         try {
-            socket.close();
-            inputStream.close();
-            outputStream.close();
+            if (null != socket) {
+                socket.close();
+            }
+            if (null != inputStream) {
+                inputStream.close();
+            }
+            if (null != outputStream) {
+                outputStream.close();
+            }
             isOpen = false;
         } catch (IOException e) {
             e.printStackTrace();
