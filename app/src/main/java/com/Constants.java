@@ -48,8 +48,8 @@ public class Constants {
     public static final String SIGNAL_SELF_CHECK_RGEX = "6E4108(.{2})0000(.{2}).*";
 
     // 上报数据（下位机发送到上位机）
-    public static final String SIGNAL_UPPER_DATA = "6E4019(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
-
+    // public static final String SIGNAL_UPPER_DATA = "6E4019(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
+    public static final String SIGNAL_UPPER_DATA = "6E401A(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
     /* 北斗协议 */
 
     // 发送读取卡号
