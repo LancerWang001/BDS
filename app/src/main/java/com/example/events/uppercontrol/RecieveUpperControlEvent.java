@@ -53,7 +53,9 @@ public class RecieveUpperControlEvent {
             latitude = Double.parseDouble(laBf.toString());
 
             StringBuilder loBf = new StringBuilder();
-            if (longitudeHem.equals("W"))
+            if (longitudeHem.equals("W")) {
+                loBf.append("-");
+            }
             loBf.append(haxToInt(loddd));
             loBf.append(haxToInt(lomm1));
             loBf.append(".");
