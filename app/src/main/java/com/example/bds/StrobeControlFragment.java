@@ -19,7 +19,6 @@ import android.widget.RadioGroup;
 import com.example.events.MessageEvent;
 import com.example.events.configparams.SendConfigParamsEvent;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
-import com.utils.NumRangeInputFilter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,60 +7,60 @@
     tools:context=".MainFragment">
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
         android:id="@+id/fragmentcard"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bkground"
+        android:layout_gravity="center_vertical"
         android:layout_marginTop="50dp"
-        android:layout_gravity="center_vertical">
+        android:background="@color/background">
 
         <LinearLayout
             android:layout_width="350dp"
-            android:clickable="true"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:background="#919191"
-            android:layout_height="200dp">
+            android:background="@color/cardview_dark_background"
+            android:clickable="true">
+
             <LinearLayout
+                android:id="@+id/card_main_selfcheck"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/card_main_selfcheck"
-                android:gravity="center_vertical|center"
-                >
+                android:gravity="center_vertical|center">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:padding="5dp"
                     android:text="装机前准备 "
                     android:textSize="30sp"
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold" />
+                    android:textColor="@color/lightText" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="350dp"
-            android:descendantFocusability="blocksDescendants"
-            android:layout_marginTop="250dp"
-            android:clickable="true"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:background="#919191"
-            android:layout_height="200dp">
+            android:layout_marginTop="250dp"
+            android:background="@color/cardview_dark_background"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants">
 
             <LinearLayout
+                android:id="@+id/card_main_position"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/card_main_position"
-                android:gravity="center_vertical|center"
-                >
+                android:gravity="center_vertical|center">
 
-                    <TextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:gravity="center_vertical|center"
+                    android:padding="5dp"
                     android:text="@string/card_main_position"
                     android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/lightText" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -18,11 +18,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.events.BDError;
-import com.example.events.readcard.SendReadCardEvent;
 import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,11 +29,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    /* communicate way : BD / WIFI */
-    public static int COMMUNICATE_WAY = R.string.card_cmnt_bd;
     private static String TAG = "HomeActivity";
     /* Data service */
-    BDSService bdsService;
+    public BDSService bdsService;
     ServiceConnection conn = new AppServiceConnection();
     private RadioGroup mRadioGroup;
     private FragmentManager fm;
@@ -71,7 +67,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         rb_help = (RadioButton) findViewById(R.id.rb_help);
         rb_main = (RadioButton) findViewById(R.id.card_mainpage);
 
-        ((TextView) findViewById(R.id.title_text)).setText("主页");
+        // init main radio as checked
+        rb_main.setTextColor(getResources().getColor(R.color.colorChecked));
+
         rb_set.setOnClickListener(this);
         rb_support.setOnClickListener(this);
         rb_help.setOnClickListener(this);
@@ -108,15 +106,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
         setTabState((RadioButton) v);
-
-        // for test service
-       // EventBus.getDefault().post(new SendReadCardEvent());
     }
 
     //设置选中和未选择的状态
     private void setTabState(RadioButton btn) {
         for (RadioButton child : btns) {
-            int color = R.color.colorunChecked;
+            int color = R.color.colorUnChecked;
             if (btn.getId() == child.getId()) {
                 color = R.color.colorChecked;
             }
@@ -135,6 +130,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         unbindService(conn);
         EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(findViewById(R.id.titlebar));
     }
 
     @Override
@@ -145,7 +141,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onError(BDError error) {
         // handle BD error
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -161,7 +157,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             bdsService = binder.getService();
             bdsService.preferences = HomeActivity.this.getSharedPreferences("BDPreferences", MODE_PRIVATE);
         }
-
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             bdsService = null;

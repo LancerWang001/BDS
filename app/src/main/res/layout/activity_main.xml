@@ -16,7 +16,7 @@
         android:clickable="true"
         app:cardElevation="50dp"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/bkground"
+        app:cardBackgroundColor="@color/background"
         app:cardCornerRadius="20dp"
         >
 
@@ -84,7 +84,6 @@
                 android:layout_marginTop="50dp"
                 android:text="登录"
                 android:textColor="#ffffff"
-                android:shadowRadius="20dp"
                 android:textSize="55dp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>

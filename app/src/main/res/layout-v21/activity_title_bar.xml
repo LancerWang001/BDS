@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/cardview_dark_background"
-    android:clickable="true"
-    android:focusable="true">
+    android:clickable="true">
 
     <Button
         android:id="@+id/title_back"
@@ -12,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dip"
+        android:backgroundTint="@color/cardview_dark_background"
         android:textColor="@color/lightText"
         android:text="返回"/>
 
@@ -22,7 +22,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/lightText"
+        android:textColor="#fff"
         android:textSize="22sp" />
 
     <Button
@@ -31,8 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dip"
+        android:backgroundTint="@color/cardview_dark_background"
         android:textColor="@color/lightText"
         android:text="退出"/>
-
 
 </LinearLayout>

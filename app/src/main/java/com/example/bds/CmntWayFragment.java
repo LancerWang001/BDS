@@ -1,7 +1,6 @@
 package com.example.bds;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.example.events.ChangeCmntWayEvent;
 
@@ -31,16 +29,13 @@ public class CmntWayFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static String cmtWay = "";
-
+    SharedPreferences mContextSp;
+    SharedPreferences mActivitySp;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private AlertDialog dialog;
     private int checkedId;
-
-    SharedPreferences mContextSp;
-    SharedPreferences mActivitySp;
 
     public CmntWayFragment() {
         // Required empty public constructor
@@ -87,14 +82,14 @@ public class CmntWayFragment extends Fragment {
         getActivity().findViewById(R.id.send_cmntway).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RadioGroup rg = (RadioGroup)getActivity().findViewById(R.id.cmnt_way_rg);
+                RadioGroup rg = (RadioGroup) getActivity().findViewById(R.id.cmnt_way_rg);
                 CmntWayFragment.this.checkedId = rg.getCheckedRadioButtonId();
                 CmntWayFragment.this.dialog.show();
             }
         });
     }
 
-    private AlertDialog createDialog () {
+    private AlertDialog createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.card_dialog_alert);
         builder.setPositiveButton(R.string.card_dialog_alert_Y, new DialogInterface.OnClickListener() {
@@ -108,16 +103,18 @@ public class CmntWayFragment extends Fragment {
                     case R.id.card_cmnt_dt:
                         cmntWay = R.string.card_cmnt_dt;
                 }
-                RadioGroup radioGroup =getActivity().findViewById(R.id.cmnt_way_rg);
+                RadioGroup radioGroup = getActivity().findViewById(R.id.cmnt_way_rg);
                 RadioButton radioGroupButton = getActivity().findViewById(radioGroup.getCheckedRadioButtonId());
                 String cmtWay = radioGroupButton.getText().toString();
-                Log.d("way" , cmtWay);
-                if(cmtWay.equals("电台通信")){
+                Log.d("way", cmtWay);
+                if (cmtWay.equals("电台通信")) {
                     cmtWay = "DT";
-                }else if(cmtWay.equals("北斗通信")){
+                } else if (cmtWay.equals("北斗通信")) {
                     cmtWay = "BD";
                 }
-                EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
+                if (((HomeActivity) getActivity()).bdsService.COMMUNICATE_WAY != cmntWay) {
+                    EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
+                }
             }
         });
         builder.setNegativeButton(R.string.card_dialog_alert_N, new DialogInterface.OnClickListener() {
@@ -128,16 +125,4 @@ public class CmntWayFragment extends Fragment {
         });
         return builder.create();
     }
-
-//    private void saveStatus(String cmntWay){
-//        //数据状态存储
-//        mContextSp = getActivity().getSharedPreferences("testContextSp", Context.MODE_PRIVATE);
-//        mActivitySp = getActivity().getPreferences(Context.MODE_PRIVATE);
-//        mActivitySp.edit().commit();
-//
-//        //接收信令存储
-//        SharedPreferences.Editor editor = mContextSp.edit();
-//        editor.putString("status",cmntWay);
-//        editor.commit();
-//    }
 }

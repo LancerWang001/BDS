@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
     android:label="@string/param_content3"
-    android:background="@color/bkground"
+    android:background="@color/background"
     tools:context=".HomeActivity">
     <TableLayout
         android:id="@+id/cmnt_way_syb"
@@ -22,7 +23,6 @@
                 android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/cmnt_way"
-                android:text="电台通信"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
@@ -42,25 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/ll_main_radio"/>
-<!--        android:background="@color/main_rb_bg"/>-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        >
-        <com.example.bds.titleBar
-            android:id="@+id/titlebar"
-            android:background="#DCDCDC"
-            app:right_icon="@drawable/bk"
-            app:right_text="更多"
-            app:titlebar_type="11"
-            app:left_icon="@drawable/bk"
-            app:title="标题标题"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-        </com.example.bds.titleBar>
-    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_main_radio"
         android:layout_width="match_parent"
@@ -109,8 +91,8 @@
 
 
     </LinearLayout>
-    <com.example.bds.titleBar
+    <com.example.bds.TitleBar
+        android:id="@+id/titlebar"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        />
+        android:layout_width="match_parent"/>
 </RelativeLayout>

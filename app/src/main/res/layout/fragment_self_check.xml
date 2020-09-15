@@ -1,210 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TrackMonitorFragment">
 
-
     <!--上半部分-->
-    <RelativeLayout
+    <com.example.bds.CmntStatus
+        android:id="@+id/relativeLayoutTop"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayoutTop">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="#cccccc">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:gravity="center_horizontal" />
-        </LinearLayout>
-        <TableLayout
-            android:id="@+id/selfcheck_table_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp">
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="20dip"
-                android:layout_margin="0.5dip"
-                android:background="#ffcccccc"
-                android:orientation="horizontal">
-                <TableRow
-                    android:layout_weight=".7"
-                    android:layout_height="60dp"
-                    >
-                    <TextView
-                        android:textColor="#000"
-                        android:gravity="right"
-                        android:layout_marginTop="35dp"
-                        android:textSize="20sp"
-                        android:text="北斗状态"
-                        />
-                </TableRow>
-                <TableRow>
-                    <com.example.bds.RestClcle
-                        android:layout_marginTop="25dp"
-                        android:layout_width="50sp"
-                        android:layout_height="50sp" />
-                </TableRow>
-                <TableRow
-                    android:layout_weight=".7"
-                    android:layout_height="60dp"
-                    >
-                    <TextView
-                        android:textColor="#000"
-                        android:gravity="right"
-                        android:layout_marginTop="35dp"
-                        android:textSize="20sp"
-                        android:text="电台状态"
-                        />
-                </TableRow>
-                <TableRow>
-                    <com.example.bds.WorkingCicle
-                        android:layout_marginTop="25dp"
-                        android:layout_width="50sp"
-                        android:layout_height="50sp" />
-                </TableRow>
-            </TableRow>
-        </TableLayout>
-    </RelativeLayout>
-<!--    &lt;!&ndash;下半部分&ndash;&gt;-->
-<!--    <RelativeLayout-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:id="@+id/relativeLayoutBottom">-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
-<!--            <Button-->
-<!--                android:id="@+id/bt_fcontact"-->
-<!--                android:layout_height="fill_parent"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textColor="#FFFFFF"-->
-<!--                android:background="#5DB851"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                android:text="退出"/>-->
-<!--        </LinearLayout>-->
-<!--    </RelativeLayout>-->
+        android:layout_height="80dp"
+        />
     <!--中间部分-->
     <RelativeLayout
+        android:id="@+id/relativeLayoutCenter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayoutTop"
-        android:id="@+id/relativeLayoutCenter"
-        android:layout_above="@id/relativeLayoutBottom"
         tools:ignore="NotSibling">
+
         <TableLayout
             android:id="@+id/selfcheck_table"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp">
+            android:orientation="vertical">
 
             <TextView
-                android:padding="15dip"
                 android:layout_height="match_parent"
-                android:text="系统自检"
-                android:textFontWeight="1000"
-                android:textSize="20sp"
                 android:gravity="left"
+                android:padding="15dip"
+                android:text="系统自检"
                 android:textColor="#000"
-                />
+                android:textFontWeight="1000"
+                android:textSize="20sp" />
+
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="20dip"
                 android:layout_margin="0.5dip"
                 android:background="#ffcccccc"
                 android:orientation="horizontal">
+
                 <TableRow
-                    android:layout_weight=".7"
                     android:layout_height="60dp"
-                    >
+                    android:layout_weight=".7">
+
                     <TextView
-                        android:padding="15dip"
-                        android:textColor="#000"
-                        android:gravity="left"
-                        android:textSize="20sp"
                         android:layout_height="match_parent"
+                        android:gravity="left"
+                        android:padding="15dip"
                         android:text="电源检查"
-                        />
+                        android:textColor="#000"
+                        android:textSize="20sp" />
                 </TableRow>
+
                 <TableRow>
+
                     <Button
                         android:id="@+id/syscheck"
-                        android:layout_marginTop="5dp"
-                        android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:textColor="#000"
                         android:background="#5DB851"
                         android:gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="开始"/>
+                        android:text="开始"
+                        android:textColor="#000" />
                 </TableRow>
             </TableRow>
+
             <TableRow
-                android:layout_weight=".7"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight=".7">
+
                 <TextView
-                    android:padding="15dip"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
                     android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:padding="15dip"
                     android:text="系统自检结果："
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_weight=".7"
-                android:layout_height="match_parent"
-                >
-                <TextView
-                    android:padding="15dip"
-                    android:id="@+id/vol_result"
-                    android:textColor="#ff0033"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-                    android:layout_height="match_parent"
-                    android:text=""
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_weight=".7"
-                android:layout_height="match_parent"
-                >
-                <TextView
-                    android:padding="15dip"
                     android:textColor="#000"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:id="@+id/vol_result"
                     android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:padding="15dip"
+                    android:text=""
+                    android:textColor="#ff0033"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:padding="15dip"
                     android:text="进度显示:"
-                    />
+                    android:textColor="#000"
+                    android:textSize="20sp" />
             </TableRow>
         </TableLayout>
     </RelativeLayout>
