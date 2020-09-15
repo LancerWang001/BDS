@@ -1,5 +1,6 @@
 package com.example.bds;
 
+import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -11,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.events.MessageEvent;
 import com.example.events.configparams.SendConfigParamsEvent;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
+import com.utils.NumRangeInputFilter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +36,7 @@ public class StrobeControlFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static String strobelAlarm = "";
+    private static String strobelAlarm = "Y";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -108,10 +111,13 @@ public class StrobeControlFragment extends Fragment {
         Log.d("频闪警报", strobelAlarm);
         EditText twinkletimes = (EditText) getActivity().findViewById(R.id.twinkletimes);
         String twinkletimesValue = String.valueOf(twinkletimes.getText());
+//        if(Double.parseDouble(twinkletimesValue)>200){
+//            VoiceInteractor.Prompt.showTips(context, "输入的最大金额不能大于MAX_VALUE");
+//        }
         EditText twinkleTimeLength = (EditText) getActivity().findViewById(R.id.twinkletimelength);
-        String twinkleTimeLengthValue = String.valueOf(twinkletimes.getText());
+        String twinkleTimeLengthValue = String.valueOf(twinkleTimeLength.getText());
         EditText twinkleInterVal = (EditText) getActivity().findViewById(R.id.twinkleinterval);
-        String twinkleInterValValue = String.valueOf(twinkletimes.getText());
+        String twinkleInterValValue = String.valueOf(twinkleInterVal.getText());
 
         Button twinkleBtn = (Button) getActivity().findViewById(R.id.twinklecontrol);
         if (null != twinkleBtn) Log.d("twinkleBtn:", "initial success!");

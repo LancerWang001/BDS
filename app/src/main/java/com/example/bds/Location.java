@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.events.LocationEvent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -28,6 +29,7 @@ public class Location extends View {
    }
     public Location(Context context, AttributeSet attrs) {
         super(context, attrs);
+        EventBus.getDefault().register(this);
         paint = new Paint();
         paint.setColor(Color.GREEN);
     }
@@ -92,6 +94,6 @@ public class Location extends View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(LocationEvent event) {
-        // dispatch data
+        Log.d("GPD destination" , Double.toString(event.message[0]));
     }
 }
