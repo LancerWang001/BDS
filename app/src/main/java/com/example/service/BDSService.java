@@ -16,6 +16,7 @@ import com.example.events.configparams.SendConfigParamsEvent;
 import com.example.events.readcard.SendReadCardEvent;
 import com.example.events.selfcheck.SendSelfControlEvent;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
+import com.example.events.systemsleep.SendSystemSleep;
 import com.example.events.uppercontrol.SendUpperControlEvent;
 import com.location.LocationService;
 import com.serialport.SerialPortUtil;
@@ -23,6 +24,7 @@ import com.socket.DTSocket;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,7 +50,7 @@ public class BDSService extends Service {
     public int COMMUNICATE_WAY = R.string.card_cmnt_dt;
 
     //北斗
-    //public int COMMUNICATE_WAY = R.string.card_cmnt_bd;
+//    public int COMMUNICATE_WAY = R.string.card_cmnt_bd;
 
     private String emissionStatus = "0";
 
@@ -121,11 +123,16 @@ public class BDSService extends Service {
 
     @Subscribe()
     public void onSendReadCardEvent(SendReadCardEvent event) {
-        sendService(calcBDVerifyRes(event.signal));
+        sendShortMessage(calcBDVerifyRes(event.signal));
+    }
+
+    @Subscribe()
+    public void onSendSystemSleepEvent(SendSystemSleep event){
+        sendShortMessage(event.signal);
     }
 
     // 订阅接收信令事件，进行分发
-    @Subscribe()
+    @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onMessageEvent(MessageEvent messageEvent) {
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             handOutSignalEvent(messageEvent.message);

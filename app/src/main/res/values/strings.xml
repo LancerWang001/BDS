@@ -24,6 +24,7 @@
     <string name="param_send_config">发送</string>
     <string name="card_main_selfcheck">系统自检</string>
     <string name="card_main_position">追踪监测</string>
+    <string name="cmnt_way">通信方式</string>
     <string name="card_cmnt_bd">北斗通信</string>
     <string name="card_cmnt_dt">电台通信</string>
     <string name="card_dialog_alert">是否确认修改通信方式</string>

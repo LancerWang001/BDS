@@ -14,9 +14,6 @@ public class Constants {
     public static final String DT_HOST = "192.168.1.123";
 
     public static final int DT_PORT = 10161;
-//    public static final String DT_HOST = "192.168.0.105";
-//
-//    public static final int DT_PORT = 8080;
 
     // System signals
 
@@ -47,8 +44,10 @@ public class Constants {
     // 系统自检结果
     public static final String SIGNAL_SELF_CHECK_RGEX = "6E4108(.{2})0000(.{2}).*";
 
+    //系统休眠
+    public static final String SIGNAL_BD_SYS_SLEEP = "6E3407%s0000";
+
     // 上报数据（下位机发送到上位机）
-    // public static final String SIGNAL_UPPER_DATA = "6E4019(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
     public static final String SIGNAL_UPPER_DATA = "6E401A(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
     /* 北斗协议 */
 

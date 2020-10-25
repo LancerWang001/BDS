@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.events.BDError;
+import com.example.events.readcard.SendReadCardEvent;
 import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;

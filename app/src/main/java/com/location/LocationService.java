@@ -18,7 +18,7 @@ public class LocationService {
 
     int minBreak = 2000;
 
-    int minDistant = 2;
+    int minDistant = 10;
 
     LocationManager locationManager;
 
@@ -46,17 +46,14 @@ public class LocationService {
                     Manifest.permission.READ_PHONE_STATE}, 100);
             return;
         }
-        String provider = locationManager.getBestProvider(criteria, true);
-        Location location = locationManager.getLastKnownLocation(provider);
-        Log.d(TAG, provider);
-        locationManager.requestLocationUpdates(provider, minBreak, minDistant, new LocationSvcListner());
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minBreak, minDistant, new LocationSvcListner());
     }
 
     private void configCriteria(Criteria criteria) {
         criteria.setAccuracy(Criteria.ACCURACY_FINE); // 高精度
         criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
-        criteria.setCostAllowed(true);
+        criteria.setBearingRequired(true);
+        criteria.setCostAllowed(false);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
     }
 }

@@ -5,14 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.events.uppercontrol.SendUpperControlEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -104,24 +101,6 @@ public class MainFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.fragment, new TrackMonitorFragment())
                         .commit();
-                //取变量
-                HomeActivity activity = (HomeActivity) getActivity();
-                int way = activity.bdsService.COMMUNICATE_WAY;
-                String dt;
-                String bd;
-                if (R.string.card_cmnt_dt == way) {
-                    dt = "Y";
-                } else {
-                    dt = "N";
-                }
-                if (R.id.card_cmnt_bd == way) {
-                    bd = "Y";
-                } else {
-                    bd = "N";
-                }
-                Log.d("dt=====", dt + " bd=======" + bd);
-                Log.d("way=====", String.valueOf(way));
-                EventBus.getDefault().post(new SendUpperControlEvent(bd, "60", dt, "2"));
             }
         });
     }

@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,14 +25,25 @@ public class Location extends View {
     int time = 0;
     Timer timer = new Timer();
 
+    ArrayList deviceCardNumArray;
+
     public Location(Context context){
         super(context);
-   }
-    public Location(Context context, AttributeSet attrs) {
-        super(context, attrs);
         EventBus.getDefault().register(this);
         paint = new Paint();
         paint.setColor(Color.GREEN);
+   }
+
+    public Location(Context context, ArrayList deviceCardNumArray){
+        super(context);
+        this.deviceCardNumArray = deviceCardNumArray;
+        EventBus.getDefault().register(this);
+        paint = new Paint();
+        paint.setColor(Color.GREEN);
+    }
+
+    public Location(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
     public Location(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);

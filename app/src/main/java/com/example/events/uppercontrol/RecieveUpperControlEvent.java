@@ -8,6 +8,8 @@ import static com.example.tools.SignalTools.haxToInt;
 
 public class RecieveUpperControlEvent {
 
+    public String cardNum;
+
     public double latitude;
 
     public double longitude;
@@ -20,7 +22,8 @@ public class RecieveUpperControlEvent {
         Pattern pattern = Pattern.compile(SIGNAL_UPPER_DATA);
         Matcher matcher = pattern.matcher(data);
         if (matcher.find()) {
-            String targetCardId  = matcher.group(1);
+            cardNum = matcher.group(1);
+
             String ladd = matcher.group(2);
             String lamm1 = matcher.group(3);
             String lamm2 = matcher.group(4);

@@ -61,13 +61,17 @@ public class BDTXSignalSvc {
                     }
                 }
             } else {
-                Log.d(TAG, "Signal return error");
-                throw new RuntimeException("Not match BD TXR signals!");
+                Log.d(TAG, "Not match BD TXR signals!");
+                return data;
             }
         }
     }
 
     static void handOutSignalEvent(String signal) {
+        if (signal.length() < 5) {
+            Log.d(TAG, signal);
+            return;
+        }
         String command = signal.substring(2, 4);
         Log.d(TAG, "signal : " + signal);
         switch (command) {
@@ -81,7 +85,7 @@ public class BDTXSignalSvc {
                 EventBus.getDefault().post(new BDError(signal));
                 break;
             default:
-                throw new RuntimeException("No cust signal match");
+                Log.d(TAG, "No cust signal match");
         }
     }
 }

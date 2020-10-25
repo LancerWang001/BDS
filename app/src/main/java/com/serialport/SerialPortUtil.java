@@ -108,7 +108,7 @@ public class SerialPortUtil {
                 byte[] readData = new byte[1024];
                 try {
                     Log.d("GET Serialport ", "Start to Read");
-                    Thread.sleep(500);
+//                    Thread.sleep(500);
                     int size = inputStream.read(readData);
                     Log.d("GET Serialport ", new String(readData));
                     if (size > 0) {
@@ -117,7 +117,6 @@ public class SerialPortUtil {
                         // Handle here
                         EventBus.getDefault().post(new MessageEvent(readString));
                     }
-
                 } catch (IOException e) {
                     Log.d("SerialPortErr", e.toString());
                 } catch (Exception e) {
