@@ -15,7 +15,7 @@
     <string name="param_content3">姿态判定时间间隔</string>
     <string name="param_title">参数配置</string>
     <string name="strobe_control_title">频闪控制</string>
-    <string name="strobe_control_warn">频闪警报</string>
+    <string name="strobe_control_warn">频闪</string>
     <string name="strobe_flash_times">闪烁次数</string>
     <string name="strobe_flash_time_length">闪烁时长</string>
     <string name="strobe_flash_break">闪烁间隔</string>
@@ -33,4 +33,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="rest_a">设备A</string>
     <string name="rest_b">设备B</string>
+    <string name="saved_high_score_key">TestKey</string>
+    <string name="exit">退出</string>
+    <string name="back">返回</string>
+    <string name="chooseDevice">选择设备</string>
+    <string name="second">(s)</string>
+    <string name="timesCalc">(次)</string>
 </resources>

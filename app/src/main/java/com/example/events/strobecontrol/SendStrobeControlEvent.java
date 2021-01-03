@@ -11,7 +11,8 @@ import static com.example.tools.SignalTools.intToHax;
 public class SendStrobeControlEvent implements SendSignalEvent {
     public String signal;
 
-    public SendStrobeControlEvent(String symbol, String times, String timeLong, String timeBreak) {
+    public SendStrobeControlEvent(String cardId, String symbol, String times, String timeLong, String timeBreak) {
+        cardId = intToHax(cardId);
         if ("Y".equals(symbol)) {
             symbol = SIGNAL_PERMIT;
         } else if ("N".equals(symbol)) {
@@ -20,7 +21,7 @@ public class SendStrobeControlEvent implements SendSignalEvent {
         times = intToHax(times);
         timeLong = intToHax(timeLong);
         timeBreak = intToHax(timeBreak);
-        signal = String.format(SIGNAL_STROBE_CONTROL, symbol, times, timeLong, timeBreak);
+        signal = String.format(SIGNAL_STROBE_CONTROL, cardId, symbol, times, timeLong, timeBreak);
         signal = calcCustomerVerifyRes(signal);
     }
 }

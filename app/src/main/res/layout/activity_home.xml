@@ -88,8 +88,6 @@
                 android:text="@string/menu_item_help"/>
 
         </RadioGroup>
-
-
     </LinearLayout>
     <com.example.bds.TitleBar
         android:id="@+id/titlebar"

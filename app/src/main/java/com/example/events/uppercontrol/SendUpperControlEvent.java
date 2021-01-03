@@ -12,7 +12,7 @@ public class SendUpperControlEvent implements SendSignalEvent {
 
     public String signal;
 
-    public SendUpperControlEvent (String bdSymbol, String bdBreak, String dtSymbol, String dtBreak) {
+    public SendUpperControlEvent (String bdSymbol, String dtSymbol) {
         if ("Y".equals(bdSymbol)) {
             bdSymbol = SIGNAL_PERMIT;
         } else if ("N".equals(bdSymbol)){
@@ -25,10 +25,7 @@ public class SendUpperControlEvent implements SendSignalEvent {
             dtSymbol = SIGNAL_REJECT;
         }
 
-        bdBreak = intToHax(bdBreak);
-        dtBreak = intToHax(dtBreak);
-
-        signal = String.format(SIGNAL_UPPER_CONTROL, bdSymbol, bdBreak, dtSymbol, dtBreak);
+        signal = String.format(SIGNAL_UPPER_CONTROL, bdSymbol, dtSymbol);
         signal = calcCustomerVerifyRes(signal);
     }
 }

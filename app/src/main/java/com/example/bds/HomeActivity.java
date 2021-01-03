@@ -20,19 +20,22 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.beans.Status;
 import com.example.events.BDError;
-import com.example.events.readcard.SendReadCardEvent;
 import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = "HomeActivity";
     /* Data service */
     public BDSService bdsService;
+    private HashMap<String, Status> targetDevices = new HashMap<String, Status>();
     ServiceConnection conn = new AppServiceConnection();
     private RadioGroup mRadioGroup;
     private FragmentManager fm;
@@ -158,9 +161,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             bdsService = binder.getService();
             bdsService.preferences = HomeActivity.this.getSharedPreferences("BDPreferences", MODE_PRIVATE);
         }
+
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             bdsService = null;
         }
+    }
+
+    public HashMap<String, Status> getTargetDevices() {
+        return targetDevices;
+    }
+
+    public void setTargetDevices(HashMap<String, Status> targetDevices) {
+        this.targetDevices = targetDevices;
     }
 }

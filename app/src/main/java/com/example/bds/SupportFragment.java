@@ -1,5 +1,6 @@
 package com.example.bds;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -67,12 +68,15 @@ public class SupportFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Button selfBtn = (Button)getActivity().findViewById(R.id.card_main_selfcheck);
-//        selfBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                DialogFragment dialogFragment = new SelfCheckFragment();
-//                dialogFragment.show(getActivity().getSupportFragmentManager(), "系统自检");
-//            }
-//        });
+        selfBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SupportFragment.this.getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment,new SelfCheckFragment())
+                        .commit();
+            }
+        });
     }
 }

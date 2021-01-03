@@ -13,6 +13,8 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class LocationService {
     static private String TAG = "LocationService";
 
@@ -38,6 +40,10 @@ public class LocationService {
         }
         criteria = new Criteria();
         configCriteria(criteria);
+        List<String> providers = locationManager.getProviders(true);
+
+        Log.d("providers: ->", providers.toString());
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "No Access !!");
@@ -46,7 +52,7 @@ public class LocationService {
                     Manifest.permission.READ_PHONE_STATE}, 100);
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minBreak, minDistant, new LocationSvcListner());
+        LocationService.this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minBreak, minDistant, new LocationSvcListner());
     }
 
     private void configCriteria(Criteria criteria) {

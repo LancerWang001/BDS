@@ -11,7 +11,7 @@ public class Constants {
     public static final int SERIAL_PORT_RATE = 115200;
 
     // Radio wifi
-    public static final String DT_HOST = "192.168.1.123";
+    public static final String DT_HOST = "192.168.56.1";
 
     public static final int DT_PORT = 10161;
 
@@ -30,7 +30,7 @@ public class Constants {
     public static final String SIGNAL_REJECT = "00";
 
     // 上报控制
-    public static final String SIGNAL_UPPER_CONTROL = "6E3208%s%s%s%s";
+    public static final String SIGNAL_UPPER_CONTROL = "6E3208%s02%s03";
 
     // 参数配置
     public static final String SIGNAL_CONFIG_PARAMS = "6E3007%s%s%s";
@@ -39,7 +39,7 @@ public class Constants {
     public static final String SIGNAL_SELF_CHECK = "6E330800000000";
 
     // 频闪控制
-    public static final String SIGNAL_STROBE_CONTROL = "6E3108%s%s%s%s";
+    public static final String SIGNAL_STROBE_CONTROL = "6E3108%s%s%s%s%s";
 
     // 系统自检结果
     public static final String SIGNAL_SELF_CHECK_RGEX = "6E4108(.{2})0000(.{2}).*";
@@ -48,7 +48,7 @@ public class Constants {
     public static final String SIGNAL_BD_SYS_SLEEP = "6E3407%s0000";
 
     // 上报数据（下位机发送到上位机）
-    public static final String SIGNAL_UPPER_DATA = "6E401A(.{2}).{14}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([S|N])(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})([W|E]).*";
+    public static final String SIGNAL_UPPER_DATA = "6E401A(.{2})(.{2})(.{2})(.{2})(.{2}).{6}(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})(.{2}).*";
     /* 北斗协议 */
 
     // 发送读取卡号

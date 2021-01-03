@@ -1,27 +1,22 @@
 package com.example.bds;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private EditText textuerName;
     private EditText textpassword;
     private Button btLogin;
+    private Button btExit;
     private HashMap accountList = new HashMap();
 
     @Override
@@ -31,16 +26,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textuerName = (EditText) findViewById(R.id.uerName);
         textpassword = (EditText) findViewById(R.id.password);
         btLogin = (Button) findViewById(R.id.button_login);
-        //btLogin.setOnClickListener(this);
+        btExit = (Button) findViewById(R.id.button_exit);
         btLogin.setOnClickListener(v -> {
             String userName = textuerName.getText().toString().trim();
             String userPasswd = textpassword.getText().toString().trim();
             String info = checkAccount(userName, userPasswd);
             Toast.makeText(MainActivity.this, info, Toast.LENGTH_SHORT).show();
         });
-        accountList.put("test1", "test1");
-        accountList.put("test2", "test2");
-        accountList.put("test3", "test3");
+        btExit.setOnClickListener(v -> {
+            int pid = android.os.Process.myPid();
+            android.os.Process.killProcess(pid);
+            ActivityManager manager = (ActivityManager) MainActivity.this.getSystemService(Context.ACTIVITY_SERVICE);
+            manager.killBackgroundProcesses(MainActivity.this.getPackageName());
+        });
+        accountList.put("admin1", "admin1");
+        accountList.put("admin2", "admin2");
+        accountList.put("admin3", "admin3");
     }
 
     //登陆验证
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (tmpPass != null && tmpPass.equals(userPasswd)) {
             loginInfo = "登陆成功";
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            MainActivity.this.finish();
         } else if (tmpPass == null) {
             loginInfo = "用户名不存在";
             textuerName.requestFocus();
@@ -60,12 +61,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             textpassword.requestFocus();
         }
         return loginInfo;
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(intent);
-        MainActivity.this.finish();
     }
 }

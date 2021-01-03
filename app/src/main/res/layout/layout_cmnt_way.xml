@@ -2,9 +2,13 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="20dip"
+    android:paddingStart="10dip"
+    android:paddingEnd="10dip"
+    android:paddingBottom="20dip"
     android:background="#ffcccccc"
-    android:orientation="vertical"
-    android:padding="30dip">
+    android:layout_marginBottom="20dp"
+    android:orientation="vertical">
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="20dip"
@@ -16,7 +20,6 @@
         android:layout_height="match_parent"
         >
         <TextView
-            android:padding="15dip"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text="通信方式"
@@ -64,7 +67,6 @@
             android:id="@+id/send_cmntway"
             android:layout_width="120dip"
             android:layout_height="wrap_content"
-            android:background="#5DB851"
             android:text="@string/param_send_config"
             android:textColor="#fff" />
     </LinearLayout>

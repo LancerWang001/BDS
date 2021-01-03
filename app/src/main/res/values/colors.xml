@@ -7,4 +7,6 @@
     <color name="colorUnChecked">#808080</color>
     <color name="background">#E6E6E6</color>
     <color name="lightText">#cccccc</color>
+    <color name="white">#ffffff</color>
+    <color name="btnBackground">#5DB851</color>
 </resources>

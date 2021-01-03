@@ -29,26 +29,20 @@ public class TitleBar extends LinearLayout {
         // init title bar with dt cmnt way
         textView.setText(R.string.card_cmnt_dt);
 
-        titleBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("返回上一级");
-                Intent intent = new Intent();
-                intent.setClass(context, HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        titleBack.setOnClickListener(v -> {
+            System.out.println("返回上一级");
+            Intent intent = new Intent();
+            intent.setClass(context, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
         });
-        titleLogout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("退出");
-                Intent intent = new Intent();
-                intent.setClass(context, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-                Toast.makeText(getContext(), "You clicked Edit button", Toast.LENGTH_SHORT).show();
-            }
+        titleLogout.setOnClickListener(v -> {
+            System.out.println("退出");
+            Intent intent = new Intent();
+            intent.setClass(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+            Toast.makeText(getContext(), "You clicked Edit button", Toast.LENGTH_SHORT).show();
         });
         EventBus.getDefault().register(this);
     }

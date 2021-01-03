@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.events.ChangeCmntWayEvent;
+import com.example.events.uppercontrol.SendUpperControlEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,12 +48,19 @@ public class CmntWay extends LinearLayout {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 int cmntWay = R.string.card_cmnt_dt;
+                String symbolBD = "";
+                String sumbolDT = "";
                 switch (CmntWay.this.checkedId) {
                     case R.id.card_cmnt_bd:
                         cmntWay = R.string.card_cmnt_bd;
+                        symbolBD = "Y";
+                        sumbolDT = "N";
                         break;
                     case R.id.card_cmnt_dt:
                         cmntWay = R.string.card_cmnt_dt;
+                        symbolBD = "N";
+                        sumbolDT = "Y";
+                        break;
                 }
                 RadioGroup radioGroup = view.findViewById(R.id.cmnt_way_rg);
                 RadioButton radioGroupButton = view.findViewById(radioGroup.getCheckedRadioButtonId());
@@ -64,6 +72,7 @@ public class CmntWay extends LinearLayout {
                     cmtWay = "BD";
                 }
                 EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
+                EventBus.getDefault().post(new SendUpperControlEvent(symbolBD, sumbolDT));
             }
         });
         builder.setNegativeButton(R.string.card_dialog_alert_N, new DialogInterface.OnClickListener() {

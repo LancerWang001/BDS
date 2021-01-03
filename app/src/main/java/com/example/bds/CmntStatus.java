@@ -8,6 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.events.EmittSocketEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class CmntStatus extends RelativeLayout {
 
     private String TAG = "CmntStatus";
@@ -17,6 +23,11 @@ public class CmntStatus extends RelativeLayout {
 
     public CmntStatus(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        };
+
         View view = LayoutInflater.from(context).inflate(R.layout.layout_cmnt_status, this);
         bdBulb = findViewById(R.id.bd_bulb);
         dtBulb = findViewById(R.id.dt_bulb);
@@ -46,6 +57,18 @@ public class CmntStatus extends RelativeLayout {
             v.setBackground(getResources().getDrawable(R.drawable.dark_bulb_shape));
         } catch (Exception e) {
             Log.d(TAG, "Remove buld animation error.");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onMessge (EmittSocketEvent event) {
+        switch (event.status) {
+            case "0":
+                Log.d(TAG, "Success!!!");
+            case "1":
+                Log.d(TAG, "Connecting!!!");
+            case "2":
+                Log.d(TAG, "Failed!!!");
         }
     }
 }

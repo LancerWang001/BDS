@@ -1,28 +1,30 @@
 package com.example.bds;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.beans.Status;
 import com.example.events.selfcheck.RecieveSelfControlEvent;
 import com.example.events.selfcheck.SendSelfControlEvent;
 import com.example.service.BDSService;
-import com.serialport.SerialPortUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,12 +75,12 @@ public class SelfCheckFragment extends Fragment {
         }
 
         // 1 获得通讯方式，控制指示灯的显示
-        bdsService = ((HomeActivity)getActivity()).bdsService;
-        int way  = bdsService.COMMUNICATE_WAY;
-        if(way == R.string.card_cmnt_dt){
-            Log.d("==========","初始化电台指示灯");
-        }else{
-            Log.d("==========","初始化北斗指示灯");
+        bdsService = ((HomeActivity) getActivity()).bdsService;
+        int way = bdsService.COMMUNICATE_WAY;
+        if (way == R.string.card_cmnt_dt) {
+            Log.d("==========", "初始化电台指示灯");
+        } else {
+            Log.d("==========", "初始化北斗指示灯");
         }
     }
 
@@ -90,10 +92,11 @@ public class SelfCheckFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // 系统自检按钮的发送
-                Log.d("=======","Voltage snd");
+                Log.d("=======", "Voltage snd");
                 EventBus.getDefault().post(new SendSelfControlEvent());
             }
         });
+        flushCheckStatus();
     }
 
     @Override
@@ -103,18 +106,40 @@ public class SelfCheckFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_self_check, container, false);
         return v;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private void flushCheckStatus () {
+        TableLayout tablelayout = getActivity().findViewById(R.id.selfcheck_table);
+        HashMap<String, Status> targetDevices = ((HomeActivity) getActivity()).getTargetDevices();
+        Set<String> keySet = targetDevices.keySet();
+        tablelayout.removeAllViews();
+        for (String deviceId : keySet) {
+            Status deviceStatus = targetDevices.get(deviceId);
+            TableRow tableRow = (TableRow) View.inflate(getContext(), R.layout.layout_self_check_status, null);
+            TextView textView = (TextView) tableRow.getChildAt(0);
+            String power = deviceStatus.getPower();
+            textView.setText("设备号：" + deviceId + " ----- 电量" + power);
+            tablelayout.addView(tableRow);
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void onRecieveSelfControlEvent(RecieveSelfControlEvent event){
-        Log.d("SelfControl=======",event.toString());
-        String batV =  event.batteryVoltage;
+    public void onRecieveSelfControlEvent(RecieveSelfControlEvent event) {
+        Log.d("SelfControl=======", event.toString());
+        String batV = event.batteryVoltage;
         Log.d("Voltage receive=======", batV);
-       TextView textView = getActivity().findViewById(R.id.vol_result);
-       textView.setText(batV);
+
+        Status status = new Status();
+        status.setDeviceId(event.targetCardId);
+        status.setPower(event.batteryVoltage);
+        HashMap<String, Status> targetDevices = ((HomeActivity) Objects.requireNonNull(getActivity())).getTargetDevices();
+        targetDevices.put(status.getDeviceId(), status);
+
+        flushCheckStatus();
     }
 
     @Override

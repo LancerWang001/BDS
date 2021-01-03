@@ -5,198 +5,272 @@
     android:layout_height="match_parent"
     tools:context=".StrobeControlFragment">
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="start"
+        android:padding="15dip"
+        android:text="@string/strobe_control_title"
+        android:textColor="#000"
+        android:textFontWeight="1000"
+        android:textSize="35sp" />
+
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="70dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:padding="15dip"
-            android:layout_height="match_parent"
-            android:text="@string/strobe_control_title"
-            android:textFontWeight="1000"
-            android:textSize="35sp"
-            android:gravity="left"
-            android:textColor="#000"
-            />
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_margin="0.5dip"
             android:background="#ffcccccc"
             android:orientation="horizontal">
+
             <TableRow
-                android:layout_weight=".7"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight=".4">
+
                 <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="end"
                     android:padding="15dip"
+                    android:text="@string/chooseDevice"
                     android:textColor="#000"
-                    android:gravity="right"
-                    android:textSize="35sp"
-                    android:layout_height="match_parent"
-                    android:text="@string/strobe_control_warn"
-                    />
+                    android:textSize="35sp" />
             </TableRow>
+
             <TableRow
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                >
-                <RadioGroup
+                android:layout_weight="1">
+
+                <Spinner
+                    android:id="@+id/card_id_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/lightText"
+                    android:spinnerMode="dialog"
+                    android:textSize="22sp" />
+            </TableRow>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/strobe_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_margin="0.5dip"
+            android:layout_marginTop="15dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
                     android:layout_height="match_parent"
-                    android:gravity="center|left"
+                    android:gravity="end"
+                    android:padding="15dip"
+                    android:text="@string/strobe_control_warn"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RadioGroup
                     android:id="@+id/strobeAlarm"
+                    android:layout_height="match_parent"
+                    android:gravity="center|start"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/strobe_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:textSize="35sp"
-                        android:text="@string/strobe_control_on"/>
+                        android:text="@string/strobe_control_on"
+                        android:textSize="35sp" />
+
                     <RadioButton
                         android:id="@+id/strobe_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="35sp"
-                        android:text="@string/strobe_control_off"/>
+                        android:text="@string/strobe_control_off"
+                        android:textSize="35sp" />
                 </RadioGroup>
             </TableRow>
         </TableRow>
+
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_marginTop="15dip"
             android:background="#ffcccccc"
             android:orientation="horizontal">
+
             <TableRow
-                android:layout_weight=".7"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight=".7">
+
                 <TextView
-                    android:padding="15dip"
-                    android:textColor="#000"
-                    android:gravity="right"
-                    android:textSize="35sp"
                     android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
                     android:text="@string/strobe_flash_times"
-                    />
+                    android:textColor="#000"
+                    android:textSize="35sp" />
             </TableRow>
+
             <TableRow
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight="1">
+
                 <EditText
                     android:id="@+id/twinkletimes"
                     android:layout_width="wrap_content"
-                    android:minWidth="60dip"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal|right"
-                    android:singleLine="true"
-                    android:inputType="numberDecimal"
+                    android:gravity="center"
+                    android:textSize="22sp"
                     android:imeOptions="actionDone"
-                    android:textAlignment="center"
-                    android:text="7"
-                    />
-                <TextView android:text="(次)" android:textColor="#000"/>
+                    android:inputType="numberDecimal"
+                    android:minWidth="60dip"
+                    android:singleLine="true"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/timesCalc"
+                    android:textColor="#000"
+                    android:textSize="22sp" />
             </TableRow>
         </TableRow>
+
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_marginTop="15dip"
             android:background="#ffcccccc"
             android:orientation="horizontal">
+
             <TableRow
-                android:layout_weight=".7"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight=".7">
+
                 <TextView
-                    android:padding="15dip"
-                    android:textColor="#000"
-                    android:gravity="right"
                     android:layout_height="match_parent"
-                    android:textSize="35sp"
+                    android:gravity="end"
+                    android:padding="15dip"
                     android:text="@string/strobe_flash_time_length"
-                    />
+                    android:textColor="#000"
+                    android:textSize="35sp" />
             </TableRow>
+
             <TableRow
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight="1">
+
                 <EditText
                     android:id="@+id/twinkletimelength"
                     android:layout_width="wrap_content"
-                    android:minWidth="60dip"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal|right"
-                    android:singleLine="true"
-
-                    android:inputType="numberDecimal"
+                    android:gravity="center"
+                    android:textSize="22sp"
                     android:imeOptions="actionDone"
-                    android:textAlignment="center"
-                    android:text="2"
-                    />
-                <TextView android:text="(s)" android:textColor="#000"/>
+                    android:inputType="numberDecimal"
+                    android:minWidth="60dip"
+                    android:singleLine="true"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="22sp"
+                    android:text="@string/second"
+                    android:textColor="#000" />
             </TableRow>
         </TableRow>
+
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_marginTop="15dip"
             android:background="#ffcccccc"
             android:orientation="horizontal">
+
             <TableRow
-                android:layout_weight=".7"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight=".7">
+
                 <TextView
-                    android:padding="15dip"
-                    android:textColor="#000"
-                    android:gravity="right"
-                    android:textSize="35sp"
                     android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
                     android:text="@string/strobe_flash_break"
-                    />
+                    android:textColor="#000"
+                    android:textSize="35sp" />
             </TableRow>
+
             <TableRow
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                >
+                android:layout_weight="1">
+
                 <EditText
                     android:id="@+id/twinkleinterval"
                     android:layout_width="wrap_content"
-                    android:minWidth="60dip"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal|right"
-                    android:singleLine="true"
-                    android:inputType="numberDecimal"
+                    android:gravity="center"
+                    android:textSize="22sp"
                     android:imeOptions="actionDone"
-                    android:textAlignment="center"
-                    android:text="60"
-                    />
-                <TextView android:text="(s)" android:textColor="#000"/>
+                    android:inputType="numberDecimal"
+                    android:minWidth="60dip"
+                    android:singleLine="true"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="22sp"
+                    android:text="@string/second"
+                    android:textColor="#000" />
             </TableRow>
         </TableRow>
+
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="20dip"
             android:layout_marginTop="15dip"
             android:gravity="center"
             android:orientation="horizontal">
+
             <Button
-                android:text="@string/param_send_config"
                 android:id="@+id/twinklecontrol"
-                android:textColor="#fff"
-                android:textSize="35sp"
                 android:layout_marginTop="15dip"
                 android:layout_marginBottom="15dip"
-                android:background="#5DB851"
-                />
+                android:text="@string/param_send_config"
+                android:textColor="#fff"
+                android:textSize="35sp" />
         </TableRow>
     </TableLayout>
 

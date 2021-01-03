@@ -20,7 +20,6 @@
         tools:ignore="NotSibling">
 
         <TableLayout
-            android:id="@+id/selfcheck_table"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -37,7 +36,6 @@
                 android:textColor="#000"
                 android:textFontWeight="1000"
                 android:textSize="20sp" />
-
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="20dip"
@@ -68,17 +66,14 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:background="#5DB851"
                         android:gravity="center"
                         android:text="开始"
                         android:textColor="#000" />
                 </TableRow>
             </TableRow>
-
             <TableRow
                 android:layout_height="match_parent"
                 android:layout_weight=".7">
-
                 <TextView
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
@@ -88,32 +83,16 @@
                     android:textSize="20sp" />
             </TableRow>
 
-            <TableRow
-                android:layout_height="match_parent"
-                android:layout_weight=".7">
-
-                <TextView
-                    android:id="@+id/vol_result"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:padding="15dip"
-                    android:text=""
-                    android:textColor="#ff0033"
-                    android:textSize="20sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_height="match_parent"
-                android:layout_weight=".7">
-
-                <TextView
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:padding="15dip"
-                    android:text="进度显示:"
-                    android:textColor="#000"
-                    android:textSize="20sp" />
-            </TableRow>
+        </TableLayout>
+        <TableLayout
+            android:id="@+id/selfcheck_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
         </TableLayout>
     </RelativeLayout>
 </RelativeLayout>
