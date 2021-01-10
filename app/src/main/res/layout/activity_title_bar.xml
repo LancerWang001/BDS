@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dip"
         android:textColor="@color/lightText"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:text="@string/back"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/lightText"
-        android:textSize="22sp" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/title_logout"
@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dip"
         android:textColor="@color/lightText"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:text="@string/exit"/>
 
 </LinearLayout>

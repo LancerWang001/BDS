@@ -22,12 +22,14 @@
     <string name="strobe_control_on">开启</string>
     <string name="strobe_control_off">关闭</string>
     <string name="param_send_config">发送</string>
+    <string name="interval_config">发送</string>
     <string name="card_main_selfcheck">系统自检</string>
     <string name="card_main_position">追踪监测</string>
     <string name="cmnt_way">通信方式</string>
     <string name="card_cmnt_bd">北斗通信</string>
     <string name="card_cmnt_dt">电台通信</string>
-    <string name="card_dialog_alert">是否确认修改通信方式</string>
+    <string name="card_dialog_alert">是否确认修改通信方式？</string>
+    <string name="card_dialog_exit">是否退出？</string>
     <string name="card_dialog_alert_Y">确认</string>
     <string name="card_dialog_alert_N">取消</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -38,5 +40,8 @@
     <string name="back">返回</string>
     <string name="chooseDevice">选择设备</string>
     <string name="second">(s)</string>
-    <string name="timesCalc">(次)</string>
+    <string name="timesCalc">(次/分钟)</string>
+    <string name="cmnt_param_interval">通信方式发送间隔</string>
+    <string name="dt_cmnt_param_interval">电台发送间隔</string>
+    <string name="bd_cmnt_param_interval">北斗发送间隔</string>
 </resources>

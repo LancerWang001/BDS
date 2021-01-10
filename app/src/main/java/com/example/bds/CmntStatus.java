@@ -34,15 +34,32 @@ public class CmntStatus extends RelativeLayout {
 
         HomeActivity acct = (HomeActivity) getContext();
         if (acct.bdsService.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
-            stopAni(dtBulb);
-            startAni(bdBulb);
+            changeStatus(dtBulb, bdBulb);
         } else {
-            stopAni(bdBulb);
-            startAni(dtBulb);
+            changeStatus(bdBulb, dtBulb);
         }
     }
 
-    private void startAni(View v) {
+    private void changeStatus (View v1, View v2) {
+        HomeActivity acct = (HomeActivity) getContext();
+        boolean isServiceAvailable = acct.bdsService.isServiceAvailable();
+        stopAni(v1);
+        if (isServiceAvailable) {
+            finishedAni(v2);
+        } else {
+            stopAni(v2);
+        }
+    }
+
+    private void finishedAni(View v) {
+        try {
+            v.setBackground(getResources().getDrawable(R.drawable.light_bulb_shape));
+        } catch (Exception e) {
+            Log.d(TAG, "Set bulb animation error.");
+        }
+    }
+
+    private void connectAni (View v) {
         try {
             v.setBackground(getResources().getDrawable(R.drawable.bulb_animation));
             ((AnimationDrawable) v.getBackground()).start();
@@ -53,7 +70,6 @@ public class CmntStatus extends RelativeLayout {
 
     private void stopAni(View v) {
         try {
-            ((AnimationDrawable) v.getBackground()).stop();
             v.setBackground(getResources().getDrawable(R.drawable.dark_bulb_shape));
         } catch (Exception e) {
             Log.d(TAG, "Remove buld animation error.");
@@ -64,11 +80,17 @@ public class CmntStatus extends RelativeLayout {
     public void onMessge (EmittSocketEvent event) {
         switch (event.status) {
             case "0":
+                finishedAni(dtBulb);
                 Log.d(TAG, "Success!!!");
+                break;
             case "1":
+                connectAni(dtBulb);
                 Log.d(TAG, "Connecting!!!");
+                break;
             case "2":
+                stopAni(dtBulb);
                 Log.d(TAG, "Failed!!!");
+                break;
         }
     }
 }

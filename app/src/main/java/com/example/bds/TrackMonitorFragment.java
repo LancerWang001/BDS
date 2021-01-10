@@ -21,9 +21,7 @@ import android.widget.Toast;
 
 import com.example.beans.Position;
 import com.example.events.UpdateTrackMessage;
-import com.example.events.strobecontrol.SendStrobeControlEvent;
 import com.example.events.systemsleep.SendSystemSleep;
-import com.example.events.uppercontrol.SendUpperControlEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -88,7 +86,6 @@ public class TrackMonitorFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        this.sendUpperControl();
     }
 
     @Override
@@ -116,9 +113,6 @@ public class TrackMonitorFragment extends Fragment {
                 EventBus.getDefault().post(new SendSystemSleep(TrackMonitorFragment.this.checkedCardNum));
             }
         });
-//        getActivity().findViewById(R.id.strobe_alarm).setOnClickListener(view -> {
-//            EventBus.getDefault().post(new SendStrobeControlEvent("Y", "1", "1", "1"));
-//        });
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -128,27 +122,6 @@ public class TrackMonitorFragment extends Fragment {
         LinearLayout location = getActivity().findViewById(R.id.canvas_location);
         locationInstance = new Location(location.getContext());
         location.addView(locationInstance);
-    }
-
-    private void sendUpperControl() {
-        //取变量
-        HomeActivity activity = (HomeActivity) getActivity();
-        int way = activity.bdsService.COMMUNICATE_WAY;
-        String dt;
-        String bd;
-        if (R.string.card_cmnt_dt == way) {
-            dt = "Y";
-        } else {
-            dt = "N";
-        }
-        if (R.id.card_cmnt_bd == way) {
-            bd = "Y";
-        } else {
-            bd = "N";
-        }
-        Log.d("dt=====", dt + " bd=======" + bd);
-        Log.d("way=====", String.valueOf(way));
-        EventBus.getDefault().post(new SendUpperControlEvent(bd, dt));
     }
 
     @Override

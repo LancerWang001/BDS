@@ -19,6 +19,10 @@ public class SerialPortUtil {
     private ReceiveThread mReceiveThread = null;
     private boolean isStart = false;
 
+    public boolean isStart() {
+        return isStart;
+    }
+
     /**
      * 打开串口，接收数据
      * 通过串口，接收单片机发送来的数据

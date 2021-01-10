@@ -8,6 +8,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.bds.R;
 import com.example.events.ChangeCmntWayEvent;
@@ -35,23 +36,19 @@ import static com.example.service.BDTXSignalSvc.handOutSignalEvent;
 import static com.example.tools.SignalTools.calcBDVerifyRes;
 
 public class BDSService extends Service {
+    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
     private static String TAG = "BDSService";
+    public SharedPreferences preferences;
+    //电台
+    public int COMMUNICATE_WAY = R.string.card_cmnt_dt;
     int mStartMode;
     IBinder mBinder = new BDSBinder();
     boolean mAllowRebind;
     ExecutorService executorService;
     DTSocket dtSocket = new DTSocket();
 
-    public static SerialPortUtil serialPortUtil = new SerialPortUtil();
-
-    public SharedPreferences preferences;
-
-    //电台
-    public int COMMUNICATE_WAY = R.string.card_cmnt_dt;
-
     //北斗
 //    public int COMMUNICATE_WAY = R.string.card_cmnt_bd;
-
     private String emissionStatus = "0";
 
     public BDSService() {
@@ -127,7 +124,7 @@ public class BDSService extends Service {
     }
 
     @Subscribe()
-    public void onSendSystemSleepEvent(SendSystemSleep event){
+    public void onSendSystemSleepEvent(SendSystemSleep event) {
         sendShortMessage(event.signal);
     }
 
@@ -142,7 +139,7 @@ public class BDSService extends Service {
         }
     }
 
-    private void sendShortMessage (String signal) {
+    private void sendShortMessage(String signal) {
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             sendService(signal);
         } else {
@@ -167,22 +164,39 @@ public class BDSService extends Service {
 
     @NonNull
     private void sendService(final String data) {
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, data);
-                if (COMMUNICATE_WAY == R.string.card_cmnt_bd) {
-                    serialPortUtil.sendSerialPort(data);
-                } else {
-                    dtSocket.writeData(data);
-                }
+        executorService.execute(() -> {
+            Log.d(TAG, data);
+            if (COMMUNICATE_WAY == R.string.card_cmnt_bd) {
+                serialPortUtil.sendSerialPort(data);
+            } else {
+                dtSocket.writeData(data);
             }
+            Toast.makeText(getApplicationContext(), "发送成功！", Toast.LENGTH_SHORT).show();
         });
     }
 
     public void startLocationService(Context context) {
         Log.d(TAG, "startLocationService");
         new LocationService(context);
+    }
+
+    public boolean isServiceAvailable() {
+        boolean available;
+        if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
+            available = dtSocket.isConnected();
+        } else {
+            available = serialPortUtil.isStart();
+        }
+        return available;
+    }
+
+    public void closeSevice() {
+        serialPortUtil.closeSerialPort();
+        dtSocket.close();
+    }
+
+    public void reConnectService() {
+        dtSocket.connect();
     }
 
     public class BDSBinder extends Binder {

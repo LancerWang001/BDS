@@ -1,12 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:BDS="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CmntWayFragment">
 
-    <com.example.bds.CmntWay
+    <TableLayout
+        android:id="@+id/selfcheck_table"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/pg"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:padding="15dip"
+            android:text="@string/cmnt_param_interval"
+            android:textColor="#000"
+            android:textFontWeight="1000"
+            android:textSize="40sp" />
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_margin="0.5dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:id="@+id/speed"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:padding="15dip"
+                    android:text="@string/dt_cmnt_param_interval"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.example.bds.NumberalEdit
+                    android:id="@+id/dt_interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    BDS:maxNum="255"
+                    BDS:minNum="1"/>
+
+                <TextView
+                    android:gravity="center_vertical"
+                    android:text="(s)"
+                    android:textColor="#000"
+                    android:textSize="30sp" />
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_marginTop="50dp"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:padding="15dip"
+                    android:text="@string/bd_cmnt_param_interval"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.example.bds.NumberalEdit
+                    android:id="@+id/bd_interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    BDS:maxNum="255"
+                    BDS:minNum="1"/>
+
+                <TextView
+                    android:gravity="center_vertical"
+                    android:text="(min)"
+                    android:textColor="#000"
+                    android:textSize="30sp" />
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:textSize="70sp">
+
+            <Button
+                android:id="@+id/param_set"
+                android:layout_marginTop="15dip"
+                android:layout_marginBottom="15dip"
+                android:text="@string/interval_config"
+                android:textColor="#fff"
+                android:textSize="45sp" />
+        </TableRow>
+    </TableLayout>
 </FrameLayout>

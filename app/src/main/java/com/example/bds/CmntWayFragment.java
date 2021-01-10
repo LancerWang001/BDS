@@ -3,10 +3,21 @@ package com.example.bds;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.beans.CmntIntervalBean;
+import com.example.events.uppercontrol.SendUpperControlEvent;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,15 +43,6 @@ public class CmntWayFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CmntWayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CmntWayFragment newInstance(String param1, String param2) {
         CmntWayFragment fragment = new CmntWayFragment();
         Bundle args = new Bundle();
@@ -60,9 +62,43 @@ public class CmntWayFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        CmntIntervalBean intervals = ((HomeActivity) Objects.requireNonNull(getActivity())).intervals;
+        EditText dtInterval = getActivity().findViewById(R.id.dt_interval);
+        EditText bdInterval = getActivity().findViewById(R.id.bd_interval);
+        dtInterval.setText(intervals.getDtInterval());
+        bdInterval.setText(intervals.getBdInterval());
+
+        Button confirmBtn = getActivity().findViewById(R.id.param_set);
+        confirmBtn.setOnClickListener((v) -> {
+            int cmntWay = ((HomeActivity) getActivity()).bdsService.COMMUNICATE_WAY;
+            String bdPermit, bdIntervalVal, dtPermit, dtIntervalVal;
+            if (cmntWay == R.string.card_cmnt_dt) {
+                bdPermit = "N";
+                dtPermit = "Y";
+            } else {
+                bdPermit = "Y";
+                dtPermit = "N";
+            }
+            bdIntervalVal = String.valueOf(bdInterval.getText());
+            dtIntervalVal = String.valueOf(dtInterval.getText());
+            intervals.setBdInterval(bdIntervalVal);
+            intervals.setDtInterval(dtIntervalVal);
+            EventBus.getDefault().post(new SendUpperControlEvent(bdPermit, bdIntervalVal, dtPermit, dtIntervalVal));
+        });
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cmnt_way, container, false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

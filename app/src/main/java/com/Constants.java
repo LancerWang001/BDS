@@ -30,7 +30,7 @@ public class Constants {
     public static final String SIGNAL_REJECT = "00";
 
     // 上报控制
-    public static final String SIGNAL_UPPER_CONTROL = "6E3208%s02%s03";
+    public static final String SIGNAL_UPPER_CONTROL = "6E3208%s%s%s%s";
 
     // 参数配置
     public static final String SIGNAL_CONFIG_PARAMS = "6E3007%s%s%s";

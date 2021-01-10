@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.beans.CmntIntervalBean;
 import com.example.beans.Status;
 import com.example.events.BDError;
 import com.example.service.BDSService;
@@ -35,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private static String TAG = "HomeActivity";
     /* Data service */
     public BDSService bdsService;
+    public CmntIntervalBean intervals = new CmntIntervalBean();
     private HashMap<String, Status> targetDevices = new HashMap<String, Status>();
     ServiceConnection conn = new AppServiceConnection();
     private RadioGroup mRadioGroup;

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StrobeControlFragment">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="start"
+        android:padding="15dip"
+        android:text="@string/strobe_control_title"
+        android:textColor="#000"
+        android:textFontWeight="1000"
+        android:textSize="35sp" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_margin="0.5dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".4">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
+                    android:text="@string/chooseDevice"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Spinner
+                    android:id="@+id/card_id_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/lightText"
+                    android:spinnerMode="dialog"
+                    android:textSize="22sp" />
+            </TableRow>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/strobe_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_margin="0.5dip"
+            android:layout_marginTop="15dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
+                    android:text="@string/strobe_control_warn"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RadioGroup
+                    android:id="@+id/strobeAlarm"
+                    android:layout_height="match_parent"
+                    android:gravity="center|start"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/strobe_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/strobe_control_on"
+                        android:textSize="35sp" />
+
+                    <RadioButton
+                        android:id="@+id/strobe_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/strobe_control_off"
+                        android:textSize="35sp" />
+                </RadioGroup>
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_marginTop="15dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
+                    android:text="@string/strobe_flash_times"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.example.bds.NumberalEdit
+                    android:id="@+id/twinkletimes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/timesCalc"
+                    android:textColor="#000"
+                    android:textSize="22sp" />
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_marginTop="15dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
+                    android:text="@string/strobe_flash_time_length"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.example.bds.NumberalEdit
+                    android:id="@+id/twinkletimelength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/second"
+                    android:textColor="#000"
+                    android:textSize="22sp" />
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_marginTop="15dip"
+            android:background="#ffcccccc"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight=".7">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:padding="15dip"
+                    android:text="@string/strobe_flash_break"
+                    android:textColor="#000"
+                    android:textSize="35sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.example.bds.NumberalEdit
+                    android:id="@+id/twinkleinterval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/second"
+                    android:textColor="#000"
+                    android:textSize="22sp" />
+            </TableRow>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_marginTop="15dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/twinklecontrol"
+                android:layout_marginTop="15dip"
+                android:layout_marginBottom="15dip"
+                android:text="@string/param_send_config"
+                android:textColor="#fff"
+                android:textSize="35sp" />
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>

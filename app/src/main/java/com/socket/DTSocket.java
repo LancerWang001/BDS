@@ -16,7 +16,7 @@ import static com.Constants.DT_HOST;
 import static com.Constants.DT_PORT;
 
 public class DTSocket {
-    Socket socket;
+    public Socket socket;
     InputStream inputStream;
     OutputStream outputStream;
 
@@ -93,15 +93,15 @@ public class DTSocket {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } while (!socket.isInputShutdown() || !socket.isOutputShutdown());
+            } while (socket != null && (!socket.isInputShutdown() || !socket.isOutputShutdown()));
 
             if (socket != null) {
                 socket.close();
-                isOpen = false;
-                socket = null;
-                inputStream = null;
-                outputStream = null;
             }
+            isOpen = false;
+            socket = null;
+            inputStream = null;
+            outputStream = null;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -111,9 +111,11 @@ public class DTSocket {
 
     private void failedConnect () {
         Log.d(TAG, "Connect drop !!!");
-        isOpen = false;
         close();
-        connect();
         EventBus.getDefault().post(new EmittSocketEvent("2"));
+    }
+
+    public boolean isConnected () {
+        return socket != null && socket.isConnected();
     }
 }

@@ -96,6 +96,13 @@ public class SelfCheckFragment extends Fragment {
                 EventBus.getDefault().post(new SendSelfControlEvent());
             }
         });
+
+        Button reConnectButton = getActivity().findViewById(R.id.reconnect);
+        reConnectButton.setOnClickListener(view -> {
+            // 重新连接按钮的发送reConnectService
+            Log.d("=======", "reconnct button snd");
+            ((HomeActivity) getActivity()).bdsService.reConnectService();
+        });
         flushCheckStatus();
     }
 
@@ -122,7 +129,7 @@ public class SelfCheckFragment extends Fragment {
             TableRow tableRow = (TableRow) View.inflate(getContext(), R.layout.layout_self_check_status, null);
             TextView textView = (TextView) tableRow.getChildAt(0);
             String power = deviceStatus.getPower();
-            textView.setText("设备号：" + deviceId + " ----- 电量" + power);
+            textView.setText("设备号：" + deviceId + " ----- 电量" + power + " %");
             tablelayout.addView(tableRow);
         }
     }
@@ -147,4 +154,5 @@ public class SelfCheckFragment extends Fragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 }

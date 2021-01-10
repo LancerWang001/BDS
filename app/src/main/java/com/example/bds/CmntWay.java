@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.beans.CmntIntervalBean;
 import com.example.events.ChangeCmntWayEvent;
 import com.example.events.uppercontrol.SendUpperControlEvent;
 
@@ -31,17 +32,15 @@ public class CmntWay extends LinearLayout {
     public void onViewAdded(View child) {
         super.onViewAdded(child);
         this.dialog = createDialog(child);
-        child.findViewById(R.id.send_cmntway).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RadioGroup rg = (RadioGroup) child.findViewById(R.id.cmnt_way_rg);
-                CmntWay.this.checkedId = rg.getCheckedRadioButtonId();
-                CmntWay.this.dialog.show();
-            }
+        child.findViewById(R.id.send_cmntway).setOnClickListener((OnClickListener) view -> {
+            RadioGroup rg = (RadioGroup) child.findViewById(R.id.cmnt_way_rg);
+            CmntWay.this.checkedId = rg.getCheckedRadioButtonId();
+            CmntWay.this.dialog.show();
         });
     }
 
     private AlertDialog createDialog(View view) {
+        CmntIntervalBean cmntInterval = ((HomeActivity) getContext()).intervals;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(R.string.card_dialog_alert);
         builder.setPositiveButton(R.string.card_dialog_alert_Y, new DialogInterface.OnClickListener() {
@@ -72,14 +71,11 @@ public class CmntWay extends LinearLayout {
                     cmtWay = "BD";
                 }
                 EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
-                EventBus.getDefault().post(new SendUpperControlEvent(symbolBD, sumbolDT));
+                EventBus.getDefault().post(new SendUpperControlEvent(symbolBD, cmntInterval.getBdInterval(), sumbolDT, cmntInterval.getDtInterval()));
             }
         });
-        builder.setNegativeButton(R.string.card_dialog_alert_N, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setNegativeButton(R.string.card_dialog_alert_N, (dialogInterface, i) -> {
 
-            }
         });
         return builder.create();
     }
