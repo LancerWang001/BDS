@@ -5,6 +5,13 @@ package com;
  * */
 
 public class Constants {
+    // shared preference
+    public static final String DEVOPSCONFIG = "DEVOPSCONFIG";
+
+    public static final String BDSDeviceConfig = "BDSDeviceConfig";
+
+    public static final String ComntWay = "ComntWay";
+
     // serial port address
     public static final String SERIAL_PORT_ADDR = "/dev/ttysWK3";
 
@@ -39,7 +46,7 @@ public class Constants {
     public static final String SIGNAL_SELF_CHECK = "6E330800000000";
 
     // 频闪控制
-    public static final String SIGNAL_STROBE_CONTROL = "6E3108%s%s%s%s%s";
+    public static final String SIGNAL_STROBE_CONTROL = "6E3109%s%s%s%s%s";
 
     // 系统自检结果
     public static final String SIGNAL_SELF_CHECK_RGEX = "6E4108(.{2})0000(.{2}).*";

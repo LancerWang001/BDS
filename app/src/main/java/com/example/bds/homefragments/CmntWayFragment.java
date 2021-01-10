@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.bds.homefragments;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 import com.example.beans.CmntIntervalBean;
 import com.example.events.uppercontrol.SendUpperControlEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 /**

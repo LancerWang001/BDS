@@ -1,7 +1,5 @@
-package com.example.bds;
+package com.example.bds.homefragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +17,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 import com.example.beans.Position;
 import com.example.events.UpdateTrackMessage;
 import com.example.events.systemsleep.SendSystemSleep;
@@ -113,11 +113,6 @@ public class TrackMonitorFragment extends Fragment {
                 EventBus.getDefault().post(new SendSystemSleep(TrackMonitorFragment.this.checkedCardNum));
             }
         });
-
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(getString(R.string.saved_high_score_key), 1232131231);
-        editor.commit();
 
         LinearLayout location = getActivity().findViewById(R.id.canvas_location);
         locationInstance = new Location(location.getContext());

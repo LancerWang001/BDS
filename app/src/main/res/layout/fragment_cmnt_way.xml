@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CmntWayFragment">
+    tools:context=".homefragments.CmntWayFragment">
 
     <TableLayout
         android:id="@+id/selfcheck_table"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <com.example.bds.NumberalEdit
+                <com.example.bds.layouts.NumberalEdit
                     android:id="@+id/dt_interval"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -90,7 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <com.example.bds.NumberalEdit
+                <com.example.bds.layouts.NumberalEdit
                     android:id="@+id/bd_interval"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

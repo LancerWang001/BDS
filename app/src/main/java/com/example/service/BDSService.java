@@ -8,8 +8,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.Constants;
 import com.example.bds.R;
 import com.example.events.ChangeCmntWayEvent;
 import com.example.events.MessageEvent;
@@ -19,6 +19,9 @@ import com.example.events.selfcheck.SendSelfControlEvent;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
 import com.example.events.systemsleep.SendSystemSleep;
 import com.example.events.uppercontrol.SendUpperControlEvent;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.location.LocationService;
 import com.serialport.SerialPortUtil;
 import com.socket.DTSocket;
@@ -27,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,6 +51,8 @@ public class BDSService extends Service {
     ExecutorService executorService;
     DTSocket dtSocket = new DTSocket();
 
+    public HashMap<String, String> BDSDeviceConfig;
+
     //北斗
 //    public int COMMUNICATE_WAY = R.string.card_cmnt_bd;
     private String emissionStatus = "0";
@@ -65,6 +71,7 @@ public class BDSService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.i(TAG, "Service is invoke onBind");
+        initPreference();
         /* Handle BD / WIFI service here */
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             dtSocket.connect();
@@ -97,6 +104,20 @@ public class BDSService extends Service {
         Log.i(TAG, "Service is invoke Destroyed");
     }
 
+    private void initPreference() {
+        try {
+            preferences = getSharedPreferences(Constants.DEVOPSCONFIG, Context.MODE_PRIVATE);
+            Gson gson = new Gson();
+            String json = preferences.getString(Constants.BDSDeviceConfig, "");
+            JsonParser jsonParser = new JsonParser();
+            assert json != null;
+            JsonObject obj = jsonParser.parse(json).getAsJsonObject();
+            BDSDeviceConfig = gson.fromJson(obj, HashMap.class);
+        } catch (Exception e) {
+            Log.d(TAG, "初始化预设参数失败");
+        }
+    }
+
     // 订阅发送信令事件，进行发送
     @Subscribe()
     public void onSendConfigParamsEvent(SendConfigParamsEvent signalEvent) {
@@ -110,7 +131,7 @@ public class BDSService extends Service {
 
     @Subscribe()
     public void onSendStrobeControlEvent(SendStrobeControlEvent signalEvent) {
-        sendShortMessage(signalEvent.signal);
+        sendShortMessage(signalEvent.signal, signalEvent.deviceId);
     }
 
     @Subscribe()
@@ -125,7 +146,7 @@ public class BDSService extends Service {
 
     @Subscribe()
     public void onSendSystemSleepEvent(SendSystemSleep event) {
-        sendShortMessage(event.signal);
+        sendShortMessage(event.signal, event.deviceId);
     }
 
     // 订阅接收信令事件，进行分发
@@ -144,6 +165,20 @@ public class BDSService extends Service {
             sendService(signal);
         } else {
             String bdtxaSignal = getBDTXA(signal);
+            sendService(bdtxaSignal);
+        }
+    }
+
+    private void sendShortMessage(String signal, String deviceId) {
+        if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
+            sendService(signal);
+        } else {
+            String cardId = BDSDeviceConfig.get(deviceId);
+            if (null == cardId) {
+                Log.d(TAG, "设备号与北斗卡号不匹配！");
+                return;
+            }
+            String bdtxaSignal = getBDTXA(signal, cardId);
             sendService(bdtxaSignal);
         }
     }
@@ -171,7 +206,6 @@ public class BDSService extends Service {
             } else {
                 dtSocket.writeData(data);
             }
-            Toast.makeText(getApplicationContext(), "发送成功！", Toast.LENGTH_SHORT).show();
         });
     }
 

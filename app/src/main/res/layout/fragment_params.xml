@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParamsFragment">
+    tools:context=".homefragments.ParamsFragment">
 
     <TableLayout
         android:id="@+id/selfcheck_table"
@@ -49,7 +49,7 @@
             <TableRow
                 android:layout_weight="1"
                 android:layout_height="match_parent">
-                <com.example.bds.NumberalEdit
+                <com.example.bds.layouts.NumberalEdit
                     android:id="@+id/accespeedRange"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -96,7 +96,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 >
-                <com.example.bds.NumberalEdit
+                <com.example.bds.layouts.NumberalEdit
                     android:id="@+id/outWaterTime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -143,7 +143,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 >
-                <com.example.bds.NumberalEdit
+                <com.example.bds.layouts.NumberalEdit
                     android:id="@+id/timeInterVal"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.bds.homefragments;
 
 import android.content.Context;
 import android.graphics.Canvas;

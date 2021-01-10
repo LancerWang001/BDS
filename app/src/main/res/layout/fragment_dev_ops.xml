@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mainfragments.DevOpsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:id="@+id/pairTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin">
+
+            <TextView
+                android:text="@string/devopsTitle"
+                android:textColor="#333"
+                android:textSize="30sp" />
+
+            <TableRow>
+
+                <TableRow android:layout_weight=".4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/devopsDevice"
+                        android:textSize="25sp" />
+                </TableRow>
+
+                <TableRow android:layout_weight=".4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/devopsCard"
+                        android:textSize="25sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".2">
+
+                    <TextView
+                        android:id="@+id/devOpsAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:width="130dp"
+                        android:text="@string/devopsAdd"
+                        android:textAlignment="textEnd"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        tools:ignore="RtlHardcoded" />
+                </TableRow>
+            </TableRow>
+        </TableLayout>
+        <TableLayout
+            android:id="@+id/cmnt_way_config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin">
+            <TextView
+                android:text="@string/devopsCmntway"
+                android:textColor="#333"
+                android:textSize="30sp" />
+            <TableRow>
+                <TextView
+                    android:text="通信方式："
+                    android:textSize="25sp"/>
+                <RadioGroup
+                    android:id="@+id/devopsCmnt">
+                    <RadioButton
+                        android:id="@+id/devopsCmnt_defaultChecked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:checked="true"
+                        android:text="电台通信"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:text="北斗通信"/>
+                </RadioGroup>
+            </TableRow>
+        </TableLayout>
+        <Button
+            android:id="@+id/confirmDevConfig"
+            android:text="@string/devopsConfirm"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

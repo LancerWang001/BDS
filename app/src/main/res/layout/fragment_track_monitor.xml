@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TrackMonitorFragment">
+    tools:context=".homefragments.TrackMonitorFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
 
             </TableLayout>
 
-            <com.example.bds.CmntWay
+            <com.example.bds.layouts.CmntWay
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -92,7 +92,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".7">
 
-                        <com.example.bds.StrobeControl />
+                        <com.example.bds.layouts.StrobeControl />
                     </TableRow>
                 </TableRow>
             </TableLayout>
@@ -138,7 +138,7 @@
                             android:id="@+id/sys_rest"
                             android:layout_width="match_parent"
                             android:gravity="center|left"
-                            android:orientation="horizontal"></RadioGroup>
+                            android:orientation="horizontal"/>
                     </TableRow>
                 </TableRow>
 

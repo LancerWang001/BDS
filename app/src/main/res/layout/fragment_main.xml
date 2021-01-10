@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
-    tools:context=".MainFragment">
+    tools:context=".homefragments.MainFragment">
 
     <android.support.v7.widget.CardView
         android:id="@+id/fragmentcard"

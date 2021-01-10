@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.bds.layouts;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.MainActivity;
+import com.example.bds.R;
 import com.example.events.ChangeCmntWayEvent;
 
 import org.greenrobot.eventbus.EventBus;

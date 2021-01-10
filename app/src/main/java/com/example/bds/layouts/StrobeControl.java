@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.bds.layouts;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -16,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 import com.example.beans.Status;
 import com.example.beans.StrobeState;
 import com.example.events.strobecontrol.SendStrobeControlEvent;

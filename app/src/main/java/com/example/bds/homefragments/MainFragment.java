@@ -1,17 +1,18 @@
-package com.example.bds;
+package com.example.bds.homefragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.example.events.MessageEvent;
-import com.example.events.configparams.SendConfigParamsEvent;
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -19,25 +20,25 @@ import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ParamsFragment#newInstance} factory method to
+ * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ParamsFragment extends Fragment {
+public class MainFragment extends Fragment {
 
+    public static final String status = "a";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    TextView t1;
+    TextView locationText;
+    SharedPreferences context;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private EditText accelerationText;
-    private EditText waterTimeText;
-    private EditText attitudDeterminationTimeText;
-
-    public ParamsFragment() {
+    public MainFragment() {
         // Required empty public constructor
     }
 
@@ -50,8 +51,8 @@ public class ParamsFragment extends Fragment {
      * @return A new instance of fragment MainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ParamsFragment newInstance(String param1, String param2) {
-        ParamsFragment fragment = new ParamsFragment();
+    public static MainFragment newInstance(String param1, String param2) {
+        MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,6 +63,7 @@ public class ParamsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -72,47 +74,41 @@ public class ParamsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_params, container, false);
+        return inflater.inflate(R.layout.fragment_main, container, false);
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button paramSetBtn = (Button) getActivity().findViewById(R.id.param_set);
-        if(null != paramSetBtn) Log.d("paramSetBtn:", "initial success!");
-        else Log.d("paramSetBtn:", "initial fail!");
+        CardView cardView = (CardView) getActivity().findViewById(R.id.fragmentcard);
+        cardView.setCardBackgroundColor(getResources().getColor(R.color.background));
+        LinearLayout selfBtn = (LinearLayout) getActivity().findViewById(R.id.card_main_selfcheck);
 
-        paramSetBtn.setOnClickListener(new View.OnClickListener() {
+        selfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accelerationText = (EditText) getActivity().findViewById(R.id.accespeedRange);
-                String a = String.valueOf(accelerationText.getText());
-                Log.d("a",a);
-                waterTimeText = (EditText) getActivity().findViewById(R.id.outWaterTime);
-                String b = String.valueOf(waterTimeText.getText());
-                attitudDeterminationTimeText = (EditText) getActivity().findViewById(R.id.timeInterVal);
-                String c = String.valueOf(attitudDeterminationTimeText.getText());
-                Log.d("========参数设置发送", "accelerationText====" + a + "waterTimeText====" + b + "attitudDeterminationTimeText====" + c);
-                EventBus.getDefault().post(new SendConfigParamsEvent(a, b, c));
+                HomeActivity home = (HomeActivity) getActivity();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, new SelfCheckFragment())
+                        .commit();
+            }
+        });
+
+        LinearLayout trackMoniBtn = (LinearLayout) getActivity().findViewById(R.id.card_main_position);
+        trackMoniBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, new TrackMonitorFragment())
+                        .commit();
             }
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        // dispatch data
-        Log.d("Event Bus: ", event.message);
+    public void onMessage(String mess) {
     }
 }

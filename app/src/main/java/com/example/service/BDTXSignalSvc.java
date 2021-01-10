@@ -25,6 +25,11 @@ public class BDTXSignalSvc {
         return calcBDVerifyRes(bdtxSignal);
     }
 
+    static String getBDTXA(String shortMessage, String targetCardNum) {
+        String bdtxSignal = String.format(SIGNAL_SHORT_MSG_S, targetCardNum, shortMessage);
+        return calcBDVerifyRes(bdtxSignal);
+    }
+
     static String getBDTXR(String data) {
         Log.d(TAG, data);
         Pattern pattern = Pattern.compile(SIGNAL_SHORT_MSG_R);

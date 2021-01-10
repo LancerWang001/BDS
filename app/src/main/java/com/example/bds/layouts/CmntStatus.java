@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.bds.layouts;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 import com.example.events.EmittSocketEvent;
 
 import org.greenrobot.eventbus.EventBus;

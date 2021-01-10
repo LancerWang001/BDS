@@ -1,21 +1,15 @@
-package com.example.bds;
+package com.example.bds.homefragments;
 
-import android.annotation.SuppressLint;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.events.ChangeCmntWayEvent;
-import com.example.events.configparams.SendConfigParamsEvent;
-import com.example.events.selfcheck.SendSelfControlEvent;
+import com.example.bds.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -92,6 +86,17 @@ public class ConfigFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_config, container, false);
     }
+
+    private void bindTransaction(View bindView, Listener listener) {
+        if (null != bindView && null != listener)
+            bindView.setOnClickListener(listener);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessage(String mess) {
+
+    }
+
     private class Listener implements View.OnClickListener {
         Fragment targetFragment;
 
@@ -106,14 +111,5 @@ public class ConfigFragment extends Fragment {
                     .replace(R.id.fragment, targetFragment)
                     .commit();
         }
-    }
-    private void bindTransaction(View bindView, Listener listener) {
-        if (null != bindView && null != listener)
-            bindView.setOnClickListener(listener);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessage(String mess) {
-
     }
 }

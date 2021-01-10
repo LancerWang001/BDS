@@ -20,6 +20,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.bds.homefragments.ConfigFragment;
+import com.example.bds.homefragments.HelpFragment;
+import com.example.bds.homefragments.MainFragment;
+import com.example.bds.homefragments.SupportFragment;
 import com.example.beans.CmntIntervalBean;
 import com.example.beans.Status;
 import com.example.events.BDError;
@@ -37,8 +41,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /* Data service */
     public BDSService bdsService;
     public CmntIntervalBean intervals = new CmntIntervalBean();
-    private HashMap<String, Status> targetDevices = new HashMap<String, Status>();
     ServiceConnection conn = new AppServiceConnection();
+    private HashMap<String, Status> targetDevices = new HashMap<String, Status>();
     private RadioGroup mRadioGroup;
     private FragmentManager fm;
     private FragmentTransaction transaction;
@@ -155,26 +159,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         builder.create().show();
     }
 
+    public HashMap<String, Status> getTargetDevices() {
+        return targetDevices;
+    }
+
     private class AppServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.d(TAG, "onServiceConnected: BDSService");
             BDSService.BDSBinder binder = (BDSService.BDSBinder) iBinder;
             bdsService = binder.getService();
-            bdsService.preferences = HomeActivity.this.getSharedPreferences("BDPreferences", MODE_PRIVATE);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             bdsService = null;
         }
-    }
-
-    public HashMap<String, Status> getTargetDevices() {
-        return targetDevices;
-    }
-
-    public void setTargetDevices(HashMap<String, Status> targetDevices) {
-        this.targetDevices = targetDevices;
     }
 }

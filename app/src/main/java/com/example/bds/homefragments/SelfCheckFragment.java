@@ -1,4 +1,4 @@
-package com.example.bds;
+package com.example.bds.homefragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +13,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.bds.HomeActivity;
+import com.example.bds.R;
 import com.example.beans.Status;
 import com.example.events.selfcheck.RecieveSelfControlEvent;
 import com.example.events.selfcheck.SendSelfControlEvent;

@@ -89,7 +89,7 @@
 
         </RadioGroup>
     </LinearLayout>
-    <com.example.bds.TitleBar
+    <com.example.bds.layouts.TitleBar
         android:id="@+id/titlebar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/>
