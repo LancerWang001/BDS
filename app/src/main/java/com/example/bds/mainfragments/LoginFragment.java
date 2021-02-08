@@ -54,6 +54,7 @@ public class LoginFragment extends Fragment {
         textpassword = (EditText) getActivity().findViewById(R.id.password);
         btLogin = (Button) getActivity().findViewById(R.id.button_login);
         btExit = (Button) getActivity().findViewById(R.id.button_exit);
+        reinitDevOps();
         btLogin.setOnClickListener(v -> {
             String userName = textuerName.getText().toString().trim();
             String userPasswd = textpassword.getText().toString().trim();
@@ -61,7 +62,6 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getActivity(), info, Toast.LENGTH_SHORT).show();
         });
         btExit.setOnClickListener(v -> {
-            reinitDevOps();
             int pid = android.os.Process.myPid();
             android.os.Process.killProcess(pid);
             ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
@@ -73,18 +73,22 @@ public class LoginFragment extends Fragment {
     private String checkAccount(String userName, String userPasswd) {
         String loginInfo = "";
         if (devOpsMap.containsKey(userName)) {
-            if (userPasswd.equals(devOpsMap.get(userName))) loginInfo = "开发人员登入";
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.preAuth, new DevOpsFragment())
-                    .commit();
+            if (userPasswd.equals(devOpsMap.get(userName))) {
+                loginInfo = "开发人员登入";
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.preAuth, new DevOpsFragment())
+                        .commit();
+            }
         } else if (adminMap.containsKey(userName)) {
             if (userPasswd.equals(adminMap.get(userName))) loginInfo = "管理人员登入";
         } else if (userMap.containsKey(userName)) {
-            if (userPasswd.equals(userMap.get(userName))) loginInfo = "用户登入";
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            if (userPasswd.equals(userMap.get(userName))) {
+                loginInfo = "用户登入";
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
         } else {
             loginInfo = "用户名不存在";
             textuerName.requestFocus();

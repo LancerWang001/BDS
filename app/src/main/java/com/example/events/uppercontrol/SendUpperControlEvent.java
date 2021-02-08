@@ -38,4 +38,8 @@ public class SendUpperControlEvent implements SendSignalEvent {
         signal = String.format(SIGNAL_UPPER_CONTROL, bdSymbol, bdIntervalCalc, dtSymbol, dtIntervalCalc);
         signal = calcCustomerVerifyRes(signal);
     }
+
+    public String getBdInterval() {
+        return bdInterval;
+    }
 }

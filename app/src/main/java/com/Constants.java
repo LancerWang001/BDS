@@ -15,10 +15,14 @@ public class Constants {
     // serial port address
     public static final String SERIAL_PORT_ADDR = "/dev/ttysWK3";
 
+//    public static final String SERIAL_PORT_ADDR = "/dev/ttyS0";
+
     public static final int SERIAL_PORT_RATE = 115200;
 
     // Radio wifi
-    public static final String DT_HOST = "192.168.56.1";
+//    public static final String DT_HOST = "192.168.124.5";
+
+    public static final String DT_HOST = "192.168.1.123";
 
     public static final int DT_PORT = 10161;
 
@@ -26,7 +30,7 @@ public class Constants {
 
 //    public static final String TARGET_CARD_NUM = "0333132";
 
-    public static final String TARGET_CARD_NUM = "0332953";
+    public static final String TARGET_CARD_NUM = "0229573";
 
     /* 上下位机协议 */
 
@@ -63,6 +67,12 @@ public class Constants {
 
     // 接收卡号读取结果
     public static String SIGNAL_READ_CARD_RGEX = "\\$BDICI,(.*?),.*";
+
+    // 发送读取信号强度
+    public static final String SIGNAL_READ_STRENGTH = "$CCRMO,BSI,2,2*";
+
+    // 接收读取信号强度
+    public static final String SIGNAL_READ_STRENGTH_RGEX = "\\$BDBSI,(.*?),(.*?),(.{19})\\*.*";
 
     // 发送短报文
     public static final String SIGNAL_SHORT_MSG_S = "$CCTXA,%s,1,2,A4%s*";

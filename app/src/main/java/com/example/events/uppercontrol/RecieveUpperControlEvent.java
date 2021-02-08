@@ -1,11 +1,12 @@
 package com.example.events.uppercontrol;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import android.util.Log;
 
 import static com.Constants.SIGNAL_UPPER_DATA;
 import static com.example.tools.SignalTools.haxToInt;
@@ -31,6 +32,7 @@ public class RecieveUpperControlEvent {
         Matcher matcher = pattern.matcher(data);
         if (matcher.find()) {
             cardNum = matcher.group(1);
+            cardNum = haxToInt(cardNum);
 
             String hour = matcher.group(2);
             String minute = matcher.group(3);
@@ -63,14 +65,9 @@ public class RecieveUpperControlEvent {
             SimpleDateFormat formatGMS = new SimpleDateFormat("HH:mm:ss");
             formatGMS.setTimeZone(TimeZone.getDefault());
 
-            String time = hour + ":" + minute + ":" + second;
-            try {
-                Date upperDate = formatUTC.parse(time);
-                timestamp = formatGMS.format(upperDate);
-            } catch (Exception e) {
-                timestamp = (Integer.parseInt(hour) + 8) + ":" + minute + ":" + second;
-                Log.d("upperDate parse error:", time);
-            }
+//            String time = hour + ":" + minute + ":" + second;
+            timestamp = (Integer.parseInt(hour) + 8) + ":" + minute + ":" + second;
+
 
             targetPower = power;
             latitudeHem = lahem;
@@ -83,30 +80,46 @@ public class RecieveUpperControlEvent {
             else if (longitudeHem.equals("45")) longitudeHem = "E";
 
             StringBuilder laBf = new StringBuilder();
+            StringBuilder laBfm = new StringBuilder();
             if (latitudeHem.equals("S")) {
                 laBf.append("-");
+                laBfm.append("-");
             }
-            laBf.append(haxToInt(ladd));
-            laBf.append(".");
-            laBf.append(haxToInt(lamm1));
-            laBf.append(haxToInt(lamm2));
-            laBf.append(haxToInt(lamm3));
-            laBf.append(haxToInt(lamm4));
-            laBf.append(haxToInt(lamm5));
-            latitude = Double.parseDouble(laBf.toString());
+            laBf.append(getPosStringNum(ladd));
+            laBfm.append(getPosStringNum(lamm1));
+            laBfm.append(".");
+            laBfm.append(getPosStringNum(lamm2));
+            laBfm.append(getPosStringNum(lamm3));
+            laBfm.append(getPosStringNum(lamm4));
+            laBfm.append(getPosStringNum(lamm5));
+            double latitudem = Double.parseDouble(laBfm.toString());
+            latitudem = latitudem / 60;
+            latitude = Double.parseDouble(laBf.toString()) + latitudem;
 
             StringBuilder loBf = new StringBuilder();
+            StringBuilder loBfm = new StringBuilder();
             if (longitudeHem.equals("W")) {
                 loBf.append("-");
+                loBfm.append("-");
             }
-            loBf.append(haxToInt(loddd));
-            loBf.append(".");
-            loBf.append(haxToInt(lomm1));
-            loBf.append(haxToInt(lomm2));
-            loBf.append(haxToInt(lomm3));
-            loBf.append(haxToInt(lomm4));
-            loBf.append(haxToInt(lomm5));
-            longitude = Double.parseDouble(loBf.toString());
+            loBf.append(getPosStringNum(loddd));
+            loBfm.append(getPosStringNum(lomm1));
+            loBfm.append(".");
+            loBfm.append(getPosStringNum(lomm2));
+            loBfm.append(getPosStringNum(lomm3));
+            loBfm.append(getPosStringNum(lomm4));
+            loBfm.append(getPosStringNum(lomm5));
+            double longitudem = Double.parseDouble(loBfm.toString());
+            longitudem = longitudem / 60;
+            longitude = Double.parseDouble(loBf.toString()) + longitudem;
         }
+    }
+
+    private String getPosStringNum(String hexString) {
+        String intString = haxToInt(hexString);
+        if (intString.length() < 2) {
+            intString = "0" + intString;
+        }
+        return intString;
     }
 }

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/cardview_dark_background"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <Button
         android:id="@+id/title_back"
@@ -12,18 +13,31 @@
         android:layout_gravity="center"
         android:layout_margin="5dip"
         android:backgroundTint="@color/cardview_dark_background"
-        android:textColor="@color/lightText"
-        android:text="返回"/>
+        android:text="@string/heading_back"
+        android:textColor="@color/lightText" />
 
-    <TextView
-        android:id="@+id/title_text"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="#fff"
-        android:textSize="22sp" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+
+        <com.example.bds.layouts.CmntStatus
+            android:id="@+id/comnt_status"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dip" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/title_logout"
@@ -32,7 +46,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dip"
         android:backgroundTint="@color/cardview_dark_background"
-        android:textColor="@color/lightText"
-        android:text="退出"/>
+        android:text="退出"
+        android:textColor="@color/lightText" />
 
 </LinearLayout>

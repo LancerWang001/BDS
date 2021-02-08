@@ -2,7 +2,7 @@ package com.example.beans;
 
 public class StrobeState {
     private String strobelAlarm = "Y"; // 频闪开启
-    private String twinkletimesValue = "7"; // 闪烁次数
+    private String twinkletimesValue = "5"; // 闪烁次数
     private String twinkleTimeLengthValue = "2"; // 闪烁时常
     private String twinkleInterValValue = "60"; // 闪烁间隔
 

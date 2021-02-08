@@ -2,44 +2,79 @@ package com.socket;
 
 import android.util.Log;
 
-import com.example.events.EmittSocketEvent;
+import com.example.beans.TimerClock;
 import com.example.events.MessageEvent;
+import com.example.events.ServiceEvent;
+import com.utils.ClockTask;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.Constants.DT_HOST;
 import static com.Constants.DT_PORT;
 
 public class DTSocket {
+    String TAG = "DTSocket";
     public Socket socket;
     InputStream inputStream;
     OutputStream outputStream;
 
-    String TAG = "DTSocket";
+    private KeepAliveTimer keepAliveTimer;
+
+    private class KeepAliveTimer {
+        private Timer timer;
+        public void start () {
+            stop();
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    DTSocket.this.writeData("keepAlive");
+                }
+            }, 0, 60000);
+        }
+        public void stop () {
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+        }
+    }
 
     private boolean isOpen;
 
     public void connect() {
         new Thread(() -> {
-            try {
-                EventBus.getDefault().post(new EmittSocketEvent("1"));
-                socket = new Socket(DT_HOST, DT_PORT);
-                inputStream = socket.getInputStream();
-                outputStream = socket.getOutputStream();
-                isOpen = true;
-                EventBus.getDefault().post(new EmittSocketEvent("0"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            while (isOpen) {
-                DTSocket.this.readData();
+            synchronized (DTSocket.this) {
+                try {
+                    socket = new Socket();
+                    socket.connect(new InetSocketAddress(DT_HOST, DT_PORT), 3000);
+                    inputStream = socket.getInputStream();
+                    outputStream = socket.getOutputStream();
+                    isOpen = true;
+                    if (null != keepAliveTimer) {
+                        keepAliveTimer.stop();
+                        keepAliveTimer = null;
+                    }
+                    keepAliveTimer = new KeepAliveTimer();
+                    keepAliveTimer.start();
+                    EventBus.getDefault().post(new ServiceEvent("DT"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    failedConnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while (isOpen) {
+                    DTSocket.this.readData();
+                }
             }
         }).start();
         try {
@@ -51,9 +86,6 @@ public class DTSocket {
 
     public void writeData(String data) {
         try {
-            if (socket == null) {
-                connect();
-            }
             String fullData = data + "\r\n";
             Log.d(TAG, fullData);
             outputStream.write(fullData.getBytes());
@@ -76,7 +108,6 @@ public class DTSocket {
             failedConnect();
             e.printStackTrace();
         } catch (Exception e) {
-            Log.d(TAG, "Connect drop !!!");
             failedConnect();
         }
     }
@@ -102,6 +133,10 @@ public class DTSocket {
             socket = null;
             inputStream = null;
             outputStream = null;
+            if (keepAliveTimer != null) {
+                keepAliveTimer.stop();
+                keepAliveTimer = null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -109,13 +144,13 @@ public class DTSocket {
         }
     }
 
-    private void failedConnect () {
+    private void failedConnect() {
         Log.d(TAG, "Connect drop !!!");
+        EventBus.getDefault().post(new ServiceEvent("DT",true));
         close();
-        EventBus.getDefault().post(new EmittSocketEvent("2"));
     }
 
-    public boolean isConnected () {
+    public boolean isConnected() {
         return socket != null && socket.isConnected();
     }
 }

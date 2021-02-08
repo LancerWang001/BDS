@@ -16,8 +16,11 @@ import android.widget.TextView;
 import com.example.bds.HomeActivity;
 import com.example.bds.R;
 import com.example.beans.Status;
+import com.example.beans.TimerClock;
 import com.example.events.selfcheck.RecieveSelfControlEvent;
 import com.example.events.selfcheck.SendSelfControlEvent;
+import com.example.events.timer.TargetEvent;
+import com.example.events.uppercontrol.RecieveUpperControlEvent;
 import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,56 +31,22 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SelfCheckFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SelfCheckFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private BDSService bdsService;
-    private TextView batteryVoltageText;
+    private TimerClock timerClock;
+    private Button selfCheckButton;
 
     public SelfCheckFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SelfCheckFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SelfCheckFragment newInstance(String param1, String param2) {
-        SelfCheckFragment fragment = new SelfCheckFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         // 1 获得通讯方式，控制指示灯的显示
-        bdsService = ((HomeActivity) getActivity()).bdsService;
+        // TODO: Rename and change types of parameters
+        BDSService bdsService = ((HomeActivity) Objects.requireNonNull(getActivity())).bdsService;
         int way = bdsService.COMMUNICATE_WAY;
         if (way == R.string.card_cmnt_dt) {
             Log.d("==========", "初始化电台指示灯");
@@ -89,21 +58,11 @@ public class SelfCheckFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button selfCheckButton = getActivity().findViewById(R.id.syscheck);
-        selfCheckButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 系统自检按钮的发送
-                Log.d("=======", "Voltage snd");
-                EventBus.getDefault().post(new SendSelfControlEvent());
-            }
-        });
-
-        Button reConnectButton = getActivity().findViewById(R.id.reconnect);
-        reConnectButton.setOnClickListener(view -> {
-            // 重新连接按钮的发送reConnectService
-            Log.d("=======", "reconnct button snd");
-            ((HomeActivity) getActivity()).bdsService.reConnectService();
+        selfCheckButton = Objects.requireNonNull(getActivity()).findViewById(R.id.syscheck);
+        selfCheckButton.setOnClickListener(view -> {
+            // 系统自检按钮的发送
+            Log.d("=======", "Voltage snd");
+            EventBus.getDefault().post(new SendSelfControlEvent());
         });
         flushCheckStatus();
     }
@@ -121,7 +80,7 @@ public class SelfCheckFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void flushCheckStatus () {
+    private void flushCheckStatus() {
         TableLayout tablelayout = getActivity().findViewById(R.id.selfcheck_table);
         HashMap<String, Status> targetDevices = ((HomeActivity) getActivity()).getTargetDevices();
         Set<String> keySet = targetDevices.keySet();
@@ -151,10 +110,26 @@ public class SelfCheckFragment extends Fragment {
         flushCheckStatus();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onRecieveUpperControlEvent(RecieveUpperControlEvent event) {
+        selfCheckButton.setEnabled(true);
+        if (timerClock != null) {
+            timerClock.stop();
+        }
+        timerClock = new TimerClock(event.cardNum);
+        timerClock.start();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onTargetEvent(TargetEvent event) {
+        if (event.time.equals("0")) {
+            selfCheckButton.setEnabled(false);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
 }

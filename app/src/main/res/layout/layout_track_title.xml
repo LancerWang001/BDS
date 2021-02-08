@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:gravity="left"
-    android:background="#ffcccccc"
-    android:layout_marginStart="100dip"
-    android:layout_marginEnd="10dip"
-    android:layout_marginTop="10dip"
-    android:layout_marginBottom="10dip"
-    android:textColor="#000"
-    android:textFontWeight="1000"
-    android:textSize="25sp"
-    >
-</TextView>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="20dip"
+    android:layout_margin="0.5dip"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginEnd="10dip"
+        android:layout_marginBottom="10dip"
+        android:background="#ffcccccc"
+        android:gravity="end"
+        android:textColor="#000"
+        android:textFontWeight="1000"
+        android:textSize="25sp" />
+</TableRow>

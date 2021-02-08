@@ -148,4 +148,10 @@
     <string name="devopsCard">卡号</string>
     <string name="devopsDevice">设备号</string>
     <string name="devopsCmntway">预设通信方式</string>
+    <string name="bd_timer">北斗发送倒计时:</string>
+    <string name="self_check_label">系统自检</string>
+    <string name="self_check_btn">开始</string>
+    <string name="self_check_result">系统自检结果：</string>
+    <string name="sys_sleep">系统休眠</string>
+    <string name="heading_back">返回</string>
 </resources>

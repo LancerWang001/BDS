@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,16 +17,26 @@ import com.Constants;
 import com.example.bds.HomeActivity;
 import com.example.bds.R;
 import com.example.beans.CmntIntervalBean;
+import com.example.events.BDSendPermitEvent;
 import com.example.events.ChangeCmntWayEvent;
 import com.example.events.uppercontrol.SendUpperControlEvent;
+import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class CmntWay extends LinearLayout {
 
     private AlertDialog dialog;
 
+    private RadioGroup cmntGroup;
+
+    private Button sendCmntway;
+
     private int checkedId;
+
+    private SharedPreferences preferences = ((HomeActivity) getContext()).bdsService.preferences;
 
     public CmntWay(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,10 +46,12 @@ public class CmntWay extends LinearLayout {
     @Override
     public void onViewAdded(View child) {
         super.onViewAdded(child);
+        EventBus.getDefault().register(this);
         this.dialog = createDialog(child);
-        child.findViewById(R.id.send_cmntway).setOnClickListener((OnClickListener) view -> {
-            RadioGroup rg = (RadioGroup) child.findViewById(R.id.cmnt_way_rg);
-            CmntWay.this.checkedId = rg.getCheckedRadioButtonId();
+        this.cmntGroup = child.findViewById(R.id.cmnt_way_rg);
+        sendCmntway = child.findViewById(R.id.send_cmntway);
+        sendCmntway.setOnClickListener((OnClickListener) view -> {
+            CmntWay.this.checkedId = cmntGroup.getCheckedRadioButtonId();
             CmntWay.this.dialog.show();
         });
         initCmntWay();
@@ -48,8 +61,7 @@ public class CmntWay extends LinearLayout {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(R.string.card_dialog_alert);
         builder.setPositiveButton(R.string.card_dialog_alert_Y, (dialogInterface, i) -> {
-            RadioGroup radioGroup = view.findViewById(R.id.cmnt_way_rg);
-            RadioButton radioGroupButton = view.findViewById(radioGroup.getCheckedRadioButtonId());
+            RadioButton radioGroupButton = view.findViewById(cmntGroup.getCheckedRadioButtonId());
             String cmtWay = radioGroupButton.getText().toString();
             Log.d("way", cmtWay);
             if (cmtWay.equals("电台通信")) {
@@ -82,21 +94,45 @@ public class CmntWay extends LinearLayout {
                 break;
         }
         CmntIntervalBean cmntInterval = ((HomeActivity) getContext()).intervals;
+        HomeActivity home = (HomeActivity) getContext();
+        BDSService service = home.bdsService;
+        int COMMUNICATE_WAY = service.COMMUNICATE_WAY;
+        if (checkedId == COMMUNICATE_WAY) return;
+        try {
+            EventBus.getDefault().post(
+                    new SendUpperControlEvent(symbolBD, cmntInterval.getBdInterval(), sumbolDT, cmntInterval.getDtInterval())
+            );
+        } catch (Exception e) {
+//            Log.
+        }
         EventBus.getDefault().post(new ChangeCmntWayEvent(cmntWay));
-        EventBus.getDefault().post(
-                new SendUpperControlEvent(symbolBD, cmntInterval.getBdInterval(), sumbolDT, cmntInterval.getDtInterval())
-        );
     }
 
     private void initCmntWay() {
-        SharedPreferences preferences = ((HomeActivity) getContext()).bdsService.preferences;
         try {
             String ComntWay = preferences.getString(Constants.ComntWay, "");
             if (ComntWay.equals("BD")) {
-                changeCmntWay(R.string.card_cmnt_bd);
+                cmntGroup.check(R.id.card_cmnt_bd);
+                changeCmntWay(R.id.card_cmnt_bd);
             }
         } catch (Exception e) {
             Toast.makeText(getContext(), "预设通信方式初始化失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onViewRemoved(View child) {
+        super.onViewRemoved(child);
+        Log.d("CmntWay", "removed!!!");
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onBDSendPermitEvent(BDSendPermitEvent event) {
+        if (!event.isPermission()) {
+            sendCmntway.setEnabled(false);
+        } else {
+            sendCmntway.setEnabled(true);
         }
     }
 }

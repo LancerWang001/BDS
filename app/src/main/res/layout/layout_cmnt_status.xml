@@ -1,57 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginLeft="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="#cccccc"
-    android:padding="15dp">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="20dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="北斗状态"
-            android:textColor="#000"
-            android:textSize="20sp" />
-
-        <View
-            android:id="@+id/bd_bulb"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/dark_bulb_shape"
-            android:layout_gravity="center"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="180dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="20dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="电台状态"
-            android:textColor="#000"
-            android:textSize="20sp" />
-        <View
-            android:id="@+id/dt_bulb"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/bulb_animation" />
-    </LinearLayout>
-</RelativeLayout>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dt_bulb"
+    android:layout_width="20dp"
+    android:layout_height="20dp"
+    android:background="@drawable/bulb_animation" />

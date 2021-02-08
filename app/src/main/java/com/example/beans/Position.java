@@ -7,8 +7,26 @@ public class Position {
     private double ydistance;
     private double latitude;
     private double longitude;
+    private String latHem;
+    private String longHem;
     private int xRange;
     private int yRange;
+
+    public String getLatHem() {
+        return latHem;
+    }
+
+    public void setLatHem(String latHem) {
+        this.latHem = latHem;
+    }
+
+    public String getLongHem() {
+        return longHem;
+    }
+
+    public void setLongHem(String longHem) {
+        this.longHem = longHem;
+    }
 
     public String getCardNum() {
         return cardNum;
@@ -74,42 +92,4 @@ public class Position {
         this.ydistance = ydistance;
     }
 
-    public static class StrobeState {
-        private String strobelAlarm = "Y"; // 频闪开启
-        private String twinkletimesValue = "7"; // 闪烁次数
-        private String twinkleTimeLengthValue = "2"; //
-        private String twinkleInterValValue = "60";
-
-        public String getStrobelAlarm() {
-            return strobelAlarm;
-        }
-
-        public void setStrobelAlarm(String strobelAlarm) {
-            this.strobelAlarm = strobelAlarm;
-        }
-
-        public String getTwinkletimesValue() {
-            return twinkletimesValue;
-        }
-
-        public void setTwinkletimesValue(String twinkletimesValue) {
-            this.twinkletimesValue = twinkletimesValue;
-        }
-
-        public String getTwinkleTimeLengthValue() {
-            return twinkleTimeLengthValue;
-        }
-
-        public void setTwinkleTimeLengthValue(String twinkleTimeLengthValue) {
-            this.twinkleTimeLengthValue = twinkleTimeLengthValue;
-        }
-
-        public String getTwinkleInterValValue() {
-            return twinkleInterValValue;
-        }
-
-        public void setTwinkleInterValValue(String twinkleInterValValue) {
-            this.twinkleInterValValue = twinkleInterValValue;
-        }
-    }
 }

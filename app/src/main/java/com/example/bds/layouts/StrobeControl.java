@@ -20,9 +20,13 @@ import com.example.bds.HomeActivity;
 import com.example.bds.R;
 import com.example.beans.Status;
 import com.example.beans.StrobeState;
+import com.example.events.BDSendPermitEvent;
+import com.example.events.UpdateTrackMessage;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +39,8 @@ public class StrobeControl extends FrameLayout {
     private NumberalEdit twinkletimes;
     private EditText twinkleTimeLength;
     private EditText twinkleInterVal;
+    private Spinner cardIdSpinner;
+    private Button twinkleBtn;
 
     public StrobeControl(@NonNull Context context) {
         super(context);
@@ -49,17 +55,18 @@ public class StrobeControl extends FrameLayout {
     @Override
     public void onViewAdded(View child) {
         super.onViewAdded(child);
+        EventBus.getDefault().register(this);
         HashMap<String, Status> targetDevices = ((HomeActivity) Objects.requireNonNull(getContext())).getTargetDevices();
         //获得单选框的数据
         RadioGroup radioGroup = this.findViewById(R.id.strobeAlarm);
-        Spinner cardIdSpinner = this.findViewById(R.id.card_id_spinner);
+        cardIdSpinner = this.findViewById(R.id.card_id_spinner);
         twinkletimes = (NumberalEdit) this.findViewById(R.id.twinkletimes);
         twinkleTimeLength = (EditText) this.findViewById(R.id.twinkletimelength);
         twinkleInterVal = (EditText) this.findViewById(R.id.twinkleinterval);
 
         setStrobeConfigs(new StrobeState());
 
-        Button twinkleBtn = (Button) this.findViewById(R.id.twinklecontrol);
+        twinkleBtn = this.findViewById(R.id.twinklecontrol);
         twinkleBtn.setOnClickListener((view -> {
             for (String cardId : this.selectedCards) {
                 String strobelAlarm = (String) ((RadioButton) this.findViewById(radioGroup.getCheckedRadioButtonId())).getText();
@@ -69,7 +76,8 @@ public class StrobeControl extends FrameLayout {
                 String twinkletimesValue = String.valueOf(twinkletimes.getText());
                 String twinkleTimeLengthValue = String.valueOf(twinkleTimeLength.getText());
                 String twinkleInterValValue = String.valueOf(twinkleInterVal.getText());
-                if (twinkletimesValue.equals("") || twinkleTimeLengthValue.equals("") || twinkleInterValValue.equals("")) return;
+                if (twinkletimesValue.equals("") || twinkleTimeLengthValue.equals("") || twinkleInterValValue.equals(""))
+                    return;
                 SendStrobeControlEvent sendStrobeControlEvent = new SendStrobeControlEvent(
                         cardId, strobelAlarm, twinkletimesValue, twinkleTimeLengthValue, twinkleInterValValue);
                 EventBus.getDefault().post(sendStrobeControlEvent);
@@ -82,8 +90,12 @@ public class StrobeControl extends FrameLayout {
                 targetDevices.put(cardId, status);
             }
         }));
+        buildDropDownlist();
+    }
 
+    private void buildDropDownlist() {
         // add deviceCard dropdown list
+        HashMap<String, Status> targetDevices = ((HomeActivity) Objects.requireNonNull(getContext())).getTargetDevices();
         Set<String> keyset = targetDevices.keySet();
         ArrayList<String> cardIdList = new ArrayList<String>(keyset);
         cardIdList.add(0, "所有设备");
@@ -125,5 +137,29 @@ public class StrobeControl extends FrameLayout {
         twinkletimes.setText("");
         twinkleTimeLength.setText("");
         twinkleInterVal.setText("");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onMessage(UpdateTrackMessage mess) {
+        Status status = new Status();
+        status.setDeviceId(mess.cardNum);
+        status.setPower(mess.targetPower);
+        ((HomeActivity) getContext()).getTargetDevices().put(mess.cardNum, status);
+        buildDropDownlist();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onBDSendPermitEvent(BDSendPermitEvent event) {
+        if (!event.isPermission()) {
+            twinkleBtn.setEnabled(false);
+        } else {
+            twinkleBtn.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void onViewRemoved(View child) {
+        super.onViewRemoved(child);
+        EventBus.getDefault().unregister(this);
     }
 }

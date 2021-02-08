@@ -47,7 +47,7 @@
                     android:id="@+id/uerName"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="devops1"
+                    android:text="user1"
                     android:maxLines="1"
                     android:textSize="35sp" />
             </LinearLayout>

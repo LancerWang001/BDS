@@ -237,19 +237,17 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="20dip"
-            android:layout_marginTop="15dip"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_weight=".1"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/twinklecontrol"
                 android:layout_marginTop="15dip"
                 android:layout_marginBottom="15dip"
                 android:text="@string/param_send_config"
-                android:textColor="#fff"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:textColor="#fff" />
         </TableRow>
     </TableLayout>
 

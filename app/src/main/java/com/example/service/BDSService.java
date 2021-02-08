@@ -11,11 +11,14 @@ import android.util.Log;
 
 import com.Constants;
 import com.example.bds.R;
+import com.example.events.BDSendPermitEvent;
 import com.example.events.ChangeCmntWayEvent;
 import com.example.events.MessageEvent;
 import com.example.events.configparams.SendConfigParamsEvent;
 import com.example.events.readcard.SendReadCardEvent;
 import com.example.events.selfcheck.SendSelfControlEvent;
+import com.example.events.signalstrength.ReceiveSignalStrengthEvent;
+import com.example.events.signalstrength.SendSignalStrengthEvent;
 import com.example.events.strobecontrol.SendStrobeControlEvent;
 import com.example.events.systemsleep.SendSystemSleep;
 import com.example.events.uppercontrol.SendUpperControlEvent;
@@ -31,6 +34,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,17 +50,18 @@ public class BDSService extends Service {
     public SharedPreferences preferences;
     //电台
     public int COMMUNICATE_WAY = R.string.card_cmnt_dt;
+    public DTSocket dtSocket = new DTSocket();
+    public HashMap<String, String> BDSDeviceConfig;
     int mStartMode;
     IBinder mBinder = new BDSBinder();
     boolean mAllowRebind;
     ExecutorService executorService;
-    DTSocket dtSocket = new DTSocket();
-
-    public HashMap<String, String> BDSDeviceConfig;
+    // 北斗发送倒计时:
+    Timer bdTimer;
+    int bdTimerNum = 0;
 
     //北斗
 //    public int COMMUNICATE_WAY = R.string.card_cmnt_bd;
-    private String emissionStatus = "0";
 
     public BDSService() {
     }
@@ -136,12 +142,22 @@ public class BDSService extends Service {
 
     @Subscribe()
     public void onSendUpperControlEvent(SendUpperControlEvent signalEvent) {
+        signalEvent.getBdInterval();
         sendShortMessage(signalEvent.signal);
     }
 
     @Subscribe()
     public void onSendReadCardEvent(SendReadCardEvent event) {
-        sendShortMessage(calcBDVerifyRes(event.signal));
+        if (COMMUNICATE_WAY == R.string.card_cmnt_bd) {
+            sendService(calcBDVerifyRes(event.signal));
+        }
+    }
+
+    @Subscribe()
+    public void onSendSignalStrengthEvent(SendSignalStrengthEvent event) {
+        if (COMMUNICATE_WAY == R.string.card_cmnt_bd) {
+            sendService(calcBDVerifyRes(event.signal));
+        }
     }
 
     @Subscribe()
@@ -155,6 +171,10 @@ public class BDSService extends Service {
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             handOutSignalEvent(messageEvent.message);
         } else {
+            if (messageEvent.message.startsWith("$BDBSI,")) {
+                EventBus.getDefault().post(new ReceiveSignalStrengthEvent(messageEvent.message));
+                return;
+            }
             String signal = getBDTXR(messageEvent.message);
             handOutSignalEvent(signal);
         }
@@ -164,6 +184,7 @@ public class BDSService extends Service {
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             sendService(signal);
         } else {
+            scheduleBDTimer(!signal.contains("6E3208"));
             String bdtxaSignal = getBDTXA(signal);
             sendService(bdtxaSignal);
         }
@@ -173,6 +194,7 @@ public class BDSService extends Service {
         if (COMMUNICATE_WAY == R.string.card_cmnt_dt) {
             sendService(signal);
         } else {
+            scheduleBDTimer(!signal.contains("6E3208"));
             String cardId = BDSDeviceConfig.get(deviceId);
             if (null == cardId) {
                 Log.d(TAG, "设备号与北斗卡号不匹配！");
@@ -183,13 +205,40 @@ public class BDSService extends Service {
         }
     }
 
+    private void scheduleBDTimer(boolean shouldDisabled) {
+        if (shouldDisabled) {
+            EventBus.getDefault().post(new BDSendPermitEvent(false));
+        }
+        if (bdTimerNum > 0) {
+            return;
+        }
+        bdTimerNum = 60;
+        bdTimer = new Timer();
+        bdTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                BDSService.this.bdTimerNum--;
+                if (BDSService.this.bdTimerNum == 0) {
+                    cancel();
+                    BDSService.this.bdTimer.cancel();
+                    BDSService.this.bdTimer = null;
+                    EventBus.getDefault().post(new BDSendPermitEvent(true));
+                }
+                Log.d("scheduleBDTimer--", Integer.toString(bdTimerNum));
+            }
+        }, 0, 1000);
+    }
+
     @Subscribe()
     public void onChangeCmntWay(ChangeCmntWayEvent event) {
         if (event.cmntWay == R.string.card_cmnt_dt) {
             // 关闭串口，连接电台
             serialPortUtil.closeSerialPort();
             dtSocket.connect();
-        } else {
+        } else if (event.cmntWay == R.string.card_cmnt_bd) {
+            if (bdTimerNum > 0) {
+                EventBus.getDefault().post(new BDSendPermitEvent(false));
+            }
             // 连接电台，关闭串口
             dtSocket.close();
             serialPortUtil.openSerialPort();

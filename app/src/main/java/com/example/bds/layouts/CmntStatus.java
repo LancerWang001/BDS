@@ -1,98 +1,157 @@
 package com.example.bds.layouts;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
+import android.content.IntentFilter;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.example.bds.HomeActivity;
 import com.example.bds.R;
-import com.example.events.EmittSocketEvent;
+import com.example.events.ChangeCmntWayEvent;
+import com.example.events.ServiceEvent;
+import com.example.events.signalstrength.ReceiveSignalStrengthEvent;
+import com.example.events.signalstrength.SendSignalStrengthEvent;
+import com.example.service.BDSService;
+import com.socket.NetworkReceiver;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class CmntStatus extends RelativeLayout {
+import java.util.ArrayList;
 
+public class CmntStatus extends View {
     private String TAG = "CmntStatus";
-
-    View bdBulb;
-    View dtBulb;
+    private Context mContext;
+    private NetworkReceiver netWorkStateReceiver;
+    private boolean isBDcmntway;
 
     public CmntStatus(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
+        View.inflate(context, R.layout.layout_cmnt_status, null);
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
-        };
+        }
+    }
 
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_cmnt_status, this);
-        bdBulb = findViewById(R.id.bd_bulb);
-        dtBulb = findViewById(R.id.dt_bulb);
+    private void bindNetworkLayout() {
+        if (netWorkStateReceiver == null) {
+            netWorkStateReceiver = new NetworkReceiver(() -> {
+                int rssi = CmntStatus.this.getWifiRssi();
+                if (isBDcmntway) return;
+                Log.d(TAG, String.valueOf(rssi));
+                showAni(rssi);
+            });
+        }
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        mContext.registerReceiver(netWorkStateReceiver, filter);
+    }
 
+    private void removeNetworkLayout() {
+        if (netWorkStateReceiver != null) {
+            mContext.unregisterReceiver(netWorkStateReceiver);
+            netWorkStateReceiver = null;
+        }
+    }
+
+    private void showAni(int rssi) {
+        int bgColor = R.drawable.dark_bulb_shape;
+        if (rssi == 0) {
+            bgColor = R.drawable.deepred_bulb_shape;
+        } else if (rssi == 1) {
+            bgColor = R.drawable.red_bulb_shape;
+        } else if (rssi == 2) {
+            bgColor = R.drawable.orange_bulb_shape;
+        } else if (rssi == 3) {
+            bgColor = R.drawable.yellow_bulb_shape;
+        } else if (rssi == 4) {
+            bgColor = R.drawable.light_bulb_shape;
+        } else if (rssi == -1) {
+            bgColor = R.drawable.dark_bulb_shape;
+        }
+        this.setBackground(getResources().getDrawable(bgColor));
+    }
+
+    public int getWifiRssi() {
         HomeActivity acct = (HomeActivity) getContext();
-        if (acct.bdsService.COMMUNICATE_WAY == R.string.card_cmnt_bd) {
-            changeStatus(dtBulb, bdBulb);
-        } else {
-            changeStatus(bdBulb, dtBulb);
+        BDSService service = acct.bdsService;
+        if (!service.isServiceAvailable()) {
+            return -1;
         }
+        WifiManager mWifiManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo mWifiInfo = mWifiManager.getConnectionInfo();
+        int wifi = mWifiInfo.getRssi();//获取wifi信号强度
+        Log.d(TAG, Integer.toString(wifi));
+        int rssi = 0;
+        if (wifi > -50 && wifi < 0) {//最强
+            rssi = 4;
+        } else if (wifi > -70 && wifi < -50) {//较强
+            rssi = 3;
+        } else if (wifi > -80 && wifi < -70) {//较弱
+            rssi = 2;
+        } else if (wifi > -100 && wifi < -80) {//微弱
+            rssi = 1;
+        }
+        return rssi;
     }
 
-    private void changeStatus (View v1, View v2) {
+    public int getSeriRssi(ArrayList<String> rssiArr) {
         HomeActivity acct = (HomeActivity) getContext();
-        boolean isServiceAvailable = acct.bdsService.isServiceAvailable();
-        stopAni(v1);
-        if (isServiceAvailable) {
-            finishedAni(v2);
-        } else {
-            stopAni(v2);
+        BDSService service = acct.bdsService;
+        if (!service.isServiceAvailable()) {
+            return -1;
         }
+        int rssi = 0;
+        if (!rssiArr.contains("3") && !rssiArr.contains("4")) rssi = 1;
+        else if (rssiArr.contains("3") && !rssiArr.contains("4")) {
+            if (rssiArr.indexOf("3") == rssiArr.lastIndexOf("3")) {
+                rssi = 2;
+            } else {
+                rssi = 3;
+            }
+        } else if (rssiArr.contains("4")) {
+            rssi = 4;
+        }
+        return rssi;
     }
 
-    private void finishedAni(View v) {
-        try {
-            v.setBackground(getResources().getDrawable(R.drawable.light_bulb_shape));
-        } catch (Exception e) {
-            Log.d(TAG, "Set bulb animation error.");
-        }
-    }
-
-    private void connectAni (View v) {
-        try {
-            v.setBackground(getResources().getDrawable(R.drawable.bulb_animation));
-            ((AnimationDrawable) v.getBackground()).start();
-        } catch (Exception e) {
-            Log.d(TAG, "Set bulb animation error.");
-        }
-    }
-
-    private void stopAni(View v) {
-        try {
-            v.setBackground(getResources().getDrawable(R.drawable.dark_bulb_shape));
-        } catch (Exception e) {
-            Log.d(TAG, "Remove buld animation error.");
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onServiceReady(ServiceEvent evt) {
+        if (evt.getCmntway().equals("DT")) {
+            bindNetworkLayout();
+        } else if (evt.getCmntway().equals("BD")) {
+            removeNetworkLayout();
+            EventBus.getDefault().post(new SendSignalStrengthEvent());
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void onMessge (EmittSocketEvent event) {
-        switch (event.status) {
-            case "0":
-                finishedAni(dtBulb);
-                Log.d(TAG, "Success!!!");
-                break;
-            case "1":
-                connectAni(dtBulb);
-                Log.d(TAG, "Connecting!!!");
-                break;
-            case "2":
-                stopAni(dtBulb);
-                Log.d(TAG, "Failed!!!");
-                break;
+    public void onServiceDrop(ServiceEvent evt) {
+        if (evt.isDrop()) {
+            showAni(-1);
+            HomeActivity acct = (HomeActivity) getContext();
+            BDSService service = acct.bdsService;
+            removeNetworkLayout();
+            if (evt.getCmntway().equals("DT") && !isBDcmntway && !service.isServiceAvailable()) {
+                Log.d(TAG, "re-connecting...");
+                service.dtSocket.connect();
+            }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onChangeCmntwayMessage(ChangeCmntWayEvent event) {
+        isBDcmntway = event.cmntWay == R.string.card_cmnt_bd;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onReceiveSignalStrengthEvent(ReceiveSignalStrengthEvent event) {
+        showAni(getSeriRssi(event.getSignals()));
     }
 }

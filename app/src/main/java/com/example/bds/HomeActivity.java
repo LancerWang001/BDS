@@ -27,6 +27,7 @@ import com.example.bds.homefragments.SupportFragment;
 import com.example.beans.CmntIntervalBean;
 import com.example.beans.Status;
 import com.example.events.BDError;
+import com.example.events.MessageEvent;
 import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -154,9 +155,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onError(BDError error) {
         // handle BD error
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(error.errorCode);
-        builder.create().show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage(error.errorCode);
+//        builder.create().show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onMessage (MessageEvent message) {
+//        Log.d(TAG, "Dialog message:" + message);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage(message.message);
+//        builder.create().show();
     }
 
     public HashMap<String, Status> getTargetDevices() {

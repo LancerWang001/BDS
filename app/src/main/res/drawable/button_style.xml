@@ -20,10 +20,25 @@
                     android:top="4dp" />
             </shape>
         </item>
-        <item>
+        <item android:state_enabled="true">
             <shape android:shape="rectangle">
                 <!-- 填充的颜色 -->
                 <solid android:color="@color/btnBackground" />
+                <!-- 设置按钮的四个角为弧形 -->
+                <!-- android:radius 弧形的半径 -->
+                <corners android:radius="4dip" />
+                <!-- padding：Button里面的文字与Button边界的间隔 -->
+                <padding
+                    android:bottom="4dp"
+                    android:left="8dp"
+                    android:right="8dp"
+                    android:top="4dp" />
+            </shape>
+        </item>
+        <item android:state_enabled="false">
+            <shape android:shape="rectangle">
+                <!-- 填充的颜色 -->
+                <solid android:color="@color/colorUnChecked" />
                 <!-- 设置按钮的四个角为弧形 -->
                 <!-- android:radius 弧形的半径 -->
                 <corners android:radius="4dip" />

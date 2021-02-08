@@ -14,7 +14,9 @@ import android.widget.Toast;
 import com.example.bds.HomeActivity;
 import com.example.bds.MainActivity;
 import com.example.bds.R;
+import com.example.bds.homefragments.MainFragment;
 import com.example.events.ChangeCmntWayEvent;
+import com.example.service.BDSService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,10 +41,10 @@ public class TitleBar extends LinearLayout {
 
         titleBack.setOnClickListener(v -> {
             System.out.println("返回上一级");
-            Intent intent = new Intent();
-            intent.setClass(context, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            context.startActivity(intent);
+            ((HomeActivity) getContext()).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment, new MainFragment())
+                    .commit();
         });
         titleLogout.setOnClickListener(v -> {
             System.out.println("退出");

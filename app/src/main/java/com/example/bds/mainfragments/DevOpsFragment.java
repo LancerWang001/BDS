@@ -110,6 +110,8 @@ public class DevOpsFragment extends Fragment {
                 pair.setBDSCardId(entry.getValue());
                 pairTable.addView(pair, pairTable.getChildCount());
             }
+            String cmntway = sp.getString(Constants.ComntWay, "");
+            if (cmntway.equals("BD")) cmntGroup.check(R.id.devopsCmnt_bd);
             Toast.makeText(getContext(), "开发数据导入成功", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getContext(), "开发数据导入失败", Toast.LENGTH_SHORT).show();

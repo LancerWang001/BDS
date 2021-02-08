@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.Constants;
 import com.example.events.MessageEvent;
+import com.example.events.ServiceEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class SerialPortUtil {
     private SerialPort serialPort = null;
@@ -35,7 +37,8 @@ public class SerialPortUtil {
             inputStream = serialPort.getInputStream();
             outputStream = serialPort.getOutputStream();
             isStart = true;
-
+            EventBus.getDefault().post(new ServiceEvent("BD"));
+            getSerialPort();
         } catch (IOException e) {
             Log.d("SerialPortErr", e.toString());
             Log.d("SerialPortErr", "Can not open serial port.");
@@ -43,7 +46,6 @@ public class SerialPortUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSerialPort();
     }
 
     /**
@@ -96,6 +98,35 @@ public class SerialPortUtil {
         mReceiveThread.start();
     }
 
+    private String buildBDStr(byte[] readData, int size) {
+        String readString = "";
+        if (size > 22) { // 北斗短报文命令头长度 ： 命令头,信息类别,卡号,电文形式,,电文内容头部(A4)
+            byte[] head = Arrays.copyOfRange(readData, 0, 5);
+            String headStr = new String(head);
+            if (headStr.equals("$BDTXR")) {
+                byte[] txrHead = Arrays.copyOfRange(readData, 0, 21);
+                String txrHeadStr = new String(txrHead);
+                String endStr = "";
+                StringBuilder hexArr = new StringBuilder();
+                for (int i = 22, bt = readData[i]; i < size; i++) {
+                    if (bt == 42) {
+                        byte[] end = Arrays.copyOfRange(readData, i, size);
+                        endStr = new String(end);
+                    }
+                    String hexStr = Integer.toHexString(bt);
+                    Log.d("readData ", hexStr);
+                    hexArr.append(hexStr);
+                }
+                readString = txrHeadStr + hexArr.toString() + endStr;
+                Log.d("Receive ", readString);
+                return readString;
+            }
+        }
+        readString = new String(readData, 0, size);
+        Log.d("Receive ", readString);
+        return readString;
+    }
+
     /**
      * 接收串口数据的线程
      */
@@ -112,12 +143,10 @@ public class SerialPortUtil {
                 byte[] readData = new byte[1024];
                 try {
                     Log.d("GET Serialport ", "Start to Read");
-//                    Thread.sleep(500);
+                    Thread.sleep(500);
                     int size = inputStream.read(readData);
-                    Log.d("GET Serialport ", new String(readData));
                     if (size > 0) {
-                        String readString = new String(readData, 0, size);
-                        Log.d("Receive ", readString);
+                        String readString = SerialPortUtil.this.buildBDStr(readData, size);
                         // Handle here
                         EventBus.getDefault().post(new MessageEvent(readString));
                     }
@@ -127,7 +156,6 @@ public class SerialPortUtil {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 }

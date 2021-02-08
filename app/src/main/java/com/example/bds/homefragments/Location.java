@@ -56,18 +56,7 @@ public class Location extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-//        shipPos = new Position();
-//        shipPos.setLongitude(Double.parseDouble("107.328"));
-//        shipPos.setLatitude(Double.parseDouble("37.829"));
-//        shipPos.setxRange(getWidth() / 2);
-//        shipPos.setyRange(getHeight() / 2);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                time ++;
-               invalidate();
-            }
-        }, 0, 2000);
+        invalidate();
     }
 
     @Override
@@ -85,18 +74,30 @@ public class Location extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.GREEN);
         // draw lines
-        int unitWidth = getWidth() / 10;
-        for (int i = 0; i < 10; i ++) {
-            int startY = unitWidth * i;
+        int widthLines = 10;
+        if (xMaxDistance != 0) {
+            widthLines = (int) Math.ceil(xMaxDistance / 1000) * 2; // 一公里为一条直线
+            if (widthLines > 20) widthLines = 20;
+        };
+        int heightLines = 10;
+        if (yMaxDistance != 0) {
+            heightLines = (int) Math.ceil(yMaxDistance / 1000) * 2;
+            if (heightLines > 21) heightLines = 21;
+        }
+        int unitHeight = getHeight() / heightLines;
+        int unitWidth = getWidth() / widthLines;
+
+        for (int i = 0; i < heightLines; i ++) {
+            int startY = unitHeight * i;
             int stopY = startY;
             int stopX = getWidth();
             canvas.drawLine(0, startY, stopX, stopY, paint);
         }
 
-        for (int i = 0; i < 10; i ++) {
+        for (int i = 0; i < widthLines; i ++) {
             int startX = unitWidth * i;
             int stopX = startX;
-            int stopY = getWidth();
+            int stopY = getHeight();
             canvas.drawLine(startX, 0, stopX, stopY, paint);
         }
         canvas.save();
@@ -111,17 +112,18 @@ public class Location extends View {
 
         Set<String> keySet = targetMap.keySet();
         for (String carNum : keySet) {
-            paint.setStrokeWidth(15);
+            paint.setStrokeWidth(27);
             paint.setColor(Color.GREEN);
             Position position = targetMap.get(carNum);
-            int xRange = position.getxRange() * 4 / 5;
-            int yRange = position.getyRange() * 4 / 5;
+            int xRange = position.getxRange();
+            int yRange = position.getyRange();
 
             canvas.drawPoint(xRange, yRange, paint);
             Log.d(TAG, "xRang->" + xRange + " yRang->" + yRange + "canvas width: " + getWidth());
-            paint.setStrokeWidth(10);
+            paint.setStrokeWidth(15);
             paint.setColor(Color.BLACK);
-            canvas.drawText(carNum, (float) (xRange - 7.5), (float) (yRange + 3), paint);
+            paint.setTextSize(25);
+            canvas.drawText(carNum, (float) (xRange - 7.5), (float) (yRange + 5), paint);
         }
         canvas.restore();
     }
@@ -129,50 +131,52 @@ public class Location extends View {
     private int calcXRange (double distance) {
         int distanceInt = (int) distance;
         int width = getWidth();
+        int xRange = (int)(width * (distanceInt / xMaxDistance) * 0.5);
         Log.d(TAG, "xMaxDistance -> " + xMaxDistance);
-        int xRange = (int)(width * (distanceInt / xMaxDistance));
+        Log.d(TAG, "xRange -> " + xRange);
         return width / 2 + xRange;
     }
 
     private int calcYRange(double distance) {
         int distanceInt = (int) distance;
         int height = getHeight();
-        int yRange = (int)(height * (distanceInt / yMaxDistance));
+        int yRange = (int)(height * (distanceInt / yMaxDistance) * 0.5);
         Log.d(TAG, "yMaxDistance -> " + yMaxDistance);
-        return height / 2 + yRange;
+        Log.d(TAG, "yRange -> " + yRange);
+        return height / 2 - yRange;
     }
 
     private double findxMaxDistance (double distance) {
-        if (Math.abs(distance) > xMaxDistance) {
-            return Math.abs(distance) * 2;
+        if (Math.abs(distance) > xMaxDistance * 1.1) {
+            return Math.abs(distance) * 1.1;
         } else {
             double max = 0;
             Set<String> keySet = targetMap.keySet();
             for (String key : keySet) {
                 Position position = targetMap.get(key);
                 assert position != null;
-                if (Math.abs(position.getXdistance()) > max) {
-                    max = Math.abs(position.getxRange());
+                if (Math.abs(position.getXdistance()) > max * 1.1) {
+                    max = Math.abs(position.getXdistance()) * 1.1;
                 }
             }
-            return max * 2;
+            return max;
         }
     }
 
     private double findyMaxDistance (double distance) {
-        if (Math.abs(distance) > yMaxDistance) {
-            return Math.abs(distance) * 2;
+        if (Math.abs(distance) > yMaxDistance * 1.1) {
+            return Math.abs(distance) * 1.1;
         } else {
             double max = 0;
             Set<String> keySet = targetMap.keySet();
             for (String key : keySet) {
                 Position position = targetMap.get(key);
                 assert position != null;
-                if (Math.abs(position.getYdistance()) > max) {
-                    max = Math.abs(position.getYdistance());
+                if (Math.abs(position.getYdistance()) > max * 1.1) {
+                    max = Math.abs(position.getYdistance()) * 1.1;
                 }
             }
-            return max * 2;
+            return max;
         }
     }
 
@@ -186,28 +190,21 @@ public class Location extends View {
         shipPos.setxRange(getWidth() / 2);
         shipPos.setyRange(getHeight() / 2);
         Log.d("Ship Position" , Double.toString(event.message[0]));
+        invalidate();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onMessage(RecieveUpperControlEvent mess) {
         // Add / Update target position
-        Log.d("Message:", mess.toString());
-//        Log.d("onMeesage cardNum : ", mess.cardNum);
-//        Log.d("onMessage1: ", Double.toString(mess.latitude));
-//        Log.d("onMessage2: ", mess.latitudeHem);
-//        Log.d("onMessage3: ", Double.toString(mess.longitude));
-//        Log.d("onMessage4: ", mess.longitudeHem);
-        if (mess.longitudeHem.equals("S")) {
-            mess.longitude = Double.parseDouble("-" + mess.longitude);
-        }
-        if (mess.latitudeHem.equals("W")) {
-            mess.latitude = Double.parseDouble("-" + mess.latitude);
-        }
+        Log.d("Position latitude:", Double.toString(mess.latitude));
+        Log.d("Position longitude:", Double.toString(mess.longitude));
         if (null != shipPos) {
             Position p = new Position();
             p.setCardNum(mess.cardNum);
             p.setLatitude(mess.latitude);
             p.setLongitude(mess.longitude);
+            p.setLatHem(mess.latitudeHem);
+            p.setLongHem(mess.longitudeHem);
             double directDistance = getDistance(mess.latitude, mess.longitude, shipPos.getLatitude(), shipPos.getLongitude());
             double xDistance = getSigleDistance(mess.longitude, shipPos.getLongitude());
             double yDistance = getSigleDistance(mess.latitude, shipPos.getLatitude());
@@ -220,6 +217,7 @@ public class Location extends View {
             p.setyRange(calcYRange(yDistance));
             targetMap.put(mess.cardNum, p);
             EventBus.getDefault().post(new UpdateTrackMessage(mess.timestamp, mess.targetPower, this.targetMap, mess.cardNum));
+            invalidate();
         }
     }
 }
